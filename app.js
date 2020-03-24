@@ -14,12 +14,11 @@ configRoutes(app);
 
 const dbConnection = require('./config/mongoConnection');
 const data = require('./data/');
-const bandsData = data.bands;
-const albumsData = data.albums
+
 //test cases
 const main = async () => {
-  const db = await dbConnection();
-  await db.dropDatabase();
+  // const db = await dbConnection();
+  // await db.dropDatabase();
  console.log('Done seeding database');
 };
 // main().catch((error) => {
