@@ -34,46 +34,21 @@ router.get("/", async (req, res) => {
     }
 });
 
-// router.get("/:id", async (req, res) => {
-//     let user
-//     try {
-//         console.log('Getting user with ID:', req.params.id)
-//         user = await usersData.getUserById(ObjectId(req.params.id))
-//     } catch (e) {
-//         console.log("Failed finding user with Id:", req.params.id)
-//         res.status(404).json({ message: "User not found" })
-//         return
-//     }
-//     try {
-//         res.status(200).json(user)
-//     } catch (e) {
-//         res.status(400).json({ error: "Failed getting info." });
-//     }
-// });
-
-router.get("/login", async (req, res) => {
-    res.locals.metaTags = {
-        title: "login page"
-    }
-    res.render("pages/login", {
-    })
-});
-
-router.post("/login", async (req, res) => {
-    let username = req.body['user-name']
-    let psw = req.body['psw']
-    console.log(`user "${username}" is trying to log in`)
+router.get("/:id", async (req, res) => {
     let user
     try {
-        user = await usersData.getUserByName(username)
+        console.log('Getting user with ID:', req.params.id)
+        user = await usersData.getUserById(ObjectId(req.params.id))
     } catch (e) {
-        console.log(e)
-        res.redirect("/users/login")
+        console.log("Failed finding user with Id:", req.params.id)
+        res.status(404).json({ message: "User not found" })
         return
     }
-    const truepsw = user.password
-    console.log(truepsw == psw)
-    res.redirect("mainpage")
+    try {
+        res.status(200).json(user)
+    } catch (e) {
+        res.status(400).json({ error: "Failed getting info." });
+    }
 });
 
 router.put("/:id", async (req, res) => {
@@ -121,8 +96,7 @@ router.post("/", async (req, res) => {
     try {
         const data = req.body;
         console.log(data)
-        const newUser = await usersData.addUser(data.basicInfo, data.email, data.address, data.password)
-        res.status(200).json(newUser)
+        res.status(200)
     } catch (e) {
         res.status(400).json({ message: "JSON provided does not match schema." })
     }

@@ -25,15 +25,15 @@ const main = async () => {
         zipCode: "114514"
     }
     let test = await usersData.addUser(basicInfo,"123@123.com",address,"weyywy")
-    basicInfo.lastName = "JOJO"
-    let test1 = await usersData.patchUser(test._id,{basicInfo})
+    // basicInfo.lastName = "JOJO"
+    // let test1 = await usersData.patchUser(test._id,{basicInfo})
     // console.log(test.shoppingCart)
-    let allUsers = await usersData.getAllUsers()
-    console.log("all",allUsers)
+    // let allUsers = await usersData.getAllUsers()
+    // console.log("all",allUsers)
 };
-// main().catch((error) => {
-//     console.log(error);
-// });
+main().catch((error) => {
+    console.log(error);
+});
 
 module.exports = {
     users: usersData,

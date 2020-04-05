@@ -146,6 +146,13 @@ module.exports = {
         if (user === null) throw 'No user with that id';
         return user;
     },
+    async getUserByName(username) {
+        if (!username) throw 'You must provide a name to search for';
+        const usersCollection = await users();
+        const user = await usersCollection.findOne({ "basicInfo.lastName":username });
+        if (user === null) throw 'No user with that name';
+        return user;
+    },
 
     async getAllUsers() {
         const usersCollection = await users();
