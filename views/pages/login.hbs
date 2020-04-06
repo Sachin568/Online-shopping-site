@@ -1,4 +1,9 @@
 <h2>log in page</h2>
+{{#if errormessage}}
+<p>
+    {{errormessage}}
+</p>
+{{/if}}
 <form action="/users/login" method="post">
     <div class="container">
         <label for="uname"><b>Username</b></label>

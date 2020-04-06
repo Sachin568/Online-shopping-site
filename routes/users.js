@@ -72,8 +72,13 @@ router.post("/login", async (req, res) => {
         return
     }
     const truepsw = user.password
-    console.log(truepsw == psw)
-    res.redirect("mainpage")
+    if (truepsw == psw) {
+        console.log(truepsw == psw)
+        res.redirect("../mainpage")
+    } else {
+        res.status(400).render("pages/login", { errormessage: "Wrong password" })
+    }
+
 });
 
 router.put("/:id", async (req, res) => {

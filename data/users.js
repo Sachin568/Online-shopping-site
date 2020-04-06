@@ -149,9 +149,13 @@ module.exports = {
     async getUserByName(username) {
         if (!username) throw 'You must provide a name to search for';
         const usersCollection = await users();
-        const user = await usersCollection.findOne({ "basicInfo.lastName":username });
+        const user = await usersCollection.findOne({ "basicInfo.lastName": username });
         if (user === null) throw 'No user with that name';
         return user;
+    },
+
+    async updateUserPsw() {
+
     },
 
     async getAllUsers() {
