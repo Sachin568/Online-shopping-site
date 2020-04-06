@@ -35,11 +35,15 @@ button {
   background-color: rgb(162, 189, 120);
   color: white;
   padding: 14px 20px;
-  margin: 8px 0;
+  margin: 8px 8px;
   border: none;
   cursor: pointer;
   width: 100%;
   display: inline-block;
+}
+
+.button-group {
+  display: flex;
 }
 
 /* Add a hover effect for buttons */
