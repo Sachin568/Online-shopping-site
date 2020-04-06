@@ -58,6 +58,13 @@ router.get("/login", async (req, res) => {
     res.render("pages/login", {
     })
 });
+router.get("/signup", async (req, res) => {
+    res.locals.metaTags = {
+        title: "sign up page"
+    }
+    res.render("pages/signup", {
+    })
+});
 
 router.post("/login", async (req, res) => {
     let username = req.body['user-name']
@@ -68,7 +75,7 @@ router.post("/login", async (req, res) => {
         user = await usersData.getUserByName(username)
     } catch (e) {
         console.log(e)
-        res.redirect("/users/login")
+        res.status(400).render("pages/login", { errormessage: "User name and password doesn't match" })
         return
     }
     const truepsw = user.password
@@ -79,6 +86,35 @@ router.post("/login", async (req, res) => {
         res.status(400).render("pages/login", { errormessage: "Wrong password" })
     }
 
+});
+router.post("/signup", async (req, res) => {
+    let lastName = req.body['lastname']
+    let firstName = req.body['firstname']
+    let birthdate = req.body['birthdate']
+    let email = req.body['email']
+
+    let psw = req.body['psw']
+    let psw_repeat = req.body['psw-repeat']
+    if (psw != psw_repeat) {
+        res.status(400).render("pages/signup", { errormessage: "Password doesn't match" })
+        return
+    }
+    const basicInfo = {
+        lastName: lastName,
+        firstName: firstName,
+        birthdate: birthdate,
+    }
+    console.log(`user "${email}" is trying to sign up`)
+    let new_user
+    try {
+        new_user = await usersData.addUser(basicInfo, email, psw)
+    } catch (e) {
+        console.log(e)
+        res.status(400).render("pages/signup", { errormessage: "What happened." })
+        return
+    }
+    console.log(`Registration successed.`)
+    res.status(200).render("pages/mainpage", {})
 });
 
 router.put("/:id", async (req, res) => {

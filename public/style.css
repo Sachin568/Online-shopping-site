@@ -1,4 +1,4 @@
-.top-menu>* {
+.top-menu> {
   height: 100px;
   display: inline-block;
   text-align: center;
@@ -12,13 +12,21 @@ form {
 
 /* Full-width inputs */
 
-input[type=text], input[type=password] {
+input[type=text], input[type=password], [type=date] {
   width: 100%;
   padding: 12px 20px;
   margin: 8px 8px;
   display: inline-block;
   border: 1px solid #ccc;
-  box-sizing: border-box;
+  /* box-sizing: border-box; */
+}
+
+#name-box {
+  display: flex;
+  width: 100%;
+  /* margin: 0 auto; */
+  /* position: relative; */
+  /* flex-flow: column wrap; */
 }
 
 /* Set a style for all buttons */

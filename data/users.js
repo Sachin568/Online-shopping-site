@@ -35,9 +35,9 @@ function checkObjectAtrributes(obj, required) {
 
 module.exports = {
     // must force frontend to send a complete json
-    async addUser(basicInfo, email, address, password) {
-        if (!checkObjectAtrributes(basicInfo, ["lastName", "firstName", "birthdate", "gender"]) || !basicInfo) throw "Basic info not valid."
-        if (!checkObjectAtrributes(address, ["state", "city", "street", "zipCode"]) || !address) throw "Address not valid."
+    async addUser(basicInfo, email, password) {
+        if (!checkObjectAtrributes(basicInfo, ["lastName", "firstName", "birthdate"]) || !basicInfo) throw "Basic info not valid."
+        // if (!checkObjectAtrributes(address, ["state", "city", "street", "zipCode"]) || !address) throw "Address not valid."
         const inputs = [email, password]
         const inputsname = ["email", "password"]
         for (i = 0; i < inputs.length; i++) {
@@ -50,15 +50,19 @@ module.exports = {
                 lastName: basicInfo.lastName,
                 firstName: basicInfo.firstName,
                 birthdate: basicInfo.birthdate,
-                gender: basicInfo.gender
-
             },
             email: email,
+            // address: {
+            //     state: address.state,
+            //     city: address.city,
+            //     street: address.street,
+            //     zipCode: address.zipCode
+            // },
             address: {
-                state: address.state,
-                city: address.city,
-                street: address.street,
-                zipCode: address.zipCode
+                state: "",
+                city: "",
+                street: "",
+                zipCode: ""
             },
             password: password,
             shoppingCart: [],
@@ -88,7 +92,7 @@ module.exports = {
     async updateUser(id, basicInfo, email, address) {
         // won't affect shopping carts and stuff like that
         if (!id) throw 'You must provide an id to search for';
-        if (!checkObjectAtrributes(basicInfo, ["lastName", "firstName", "birthdate", "gender"]) || !basicInfo) throw "Basic info not valid."
+        if (!checkObjectAtrributes(basicInfo, ["lastName", "firstName", "birthdate"]) || !basicInfo) throw "Basic info not valid."
         if (!checkObjectAtrributes(address, ["state", "city", "street", "zipCode"]) || !address) throw "Address not valid."
         const inputs = [email]
         const inputsname = ["email"]
@@ -102,8 +106,6 @@ module.exports = {
                 lastName: basicInfo.lastName,
                 firstName: basicInfo.firstName,
                 birthdate: basicInfo.birthdate,
-                gender: basicInfo.gender
-
             },
             email: email,
             address: {

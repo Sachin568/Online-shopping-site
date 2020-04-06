@@ -15,8 +15,7 @@ const main = async () => {
     let basicInfo = {
         lastName: "ma",
         firstName: "dongming",
-        birthdate: "101010101",
-        gender: "male"
+        birthdate: "101010101"
     }
     let address = {
         state: "NJ",
@@ -24,7 +23,7 @@ const main = async () => {
         street: "9999999",
         zipCode: "114514"
     }
-    let test = await usersData.addUser(basicInfo,"123@123.com",address,"weyywy")
+    let test = await usersData.addUser(basicInfo,"123@123.com","weyywy")
     // basicInfo.lastName = "JOJO"
     // let test1 = await usersData.patchUser(test._id,{basicInfo})
     // console.log(test.shoppingCart)
