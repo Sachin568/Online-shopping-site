@@ -110,12 +110,11 @@ router.post("/signup", async (req, res) => {
         new_user = await usersData.addUser(basicInfo, email, psw)
     } catch (e) {
         console.log(e)
-        // res.status(400).render("pages/signup", { errormessage: e })
-        res.status(400).send({ errormessage: e })//"pages/signup", 
+        res.status(400).render("pages/signup", { errormessage: "What happened." })
         return
     }
     console.log(`Registration successed.`)
-    // res.status(200).render("pages/mainpage")
+    res.status(200).render("pages/mainpage", {})
 });
 
 router.put("/:id", async (req, res) => {

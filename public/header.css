@@ -1,38 +1,69 @@
-.top-menu> {
-  /* height: 100px; */
-  /* display: inline-block; */
-  /* font-size: 2rem; */
-  overflow: hidden;
-}
-
-header {
-  border-bottom: 10px solid black;
-}
-
-.top-menu a {
-  font-size: 150%;
-  float: right;
-  text-align: center;
-  padding: 14px 16px;
+*{
+  padding:0;
+  margin:0;
   text-decoration: none;
-  font-size: 17px;
+  list-style:none;
+  box-sizing:border-box;
+
 }
-#errormessage{
-  font-size: 200%;
-  color: red;
+body{
+  font-family:montserrat;
+}
+
+nav{
+  background:rgb(39, 38, 111);
+  height:35px;
+  width:100%;
+}
+
+label.logo{
+  color:white;
+  font-size:35px;
+  line-height:80px;
+  padding: 0 100px;
+  font-weight:bold;
+}
+
+nav ul{
+  float:right;
+  margin-right:20px;
+}
+
+nav ul li{
+  display:inline-block;
+  line-height:80px;
+  margin: 0 5px;
+}
+
+nav ul li a{
+  color:white;
+  font-size:17px;
+  padding:7px 13px;
+  border-radius:3px ;
+  text-transform:uppercase;
+}
+
+a.active,a:hover{
+  background-color:rgb(50, 48, 141);
+  transition: .5s;
+}
+
+/* login.css  */
+
+.top-menu> {
+  height: 100px;
+  display: inline-block;
   text-align: center;
+  padding: 0 0.3rem;
+  text-align:center;
 }
 
-.logo {
-  font-size: 200%;
-}
-
+/*form of the login page */
 form {
   border: 3px solid #f1f1f1;
 }
 
 /* Full-width inputs */
-
 input[type=text], input[type=password], [type=date] {
   width: 100%;
   padding: 12px 20px;
@@ -42,23 +73,18 @@ input[type=text], input[type=password], [type=date] {
   /* box-sizing: border-box; */
 }
 
-hr {
-  border: 2px solid gray;
-  border-radius: 2px;
-}
-
 #name-box {
   display: flex;
   width: 100%;
+  text-align:center;
   /* margin: 0 auto; */
   /* position: relative; */
   /* flex-flow: column wrap; */
 }
 
-/* Set a style for all buttons */
-
+/* login button */
 button {
-  background-color: rgb(162, 189, 120);
+  background-color: rgb(50, 48, 141);
   color: white;
   padding: 14px 20px;
   margin: 8px 8px;
@@ -101,7 +127,4 @@ button:hover {
 
 /* The "Forgot password" text */
 
-span.psw {
-  float: right;
-  padding-top: 16px;
-}
+

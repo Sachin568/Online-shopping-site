@@ -1,8 +1,6 @@
 const mongoCollections = require('../config/mongoCollections');
 const users = mongoCollections.users;
 const ObjectId = require('mongodb').ObjectID;
-const bcrypt = require("bcrypt");
-const saltRounds = 16;
 
 // untilities
 function checkStringInput(value, inputName, functionName) {
@@ -46,11 +44,7 @@ module.exports = {
             checkStringInput(inputs[i], inputsname[i], 'addUser')
         }
         const usersCollection = await users();
-        const checkExist = await usersCollection.findOne({ email: email })
-        if (checkExist) {
-            throw `User already exists with that email ${email}`
-        }
-        let hashedPassword = await bcrypt.hash(password, saltRounds);
+
         let newUser = {
             basicInfo: {
                 lastName: basicInfo.lastName,
@@ -70,7 +64,7 @@ module.exports = {
                 street: "",
                 zipCode: ""
             },
-            password: hashedPassword,
+            password: password,
             shoppingCart: [],
             wishList: [],
             reviews: [],
@@ -81,7 +75,6 @@ module.exports = {
         if (insertInfo.insertedCount === 0) throw 'Could not add user.';
         const newId = insertInfo.insertedId;
         const user = await this.getUserById(newId);
-        console.log("User has been added:",user)
         return user;
     },
     async removeUser(id) {

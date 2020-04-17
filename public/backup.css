@@ -1,0 +1,125 @@
+.top-menu> {
+    height: 100px;
+    display: inline-block;
+    text-align: center;
+    padding: 0 0.3rem;
+    text-align:center;
+    float: right;
+  }
+  
+  /*form of the login page */
+  form {
+    border: 3px solid #f1f1f1;
+  }
+  
+  /* Full-width inputs */
+  input[type=text], input[type=password], [type=date] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 8px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    /* box-sizing: border-box; */
+  }
+  
+  #name-box {
+    display: flex;
+    width: 100%;
+    text-align:center;
+    /* margin: 0 auto; */
+    /* position: relative; */
+    /* flex-flow: column wrap; */
+  }
+  
+  /* login button */
+  button {
+    background-color: rgb(162, 189, 120);
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 8px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    display: inline-block;
+  }
+  
+  .button-group {
+    display: flex;
+  }
+  
+  /* Add a hover effect for buttons */
+  
+  button:hover {
+    opacity: 0.8;
+  }
+  
+  /* Extra style for the cancel button (red) */
+  
+  .cancelbtn {
+    background-color: rgb(224, 79, 79);
+  }
+  
+  /* Add padding to containers */
+  
+  .container {
+    width: 30%;
+    margin-left: 35%;
+    margin-right: 35%;
+    padding: 16px;
+  }
+  
+  /* .button-group {
+    display: block;
+    padding: 10px 18px;
+    width: 70%;
+  } */
+  
+  /* The "Forgot password" text */
+  
+  span.psw {
+    float: right;
+    padding-top: 16px;
+  }
+  .topbar{
+    color:white;
+    text-align:center;
+    background-color: rgb(39, 38, 111);
+    margin: 0;
+  }
+  .navbar{
+    /* background-color: #f1f1f1; */
+    background-color: rgb(39, 38, 111);
+    color:rgb(153, 83, 83);
+    margin = 0;
+    justify-content:flexend;
+    margin: 0;
+  }
+  
+  
+  .nav-item{
+    color: white;
+    background-color: rgb(39, 38, 111);
+    font-family:  monospace;
+    font-weight:bold;
+    text-align:center;
+    border-style: solid;
+    float:right;
+    /* display:block; */
+    font-size:20px;
+  }
+  .p{
+    color:white;
+  }
+  .a{
+    color:white;
+  }
+  a:hover{
+  color:black;
+  }
+  
+  #grocery{
+    text-decoration-color: white;
+  }
+  
+  
+  
