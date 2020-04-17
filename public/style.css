@@ -1,9 +1,30 @@
 .top-menu> {
-  height: 100px;
-  display: inline-block;
-  text-align: center;
-  padding: 0 0.3rem;
+  /* height: 100px; */
+  /* display: inline-block; */
+  /* font-size: 2rem; */
+  overflow: hidden;
+}
+
+header {
+  border-bottom: 10px solid black;
+}
+
+.top-menu a {
+  font-size: 150%;
   float: right;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+#errormessage{
+  font-size: 200%;
+  color: red;
+  text-align: center;
+}
+
+.logo {
+  font-size: 200%;
 }
 
 form {
@@ -19,6 +40,11 @@ input[type=text], input[type=password], [type=date] {
   display: inline-block;
   border: 1px solid #ccc;
   /* box-sizing: border-box; */
+}
+
+hr {
+  border: 2px solid gray;
+  border-radius: 2px;
 }
 
 #name-box {
