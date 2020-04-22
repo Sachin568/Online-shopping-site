@@ -1,2 +1,3 @@
 # CS546_FinalProject
-Fake Amazon
+Roadmap:
+  https://docs.google.com/document/d/1rwgBnkCaUjivOpRTSNohd7tgfA9O-g7jN86eBceYDOA/edit?usp=sharing
