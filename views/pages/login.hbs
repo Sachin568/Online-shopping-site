@@ -1,16 +1,19 @@
 <h2>log in page</h2>
-{{#if errormessage}}
-<p>
-    {{errormessage}}
-</p>
-{{/if}}
+
+<div id="errormessage">
+    {{#if errormessage}}
+    <p>
+        {{errormessage}}
+    </p>
+    {{/if}}
+</div>
 <form action="/users/login" method="post">
     <div class="container">
-        <label for="uname"><b>Username</b></label>
-        <input type="text" placeholder="Enter Username" name="user-name" required>
+        <label for="username"><b>Username</b></label>
+        <input type="text" placeholder="Enter Username" name="username" id="username" required>
 
         <label for="psw"><b>Password</b></label>
-        <input type="password" placeholder="Enter Password" name="psw" required>
+        <input type="password" placeholder="Enter Password" name="psw" id="psw" required>
         <div class="button-group">
             <button type="submit">Login</button>
             <button type="button" class="cancelbtn" onclick="location.href='/mainpage'">Cancel</button>

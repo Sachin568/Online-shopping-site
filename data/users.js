@@ -2,7 +2,7 @@ const mongoCollections = require('../config/mongoCollections');
 const users = mongoCollections.users;
 const ObjectId = require('mongodb').ObjectID;
 const bcrypt = require("bcrypt");
-const saltRounds = 16;
+const saltRounds = 4;
 
 // untilities
 function checkStringInput(value, inputName, functionName) {
@@ -37,8 +37,9 @@ function checkObjectAtrributes(obj, required) {
 
 module.exports = {
     // must force frontend to send a complete json
+    //TODO: lower case
     async addUser(basicInfo, email, password) {
-        if (!checkObjectAtrributes(basicInfo, ["lastName", "firstName", "birthdate"]) || !basicInfo) throw "Basic info not valid."
+        if (!checkObjectAtrributes(basicInfo, ["username", "birthdate"]) || !basicInfo) throw "Basic info not valid."
         // if (!checkObjectAtrributes(address, ["state", "city", "street", "zipCode"]) || !address) throw "Address not valid."
         const inputs = [email, password]
         const inputsname = ["email", "password"]
@@ -53,8 +54,9 @@ module.exports = {
         let hashedPassword = await bcrypt.hash(password, saltRounds);
         let newUser = {
             basicInfo: {
-                lastName: basicInfo.lastName,
-                firstName: basicInfo.firstName,
+                lastName: "",
+                firstName: "",
+                username: basicInfo.username,
                 birthdate: basicInfo.birthdate,
             },
             email: email,
@@ -99,7 +101,7 @@ module.exports = {
     async updateUser(id, basicInfo, email, address) {
         // won't affect shopping carts and stuff like that
         if (!id) throw 'You must provide an id to search for';
-        if (!checkObjectAtrributes(basicInfo, ["lastName", "firstName", "birthdate"]) || !basicInfo) throw "Basic info not valid."
+        if (!checkObjectAtrributes(basicInfo, ["lastName","firstName","username", "birthdate"]) || !basicInfo) throw "Basic info not valid."
         if (!checkObjectAtrributes(address, ["state", "city", "street", "zipCode"]) || !address) throw "Address not valid."
         const inputs = [email]
         const inputsname = ["email"]
@@ -113,6 +115,7 @@ module.exports = {
                 lastName: basicInfo.lastName,
                 firstName: basicInfo.firstName,
                 birthdate: basicInfo.birthdate,
+                username: basicInfo.username
             },
             email: email,
             address: {
@@ -158,7 +161,7 @@ module.exports = {
     async getUserByName(username) {
         if (!username) throw 'You must provide a name to search for';
         const usersCollection = await users();
-        const user = await usersCollection.findOne({ "basicInfo.lastName": username });
+        const user = await usersCollection.findOne({ "basicInfo.username": username });
         if (user === null) throw 'No user with that name';
         return user;
     },

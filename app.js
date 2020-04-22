@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path")
 const exphbs = require("express-handlebars")
+const session = require('express-session')
 const configRoutes = require("./routes");
 
 
@@ -24,6 +25,23 @@ app.engine("hbs", exphbs({
 }))
 app.set("view engine", "hbs")
 app.set("views", path.join(__dirname, '/views'))
+app.use(
+  session({
+    name: 'AuthCookie',
+    secret: "Operation Aegis",
+    saveUninitialized: true,
+    resave: false,
+    isAuthenticated: false,
+    userID: undefined
+  })
+);
+//logging
+app.use(async (req, res, next) => {
+  const time = new Date().toUTCString()
+  const authen = req.session.isAuthenticated ? "Authenticated" : "Non-Authenticated"
+  console.log(`[${time}]: ${req.method} ${req.originalUrl} ${authen} user`)
+  next()
+})
 // exphbs.registerPartials(__dirname+'/views/partials')
 
 configRoutes(app);

@@ -6,4 +6,9 @@
         <a href="users/login">Log in</a>
         <a href="users/signup">Sign Up</a>
     </div>
+    <div id="userInfo">
+        {{#if userInfo}}
+        hello, {{userInfo}}.
+        {{/if}}
+    </div>
 </header>

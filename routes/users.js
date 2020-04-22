@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const data = require("../data");
+const bcrypt = require("bcrypt");
+const url = require('url');
 const usersData = data.users;
 
 ObjectId = require('mongodb').ObjectID;
@@ -65,11 +67,11 @@ router.get("/signup", async (req, res) => {
     res.render("pages/signup", {
     })
 });
-
+//TODO:check if user already logged in
 router.post("/login", async (req, res) => {
-    let username = req.body['user-name']
+    let username = req.body['username']
     let psw = req.body['psw']
-    console.log(`user "${username}" is trying to log in`)
+    console.log(`user "${username}" is trying to log in with psw: ${psw}`)
     let user
     try {
         user = await usersData.getUserByName(username)
@@ -78,30 +80,36 @@ router.post("/login", async (req, res) => {
         res.status(400).render("pages/login", { errormessage: "User name and password doesn't match" })
         return
     }
-    const truepsw = user.password
-    if (truepsw == psw) {
-        console.log(truepsw == psw)
-        res.redirect("../mainpage")
+    const hashedPassword = user.password
+    const pswmatch = await bcrypt.compare(psw, hashedPassword)
+    if (pswmatch) {
+        console.log(`user ${username} logged in`)
+        req.session.userInfo = username
+        req.session.isAuthenticated = true
+        res.redirect("/mainpage")
+        // res.redirect(url.format({
+        //     pathname: "/mainpage",
+        //     userInfo: username,
+        // }))
+        // res.status(200).render("pages/mainpage", { userInfo: username, isAuthenticated :true })
     } else {
         res.status(400).render("pages/login", { errormessage: "Wrong password" })
     }
 
 });
 router.post("/signup", async (req, res) => {
-    let lastName = req.body['lastname']
-    let firstName = req.body['firstname']
+    let username = req.body['username']
     let birthdate = req.body['birthdate']
     let email = req.body['email']
 
     let psw = req.body['psw']
-    let psw_repeat = req.body['psw-repeat']
-    if (psw != psw_repeat) {
-        res.status(400).render("pages/signup", { errormessage: "Password doesn't match" })
-        return
-    }
+    // let psw_repeat = req.body['psw-repeat']
+    // if (psw != psw_repeat) {
+    //     res.status(400).render("pages/signup", { errormessage: "Password doesn't match" })
+    //     return
+    // }
     const basicInfo = {
-        lastName: lastName,
-        firstName: firstName,
+        username: username,
         birthdate: birthdate,
     }
     console.log(`user "${email}" is trying to sign up`)
@@ -116,6 +124,7 @@ router.post("/signup", async (req, res) => {
     }
     console.log(`Registration successed.`)
     // res.status(200).render("pages/mainpage")
+    res.send({ redirectURL: "/users/login" })
 });
 
 router.put("/:id", async (req, res) => {

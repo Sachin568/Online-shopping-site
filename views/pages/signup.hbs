@@ -11,17 +11,19 @@
         <h1>Sign Up</h1>
         <p>Please fill in this form to create an account.</p>
         <hr>
-        <div id='name-box'>
+        {{!-- <div id='name-box'>
             <label for="lastname">Last Name</label>
             <input type="text" placeholder="Last Name" name="lastname" maxlength="20" required>
             <label for="firstname">First Name</label>
             <input type="text" placeholder="First Name" name="firstname" maxlength="20" required>
-        </div>
+        </div> --}}
+        <labelfor="username">User Name</label>
+        <input type="text" placeholder="User Name" name="username" id="username" maxlength="20" required>
         <label for="birthdate">birthdate</label>
         <input type="date" name="birthdate" required>
         <hr>
         <label for="email"><b>Email</b></label>
-        <input type="text" placeholder="Enter Email" name="email" required>
+        <input type="text" placeholder="Enter Email" name="email" id="email" required>
 
         <label for="psw"><b>Password</b></label>
         <input type="password" placeholder="Enter Password" name="psw" id="psw" required>

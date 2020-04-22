@@ -19,8 +19,7 @@ const main = async () => {
     const usersCollection = await users();
 
     let basicInfo = {
-        lastName: "ma",
-        firstName: "dongming",
+        username: "DIO",
         birthdate: "101010101"
     }
     let email = "123@123.com"
@@ -31,7 +30,7 @@ const main = async () => {
     //     street: "9999999",
     //     zipCode: "114514"
     // }
-    let test = await usersData.addUser(basicInfo,email,"weyywy")
+    let test = await usersData.addUser(basicInfo,email,"wry")
     // console.log(test)
     // let test2 = await usersData.addUser(basicInfo,email2,"weyywy")
     // console.log(test2)

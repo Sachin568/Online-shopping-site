@@ -5,8 +5,12 @@ router.get("/", async (req, res) => {
     res.locals.metaTags = {
         title: "Mainpage"
     }
-    res.render("pages/mainpage", {
-    })
+    if (req.session.isAuthenticated) {
+        res.render("pages/mainpage", {userInfo: req.session.userInfo})
+    } else {
+        res.render("pages/mainpage", {})
+
+    }
 });
 
 
