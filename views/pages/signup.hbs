@@ -4,8 +4,8 @@
         {{errormessage}}
     </p> --}}
 {{!-- {{/if}} --}}
-
-<form action="/users/signup" method="post" id="signupForm">
+<div class="login_form">
+    <form action="/users/signup" method="post" id="signupForm">
     <div id="errormessage" hidden></div>
     <div class="container">
         <h1>Sign Up</h1>
@@ -43,5 +43,7 @@
         </div>
     </div>
 </form>
+</div>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src='../static/js/signupChecker.js'><{{!}}/script>

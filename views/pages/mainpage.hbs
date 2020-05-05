@@ -2,7 +2,18 @@
     <h2> title here </h2>
 </div>
 <div>
-    <ul>
-        <li>items here</li>
+    <ul class="product_list">
+        {{#each products}}
+        <li>{{this.name}}  -  {{this.price}}<br />
+            {{this.description}}<br />
+            <img src={{this.pic}} height="90" width="120">
+        </li>
+        {{else}}
+        <p>No items match your criteria.</p>
+        {{/each}}
+        {{!-- <li>items here</li> --}}
     </ul>
 </div>
+{{#if status}}
+<p>status: {{status}}</p>
+{{/if}}

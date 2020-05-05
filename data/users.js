@@ -87,7 +87,7 @@ module.exports = {
         return user;
     },
     async removeUser(id) {
-        if (!id) throw 'You must provide an id to search for';
+        if (!id) throw 'You must provide an id to delete user';
 
         const usersCollection = await users();
         const removedUser = await this.getUserById(ObjectId(id))
@@ -100,7 +100,7 @@ module.exports = {
     },
     async updateUser(id, basicInfo, email, address) {
         // won't affect shopping carts and stuff like that
-        if (!id) throw 'You must provide an id to search for';
+        if (!id) throw 'You must provide an id to update user';
         if (!checkObjectAtrributes(basicInfo, ["lastName","firstName","username", "birthdate"]) || !basicInfo) throw "Basic info not valid."
         if (!checkObjectAtrributes(address, ["state", "city", "street", "zipCode"]) || !address) throw "Address not valid."
         const inputs = [email]
@@ -154,7 +154,7 @@ module.exports = {
     async getUserById(id) {
         if (!id) throw 'You must provide an id to search for';
         const usersCollection = await users();
-        const user = await usersCollection.findOne({ _id: id });
+        const user = await usersCollection.findOne({ _id: ObjectId(id) });
         if (user === null) throw 'No user with that id';
         return user;
     },
