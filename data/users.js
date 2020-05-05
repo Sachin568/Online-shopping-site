@@ -83,7 +83,7 @@ module.exports = {
         if (insertInfo.insertedCount === 0) throw 'Could not add user.';
         const newId = insertInfo.insertedId;
         const user = await this.getUserById(newId);
-        console.log("User has been added:",user)
+        console.log("User has been added:", user)
         return user;
     },
     async removeUser(id) {
@@ -98,11 +98,14 @@ module.exports = {
         }
         return removedUser
     },
+    //TODO: need polish
     async updateUser(id, basicInfo, email, address) {
         // won't affect shopping carts and stuff like that
         if (!id) throw 'You must provide an id to update user';
-        if (!checkObjectAtrributes(basicInfo, ["lastName","firstName","username", "birthdate"]) || !basicInfo) throw "Basic info not valid."
-        if (!checkObjectAtrributes(address, ["state", "city", "street", "zipCode"]) || !address) throw "Address not valid."
+        checkObjectAtrributes(basicInfo, ["lastName", "firstName", "username", "birthdate"])
+        if (!basicInfo) throw "Basic info is missing."
+        checkObjectAtrributes(address, ["state", "city", "street", "zipCode"])
+        if (!address) throw "Address is missing."
         const inputs = [email]
         const inputsname = ["email"]
         for (i = 0; i < inputs.length; i++) {
@@ -124,11 +127,6 @@ module.exports = {
                 street: address.street,
                 zipCode: address.zipCode
             }
-            // password: password,
-            // shoppingCart: shoppingCart,
-            // wishList: wishList,
-            // reviews: reviews,
-            // purchased: purchased
         }
 
         const updatedInfo = await usersCollection.updateOne({ _id: id }, { $set: newUser });
@@ -148,7 +146,7 @@ module.exports = {
             throw 'could not update band successfully. Nothing changed?';
         }
 
-        return await this.getUserById(ObjectId(id));
+        return await this.getUserById(id);
     },
 
     async getUserById(id) {
