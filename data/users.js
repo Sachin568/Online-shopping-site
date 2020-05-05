@@ -4,7 +4,7 @@ const ObjectId = require('mongodb').ObjectID;
 const bcrypt = require("bcrypt");
 const saltRounds = 4;
 
-// untilities
+// untilities TODO:need to check uncommon inputs like white spaces
 function checkStringInput(value, inputName, functionName) {
     if (typeof value == 'undefined') {
         throw `Warning[${functionName}]: '${inputName}' is missing.`
@@ -37,7 +37,6 @@ function checkObjectAtrributes(obj, required) {
 
 module.exports = {
     // must force frontend to send a complete json
-    //TODO: lower case
     async addUser(basicInfo, email, password) {
         if (!checkObjectAtrributes(basicInfo, ["username", "birthdate"]) || !basicInfo) throw "Basic info not valid."
         // if (!checkObjectAtrributes(address, ["state", "city", "street", "zipCode"]) || !address) throw "Address not valid."
@@ -47,10 +46,17 @@ module.exports = {
             checkStringInput(inputs[i], inputsname[i], 'addUser')
         }
         const usersCollection = await users();
-        const checkExist = await usersCollection.findOne({ email: email })
-        if (checkExist) {
+        email = email.toLowerCase()
+        const checkEmailExist = await usersCollection.findOne({ email: email })
+        if (checkEmailExist) {
             throw `User already exists with that email ${email}`
         }
+        basicInfo.username = basicInfo.username.toLowerCase()
+        const checkUsernameExist = await usersCollection.findOne({ username: basicInfo.username })
+        if (checkUsernameExist) {
+            throw `User already exists with that username ${basicInfo.username}`
+        }
+
         let hashedPassword = await bcrypt.hash(password, saltRounds);
         let newUser = {
             basicInfo: {

@@ -35,13 +35,13 @@ app.use(
     userID: undefined
   })
 );
-//logging
-app.use(async (req, res, next) => {
-  const time = new Date().toUTCString()
-  const authen = req.session.isAuthenticated ? "Authenticated" : "Non-Authenticated"
-  console.log(`[${time}]: ${req.method} ${req.originalUrl} ${authen} user`)
-  next()
-})
+//logging - uesless for now
+// app.use(async (req, res, next) => {
+//   const time = new Date().toUTCString()
+//   const authen = req.session.isAuthenticated ? "Authenticated" : "Non-Authenticated"
+//   console.log(`[${time}]: ${req.method} ${req.originalUrl} ${authen} user`)
+//   next()
+// })
 // exphbs.registerPartials(__dirname+'/views/partials')
 
 configRoutes(app);

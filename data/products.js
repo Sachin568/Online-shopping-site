@@ -1,6 +1,8 @@
 const mongoCollections = require('../config/mongoCollections');
 const products = mongoCollections.products;
 const ObjectId = require('mongodb').ObjectID;
+const users = require("./users")
+
 
 // untilities
 function checkStringInput(value, inputName, functionName) {
@@ -119,5 +121,24 @@ module.exports = {
     }
     console.log("remove successfully")
     return removedProduct
+  },
+
+  // TODO:check authentication
+  async addProductToCart(userId, productId) {
+    let user, product
+    try{
+      user = await users.getUserById(userId)
+      product = await this.getProductById(productId)
+    }catch{
+      throw `Ids not valid`
+    }
+    let updatedShoppingCart = user.shoppingCart
+    updatedShoppingCart.push(productId)
+    try {
+      users.patchUser(userId, { "shoppingCart": updatedShoppingCart })
+    } catch{
+      throw `unable to add product to cart.`
+    }
+    console.log(`Product ${product.name} has been added to user ${user.basicInfo.username}'s cart.`)
   }
 }
