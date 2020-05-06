@@ -30,11 +30,10 @@ app.use(
     name: 'AuthCookie',
     secret: "Operation Aegis",
     saveUninitialized: true,
-    resave: false,
-    isAuthenticated: false,
-    userID: undefined
+    resave: false
   })
 );
+
 //logging - uesless for now
 // app.use(async (req, res, next) => {
 //   const time = new Date().toUTCString()

@@ -4,7 +4,7 @@
 <div>
     <ul class="product_list">
         {{#each products}}
-        <li><a href="/products/{{this._id}}">{{this.name}}</a>  -  {{this.price}}<br />
+        <li><a href="/products/{{this._id}}">{{this.name}}</a> - {{this.price}}<br />
             {{this.description}}<br />
             <img src={{this.pic}} height="90" width="120">
         </li>
@@ -15,5 +15,5 @@
     </ul>
 </div>
 {{#if status}}
-<p>status: {{status}}</p>
+<p>status: {{status}} | userInfo:{{userInfo}}</p>
 {{/if}}

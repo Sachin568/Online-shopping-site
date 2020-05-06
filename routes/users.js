@@ -178,5 +178,9 @@ router.post("/", async (req, res) => {
         res.status(400).json({ message: "JSON provided does not match schema." })
     }
 });
+router.get("/logout", async (req, res) => {
+    req.session.destroy()
+    res.redirect("/mainpage")
+})
 
 module.exports = router;
