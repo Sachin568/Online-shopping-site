@@ -81,6 +81,14 @@ module.exports = {
     const product = await productCollection.findOne({ _id: ObjectId(id) });
     if (product === null) throw 'No product with that id';
 
+    const userComments = [];
+    const commentDBApi = require("./comments");
+    for(let commentId of product.comments){
+      userComments.push(await commentDBApi.getCommentById(commentId));
+    }
+
+    product.comments = userComments;
+
     return product;
   },
 

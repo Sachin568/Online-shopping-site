@@ -6,10 +6,11 @@ const prodData = data.products;
 router.get("/:id", async (req, res) => {
   let prodDetails
   try {
+    console.log(req.params.id);
     prodDetails = await prodData.getProductById(req.params.id);
-    console.log(prodDetails);
   } catch (e) {
     res.status(404).json({ error: e });
+    return;
   }
   console.log(prodDetails)
   res.status(200).render("pages/singleProduct", { prodDetails: prodDetails });

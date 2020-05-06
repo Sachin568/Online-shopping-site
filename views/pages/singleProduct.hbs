@@ -3,6 +3,12 @@
     <p>{{prodDetails.description}}</p>
     
     <img src="/{{prodDetails.pic}}" height="600" width="800" alt="imaging there is a pic">
+
+    <div>Comments : </div>
+    {{#each prodDetails.comments}}
+        <div>comment by : {{username}}</div>
+        <div>comment : {{comment}}</div>
+    {{/each}}
     <button id="purchase">Purchase</button>
     <button id="add-to-cart">Add to cart</button>
 </div>
