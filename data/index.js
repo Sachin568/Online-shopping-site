@@ -27,8 +27,8 @@ const main = async () => {
     let p1 = await productsData.addProduct("tea", "tea", 29.99, "make your friend fall asleep", "static/imgs/green-tea-pouring-cup.jpg")
     let p2 = await productsData.addProduct("lethargic tea", "tea", 49.99, "make your friend fall asleep in 3 seconds", "static/imgs/green-tea-pouring-cup.jpg")
     let p3 = await productsData.addProduct("lethargic tea 野獣先輩 limited edition", "tea", 114.514, "イキスギイクゥ！イクイクゥ！ンアッー！", "static/imgs/野兽先辈.jpg")
-    let c1 = await commentsData.addComment("wtf is this",u1._id,1)
-    let c2 = await commentsData.addComment("wtf is this???",u1._id,0.1)
+    let c1 = await commentsData.addComment(p1._id,u1._id,"wtf is this")
+    let c2 = await commentsData.addComment(p2._id,u1._id,"wtf is this???")
     let u11 = await usersData.getUserById(u1._id)
     console.log(u11)
 

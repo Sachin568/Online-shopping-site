@@ -7,6 +7,7 @@ router.get("/:id", async (req, res) => {
   let prodDetails
   try {
     prodDetails = await prodData.getProductById(req.params.id);
+    console.log(prodDetails);
   } catch (e) {
     res.status(404).json({ error: e });
   }

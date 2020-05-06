@@ -9,7 +9,7 @@ function checkStringInput(value, inputName, functionName) {
     if (typeof value == 'undefined') {
       throw `Warning[${functionName}]: '${inputName}' is missing.`
     }
-    else if (typeof value != 'string' || value === '') {
+    else if (typeof value != 'string') {
       throw `Warning[${functionName}]: String is expected for '${inputName}'. Get ${typeof value} instead.`
     }
   
@@ -20,7 +20,7 @@ function checkStringInput(value, inputName, functionName) {
     if (typeof value == 'undefined') {
       throw `Warning[${functionName}]: '${inputName}' is missing.`
     }
-    else if (typeof value != 'string' || typeof value != 'object') {
+    else if (typeof value != 'string' && typeof value != 'object') {
       throw `Warning[${functionName}]: String or ObjectId is expected for '${inputName}'. Got ${typeof value} instead.`
     }
 
@@ -30,31 +30,6 @@ function checkStringInput(value, inputName, functionName) {
     return value
   }
 
-  function checkNumberInput(value, inputName, functionName) {
-    if (typeof value == 'undefined') {
-      throw `Warning[${functionName}]: '${inputName}' is missing.`
-    }
-
-    const newComment = {
-      content: content,
-      userID: userID,
-      rating: rating
-    }
-    const commentsCollection = await comments();
-    const insertInfo = await commentsCollection.insertOne(newComment);
-    if (insertInfo.insertedCount === 0) throw 'Could not add comment.';
-    const newId = insertInfo.insertedId;
-    const comment = await this.getCommentById(newId);
-
-    let userReviews = user.reviews
-    userReviews.push(newId)
-    try {
-      users.patchUser(userID, { "reviews": userReviews })
-    } catch{
-      throw `unable to add comment.`
-    }
-    return value
-  }
 
 module.exports = {
   async addComment(productId,userId,comment){
@@ -71,17 +46,28 @@ module.exports = {
     if(!product)
       throw "Warning[addComment]: product not found with the given ID.";
 
-    const comment = {
-      username : user.username,
+    const newComment = {
+      username : user.basicInfo.username,
       comment : comment,
     }
 
     const commentsCollection = await comments();
-    const insertInfo = await commentsCollection.insertOne(newProduct);
+    const insertInfo = await commentsCollection.insertOne(newComment);
     if (insertInfo.insertedCount === 0) throw 'Warning[addComment]: Could not add Comment';
     const newCommentId = insertInfo.insertedId;
 
-    product.comment.add(newCommentId);
+    console.log(product.comments)
+    product.comments.push(newCommentId);
+
+    const products = require("../config/mongoCollections").products;
+    const productCollection = await products();
+    const updatedInfo = await productCollection.updateOne({ _id: productId }, { $set: product });
+    if (updatedInfo.modifiedCount === 0) {
+      throw 'Could not update product successfully.';
+    }
+    console.log("update successfully.")
+
+    return await productDBApi.getProductById(productId);
     //productDBApi.updateProduct()  TODO : AddComment to product
 
   },

@@ -44,7 +44,8 @@ module.exports = {
       category: category,
       price: price,
       description: description,
-      pic: pic
+      pic: pic,
+      comments : []
     };
 
     const insertInfo = await productCollection.insertOne(newProduct);
