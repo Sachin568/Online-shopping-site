@@ -1,45 +1,38 @@
 const mongoCollections = require('../config/mongoCollections');
 const comments = mongoCollections.comments;
-const users = require("./users")
-
+const userDBApi = require("./users");
+const productDBApi = require("./products");
 const ObjectId = require('mongodb').ObjectID;
 
 // untilities
 function checkStringInput(value, inputName, functionName) {
-  if (typeof value == 'undefined') {
-    throw `Warning[${functionName}]: '${inputName}' is missing.`
-  }
-  else if (typeof value != 'string') {
-    throw `Warning[${functionName}]: String is expected for '${inputName}'. Get ${typeof value} instead.`
+    if (typeof value == 'undefined') {
+      throw `Warning[${functionName}]: '${inputName}' is missing.`
+    }
+    else if (typeof value != 'string' || value === '') {
+      throw `Warning[${functionName}]: String is expected for '${inputName}'. Get ${typeof value} instead.`
+    }
+  
+    return value
   }
 
-  return value
-}
-function checkNumberInput(value, inputName, functionName) {
-  if (typeof value == 'undefined') {
-    throw `Warning[${functionName}]: '${inputName}' is missing.`
+  function checkDBIdInput(value, inputName, functionName) {
+    if (typeof value == 'undefined') {
+      throw `Warning[${functionName}]: '${inputName}' is missing.`
+    }
+    else if (typeof value != 'string' || typeof value != 'object') {
+      throw `Warning[${functionName}]: String or ObjectId is expected for '${inputName}'. Got ${typeof value} instead.`
+    }
+
+    if(typeof value != 'string')
+      value = ObjectId(value);
+  
+    return value
   }
-  else if (typeof value != 'number') {
-    throw `Warning[${functionName}]: Number is expected for '${inputName}'. Get ${typeof value} instead.`
-  }
-  else if (isNaN(value)) {
-    throw `Warning[${functionName}]: Number is expected for '${inputName}'. Get NaN instead.`
-  } else if (value < 0 | value > 5) {
-    throw `Warning[${functionName}]: '${inputName}' can not be negative or greater than 5.`
-  }
-  return value
-}
-module.exports = {
-  async addComment(content, userID, rating) {
-    checkStringInput(content, "content", "addComment")
-    checkNumberInput(rating, "rating", "addComment")
-    if (!userID) throw "must provide user Id to add comment."
-    // get user first then insert it into the user's comment field
-    let user
-    try {
-      user = await users.getUserById(ObjectId(userID))
-    } catch{
-      throw `Unable to fetch user ${userID}`
+
+  function checkNumberInput(value, inputName, functionName) {
+    if (typeof value == 'undefined') {
+      throw `Warning[${functionName}]: '${inputName}' is missing.`
     }
 
     const newComment = {
@@ -60,15 +53,58 @@ module.exports = {
     } catch{
       throw `unable to add comment.`
     }
-    console.log("Comment has been posted by user:", user.basicInfo.username)
-    return comment;
-  },
+    return value
+  }
 
-  async getCommentById(id) {
-    if (!id) throw 'You must provide an id to search for';
+module.exports = {
+  async addComment(productId,userId,comment){
+    productId = checkDBIdInput(productId,"productId","addComment");
+    userId = checkDBIdInput(userId,"userId","addComment");
+    checkStringInput(comment,"Comments","addComments");
+    
+    const user = await userDBApi.getUserById(userId);
+    const product = await productDBApi.getProductById(productId);
+
+    if(!user)
+      throw "Warning[addComment]: user not found with the given ID.";
+
+    if(!product)
+      throw "Warning[addComment]: product not found with the given ID.";
+
+    const comment = {
+      username : user.username,
+      comment : comment,
+    }
+
     const commentsCollection = await comments();
-    const comment = await commentsCollection.findOne({ _id: ObjectId(id) });
-    if (comment === null) throw 'No user with that id';
+    const insertInfo = await commentsCollection.insertOne(newProduct);
+    if (insertInfo.insertedCount === 0) throw 'Warning[addComment]: Could not add Comment';
+    const newCommentId = insertInfo.insertedId;
+
+    product.comment.add(newCommentId);
+    //productDBApi.updateProduct()  TODO : AddComment to product
+
+  },
+  async removeComment(commentId){
+    commentId = checkDBIdInput(commentId,"commentId","removeComment");
+
+    const commentsCollection = await comments();
+    const removedComment = await this.getCommentById(commentId)
+
+    const deletionInfo = await commentsCollection.removeOne({ _id:commentId });
+    if (deletionInfo.deletedCount === 0) {
+      throw `Could not delete comment with id of ${commentId}`;
+    }
+    console.log("remove successfully");
+    return removedComment;
+  },async getCommentById(commentId) {
+    commentId = checkDBIdInput(commentId,"commentId","removeComment");
+    const commentsCollection = await comments();
+
+    const comment = await commentsCollection.findOne({ _id: commentId});
+    if (!comment)  throw "Warning[getCommentById]: comment not found with the given ID.";
+
     return comment;
   }
+
 }
