@@ -56,7 +56,7 @@ module.exports = {
     let userReviews = user.reviews
     userReviews.push(newId)
     try {
-      users.patchUser(userID, { "reviews": userReviews })
+      await users.patchUser(userID, { "reviews": userReviews })
     } catch{
       throw `unable to add comment.`
     }

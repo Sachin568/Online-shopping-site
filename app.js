@@ -2,6 +2,7 @@ const express = require("express");
 const path = require("path")
 const exphbs = require("express-handlebars")
 const session = require('express-session')
+const cookieParser = require('cookie-parser')
 const configRoutes = require("./routes");
 
 
@@ -9,6 +10,7 @@ const app = express();
 app.use("/static", express.static(__dirname + "/public"))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json());
+app.use(cookieParser())
 //handling syntax error throwed by body-parser
 app.use(function (error, req, res, next) {
   if (error instanceof SyntaxError && error.status === 400 && 'body' in error) {
@@ -18,7 +20,7 @@ app.use(function (error, req, res, next) {
   }
 });
 app.engine("hbs", exphbs({
-  extname:'.hbs',
+  extname: '.hbs',
   defaultLayout: "main",
   layoutsDir: __dirname + '/views/layouts',
   partialsDir: __dirname + '/views/partials'
@@ -33,7 +35,14 @@ app.use(
     resave: false
   })
 );
-
+app.use(async (req, res, next) => {
+  // console.log("cookie",res.cookie('userInfo',))
+  // res.cookie('userInfo',"test")
+  if (req.session.userInfo) {
+    res.cookie('userInfo',req.session.userInfo)
+  }
+  next()
+})
 //logging - uesless for now
 // app.use(async (req, res, next) => {
 //   const time = new Date().toUTCString()

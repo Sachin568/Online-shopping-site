@@ -1,26 +1,13 @@
-$(document).ready(function () {
-    // alert(userInfo)
-    console.log(typeof (username), username)
-    if (username === "") {
-        $("#account").hide()
-        $("#shopping-cart").hide()
-        $("#log-out").hide()
-        $("#log-in").show()
-        $("#sign-up").show()
-    } else {
-        $("#account").show()
-        $("#shopping-cart").show()
-        $("#log-out").show()
-        $("#log-in").hide()
-        $("#sign-up").hide()
-    }
+$(document).ready(function (response) {
+    // console.log(document.cookie.split(';'))
+    checkStatus($.cookie("userInfo"))
 })
-$("search").click(function () {
+$("#search").click(function () {
     $.ajax({
         url: "/mainpage",
         type: "get",
         data: {
-            searchOn: $("#searchbar").val(),
+            searchOn: $("#searchbar").val()
         },
         success: function (response) {
             //Do Something
@@ -28,6 +15,26 @@ $("search").click(function () {
         error: function (xhr) {
             //Do Something to handle error
         }
+    });
+})
+$("#add-to-cart").click(function () {
+    console.log(productId)
+    $.ajax({
+        url: "/products/addCart",
+        type: "post",
+        data: {
+            ProductToCart: productId
+        },
+        success: function (response) {
+            console.log(response)
+            alert("product has been added to cart.")
+        },
+        error: function (xhr) {
+            alert(JSON.parse(xhr.responseText).errormessage)
+        },
+        // done: function (response,textStatus) {
+        //     console.log(response, textStatus)
+        // }
     });
 })
 $('#signupForm').submit((event) => {
@@ -39,22 +46,12 @@ $('#signupForm').submit((event) => {
         $('#errormessage').text("Password doesn't match!")
         $('#errormessage').show();
     } else {
-        // $.post($('#signupForm').attr('action'), $('#signupForm').serialize())
-        //     .done(function (response) {
-        //             window.location.replace = response.redirectURL;
-        //         // $.redirect('/mainpage', {});
-        //     })
-        //     .fail(function (jqXHR, textStatus, errorThrown) {
-        //         $('#errormessage').text(JSON.parse(jqXHR.responseText).errormessage);
-        //         // alert(jqXHR.responseText)
-        //         $('#errormessage').show();
-        //     });
         $.ajax({
             url: $('#signupForm').attr('action'),
             type: 'POST',
             data: $('#signupForm').serialize(),
             success: function (response) {
-                console.log(response.redirectURL)
+                // console.log(response.redirectURL)
                 window.location.href = response.redirectURL;
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -65,3 +62,21 @@ $('#signupForm').submit((event) => {
         });
     }
 });
+function checkStatus(userInfo) {
+    console.log(userInfo)
+    if (!userInfo) {
+        $("#account").hide()
+        $("#shopping-cart").hide()
+        $("#log-out").hide()
+        $("#log-in").show()
+        $("#sign-up").show()
+        $("#greeting-message").append(`guest`)
+    } else {
+        $("#account").show()
+        $("#shopping-cart").show()
+        $("#log-out").show()
+        $("#log-in").hide()
+        $("#sign-up").hide()
+        $("#greeting-message").append(`${userInfo}`)
+    }
+}

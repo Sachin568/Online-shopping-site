@@ -67,7 +67,7 @@ router.get("/signup", async (req, res) => {
     res.render("pages/signup", {
     })
 });
-//TODO:check if user already logged in
+//TODO:check if user already logged in: not possible
 router.post("/login", async (req, res) => {
     let username = req.body['username']
     let psw = req.body['psw']
@@ -85,7 +85,8 @@ router.post("/login", async (req, res) => {
     if (pswmatch) {
         console.log(`user ${username} logged in`)
         req.session.userInfo = username
-        req.session.isAuthenticated = true
+        // req.session.isAuthenticated = true
+        req.session.userId = user._id
         res.redirect("/mainpage")
         // res.redirect(url.format({
         //     pathname: "/mainpage",
@@ -123,10 +124,12 @@ router.post("/signup", async (req, res) => {
         return
     }
     console.log(`Registration successed.`)
+    req.session.userInfo = username
+    req.session.userId = user._id
     // res.status(200).render("pages/mainpage")
     res.send({ redirectURL: "/users/login" })
 });
-
+//TODO:update user info
 router.put("/:id", async (req, res) => {
     let user
     try {
@@ -148,7 +151,7 @@ router.put("/:id", async (req, res) => {
         res.status(400).json({ message: "Update failed. JSON provided does not match schema?" });
     }
 });
-
+//TODO:not used
 router.delete("/:id", async (req, res) => {
     let removedUser
     try {
@@ -167,7 +170,7 @@ router.delete("/:id", async (req, res) => {
         res.status(400).json({ message: "Can not remove user with that Id" })
     }
 });
-
+//TODO:not used
 router.post("/", async (req, res) => {
     try {
         const data = req.body;
@@ -180,6 +183,7 @@ router.post("/", async (req, res) => {
 });
 router.get("/logout", async (req, res) => {
     req.session.destroy()
+    res.clearCookie("userInfo")
     res.redirect("/mainpage")
 })
 

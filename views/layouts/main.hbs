@@ -9,17 +9,22 @@
 </head>
 
 <body>
-    {{> header}}
+        {{> header}}
     <main>
         {{{body}}}
     </main>
     <footer>
         {{> footer}}
     </footer>
-<script>let username = "{{userInfo}}"</script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src='../static/js/utilities.js'></script>
+    <script>
+        let username = "{{userInfo}}"
+        let productId = "{{prodDetails._id}}"
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="../static/js/jquery_cookie.js"></script>
+    <script src='../static/js/utilities.js'></script>
 
 
 </body>
+
 </html>

@@ -6,13 +6,7 @@
     <a href="" id="account">Account</a>
     <a href="" id="shopping-cart">Shopping Cart</a>
     <a href="/users/logout" id="log-out">Log out</a>
-    <div id="userInfo">
-        {{#if userInfo}}
-        hello, {{userInfo}}.
-        {{else}}
-        hello, guest.
-        {{/if}}
-    </div>
+    <div id="greeting-message"></div>
     <div class="search-container">
         <form>
             <input type="text" placeholder="Search.." name="search" id="searchbar">

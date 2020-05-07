@@ -4,8 +4,6 @@ const data = require("../data");
 
 const productsData = data.products;
 
-
-
 router.get("/", async (req, res) => {
     res.locals.metaTags = {
         title: "Mainpage"
@@ -21,11 +19,11 @@ router.get("/", async (req, res) => {
         status = `offer ${searchOn}`
     }
     console.log(`Returning products with name ${searchOn}`)
-    console.log(req.session)
-    res.render("pages/mainpage", {
-        userInfo: req.session.userInfo, products: offeredProducts,
+    // console.log(req.session)
+    res.status(200).render("pages/mainpage", {
+        products: offeredProducts,
         status: status
-    })
+    })//userInfo: req.session.userInfo,
 
 
 });

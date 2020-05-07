@@ -156,7 +156,7 @@ module.exports = {
     },
 
     async getUserById(id) {
-        if (!id) throw 'You must provide an id to search for';
+        if (!id|typeof(id)==='undefined') throw 'You must provide an id to search for';
         const usersCollection = await users();
         const user = await usersCollection.findOne({ _id: ObjectId(id) });
         if (user === null) throw 'No user with that id';
