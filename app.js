@@ -35,11 +35,14 @@ app.use(
     resave: false
   })
 );
+//TODO: implement "remember me" check box logic here
 app.use(async (req, res, next) => {
   // console.log("cookie",res.cookie('userInfo',))
   // res.cookie('userInfo',"test")
   if (req.session.userInfo) {
     res.cookie('userInfo',req.session.userInfo)
+  }else{
+    res.clearCookie("userInfo")
   }
   next()
 })

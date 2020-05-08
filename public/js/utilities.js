@@ -17,13 +17,17 @@ $("#search").click(function () {
         }
     });
 })
-$("#add-to-cart").click(function () {
-    console.log(productId)
+//add item into cart
+$("button").click(function () {
+    if (this.id.match(/add-to-cart-\d/)){
+    }
+    const productIdToAdd = $(`#${this.id}`).parent().attr("id")
+    console.log("adding",productIdToAdd,"to cart")
     $.ajax({
         url: "/products/addCart",
         type: "post",
         data: {
-            ProductToCart: productId
+            ProductToCart: productIdToAdd
         },
         success: function (response) {
             console.log(response)
@@ -36,6 +40,33 @@ $("#add-to-cart").click(function () {
         //     console.log(response, textStatus)
         // }
     });
+})
+// a stupid way to remove items in cart ahhhhhhhhhhh
+$("button").click(function () {
+    if (this.id.match(/remove-item-\d/)){
+        console.log(this.id)
+        const itemIdToRemove = $(`#${this.id}`).parent().attr("id")
+        console.log("removing",itemIdToRemove,"from cart")
+        console.log(itemIdToRemove)
+        $.ajax({
+            url: "/products/removeItemFromCart",
+            type: "post",
+            data: {            
+                ProductToRemove: itemIdToRemove
+            },
+            success: function (response) {
+                console.log(response)
+                location.reload(true);
+                // alert("product has been removed.")
+            },
+            error: function (xhr) {
+                alert(JSON.parse(xhr.responseText).errormessage)
+            },
+            // done: function (response,textStatus) {
+            //     console.log(response, textStatus)
+            // }
+        });
+    }
 })
 $('#signupForm').submit((event) => {
     event.preventDefault();

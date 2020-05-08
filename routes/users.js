@@ -4,6 +4,7 @@ const data = require("../data");
 const bcrypt = require("bcrypt");
 const url = require('url');
 const usersData = data.users;
+const productsData = data.products
 
 ObjectId = require('mongodb').ObjectID;
 
@@ -185,6 +186,30 @@ router.get("/logout", async (req, res) => {
     req.session.destroy()
     res.clearCookie("userInfo")
     res.redirect("/mainpage")
+})
+
+router.get("/shoppingcart", async (req, res) => {
+    console.log("user", req.session.userInfo, "is accessing shopping cart.")
+    console.log(req.session.userId)
+    let userId = req.session.userId
+    if (!userId | typeof (userId) === "undefined") {
+        res.redirect("/mainpage")
+    }
+    let user
+    try {
+        userShoppingCartIds = await usersData.getUserCart(userId)
+    } catch{
+        return
+    }
+    let userShoppingCart = []
+    let cartTotalValue = 0
+    for(let id of userShoppingCartIds){
+        let item = await productsData.getProductById(id)
+        userShoppingCart.push(item)
+        cartTotalValue += item.price
+        console.log(cartTotalValue,item.price)
+    }
+    res.status(200).render("pages/shoppingCart", { cartList: userShoppingCart, cartTotalValue: cartTotalValue })
 })
 
 module.exports = router;

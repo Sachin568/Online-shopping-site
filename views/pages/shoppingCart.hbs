@@ -1,0 +1,17 @@
+<div class="shopping-cart">
+    <ul>
+        {{#each cartList}}
+        <li id="{{this._id}}"><a href="/products/{{this._id}}">{{this.name}}</a> - {{this.price}}<br />
+            {{this.description}}<br />
+            <img src="/{{this.pic}}" height="90" width="120">
+            <button id="remove-item-{{@index}}">remove</button>
+        </li>
+        {{else}}
+        <p>No items in your cart.</p>
+        {{/each}}
+    </ul>
+</div>
+<div id="cart-summary">
+    <p>Total price: {{cartTotalValue}}</p>
+    <button id="check-out">remove</button>
+</div>

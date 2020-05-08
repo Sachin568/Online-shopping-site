@@ -29,6 +29,8 @@ const main = async () => {
     let p3 = await productsData.addProduct("lethargic tea 野獣先輩 limited edition", "tea", 114.514, "イキスギイクゥ！イクイクゥ！ンアッー！", "static/imgs/野兽先辈.jpg")
     let c1 = await commentsData.addComment("wtf is this",u1._id,1)
     let c2 = await commentsData.addComment("wtf is this???",u1._id,0.1)
+    await productsData.addProductToCart(u1._id,p1._id)
+    await productsData.addProductToCart(u1._id,p2._id)
     let u11 = await usersData.getUserById(u1._id)
     console.log(u11)
 

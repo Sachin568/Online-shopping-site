@@ -4,9 +4,10 @@
 <div>
     <ul class="product_list">
         {{#each products}}
-        <li><a href="/products/{{this._id}}">{{this.name}}</a> - {{this.price}}<br />
+        <li id="{{this._id}}"><a href="/products/{{this._id}}">{{this.name}}</a> - {{this.price}}<br />
             {{this.description}}<br />
             <img src={{this.pic}} height="90" width="120">
+            <button id="add-to-cart-{{@index}}">Add to cart</button>
         </li>
         {{else}}
         <p>No items match your criteria.</p>
