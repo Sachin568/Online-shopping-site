@@ -1,0 +1,24 @@
+<div class="order-history">
+    <h2>Order history</h2>
+    <ul>
+        {{#each orderHistory}}
+        <li id="{{this._id}}">order#{{this._id}} <br>
+            Total Value:{{this.value}} ----------- Placed at {{this.placedDate}}<br />
+            <ul>
+                {{#each this.products}}
+                <li>
+                    <a href="/products/{{this._id}}">{{this.name}}</a> - {{this.price}}
+                </li>
+                {{/each}}
+            </ul>
+            {{!-- <button id="remove-item-{{@index}}">remove</button> --}}
+            <hr>
+        </li>
+        {{else}}
+        <p>No order has been placed yet.</p>
+        {{/each}}
+    </ul>
+</div>
+<script>
+
+</script>

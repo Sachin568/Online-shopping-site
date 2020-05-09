@@ -7,17 +7,15 @@
             name="street" id="street" readonly="readonly">
 
         <label for="city">City</label>
-        <input type="text" placeholder={{#if userAddress.city}}{{userAddress.city}}{{else}}city{{/if}}
-            name="city" id="city" readonly="readonly">
+        <input type="text" placeholder={{#if userAddress.city}}{{userAddress.city}}{{else}}city{{/if}} name="city"
+            id="city" readonly="readonly">
 
         <label for="state">State</label>
-        <input type="text"
-            placeholder={{#if userAddress.state}}{{userAddress.state}}{{else}}state{{/if}} name="state"
+        <input type="text" placeholder={{#if userAddress.state}}{{userAddress.state}}{{else}}state{{/if}} name="state"
             id="state" readonly="readonly">
 
         <label for="zipCode">Zipcode</label>
-        <input type="text"
-            placeholder={{#if userAddress.zipCode}}{{userAddress.zipCode}}{{else}}zipCode{{/if}}
+        <input type="text" placeholder={{#if userAddress.zipCode}}{{userAddress.zipCode}}{{else}}zipCode{{/if}}
             name="zipCode" id="zipCode" readonly="readonly">
     </div>
     <div class="review-cart">
@@ -36,12 +34,12 @@
     </div>
     <div id="cart-summary">
         <p>Total price: {{cartTotalValue}}</p>
-        <form id="">
+        <form id="place-order" action="/users/orderplaced">
+            <button>Place your order</button>
         </form>
-        <button id="place-order">Place your order</button>
 
     </div>
 </div>
 <script type="text/javascript">
-    var address = {{{json userAddress}}}
+    var address = {{{ json userAddress }}}
 </script>

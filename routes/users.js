@@ -3,8 +3,10 @@ const router = express.Router();
 const data = require("../data");
 const bcrypt = require("bcrypt");
 const url = require('url');
+const ordersData = data.orders
 const usersData = data.users;
 const productsData = data.products
+// const ordersData = require("../data/orders")
 
 ObjectId = require('mongodb').ObjectID;
 
@@ -202,7 +204,7 @@ router.get("/account", async (req, res) => {
         return
     }
     delete user._id;
-    res.status(200).render("pages/account", { userDetails: user})
+    res.status(200).render("pages/account", { userDetails: user })
 })
 
 router.get("/shoppingcart", async (req, res) => {
@@ -254,8 +256,65 @@ router.get("/checkout", async (req, res) => {
         cartTotalValue += item.price
     }
     delete user._id
-    console.log(user)
-    res.status(200).render("pages/checkout", { userAddress: user.address,cartList: userShoppingCart, cartTotalValue: cartTotalValue })
+    res.status(200).render("pages/checkout", { userAddress: user.address, cartList: userShoppingCart, cartTotalValue: cartTotalValue })
+})
+
+router.get("/orderplaced", async (req, res) => {
+    console.log("user", req.session.userInfo, "is placing order.")
+    let userId = req.session.userId
+    if (!userId | typeof (userId) === "undefined") {
+        res.redirect("/mainpage")
+    }
+    let user
+    try {
+        user = await usersData.getUserById(userId)
+    } catch{
+        return
+    }
+    let userShoppingCartIds = user.shoppingCart
+    let newOrder
+    let orderTotalValue = 0
+    for (let id of userShoppingCartIds) {
+        let item = await productsData.getProductById(id)
+        orderTotalValue += item.price
+    }
+    try {
+        newOrder = await ordersData.addOrder(userId, userShoppingCartIds,orderTotalValue)
+    } catch (e) {
+        console.log(e)
+        throw `error occured when placing order.`
+    }
+    //TODO:clear cart
+    usersData.patchUser(userId, { "shoppingCart": [] })
+    res.status(200).render("pages/orderplaced")
+})
+
+router.get("/orderhistory", async (req, res) => {
+    console.log("user", req.session.userInfo, "is viewing order history.")
+    let userId = req.session.userId
+    if (!userId | typeof (userId) === "undefined") {
+        res.redirect("/mainpage")
+    }
+    let user
+    try {
+        user = await usersData.getUserById(userId)
+    } catch{
+        return
+    }
+    let userOrderHistory = user.orderHistory
+    let userDetailedOrderHistory = []
+    for (let id of userOrderHistory) {
+        let order = await ordersData.getOrdertById(id)
+        let ordreDetailedProducts = []
+        for (let productId of order.products){
+            let deteiledProduct = await productsData.getProductById(productId)
+            ordreDetailedProducts.push(deteiledProduct)
+        }
+        order.products = ordreDetailedProducts
+        userDetailedOrderHistory.push(order)
+    }
+    res.status(200).render("pages/orderhistory",{orderHistory:userDetailedOrderHistory})
+
 })
 
 module.exports = router;

@@ -67,16 +67,16 @@ module.exports = {
             },
             email: email, 
             address: {
-                state: "",
-                city: "",
-                street: "",
-                zipCode: ""
+                state: "1",
+                city: "2",
+                street: "3",
+                zipCode: "4"
             },
             password: hashedPassword,
             shoppingCart: [],
             wishList: [],
             reviews: [],
-            purchased: []
+            orderHistory: []
         }
 
         const insertInfo = await usersCollection.insertOne(newUser);

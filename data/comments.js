@@ -1,6 +1,6 @@
 const mongoCollections = require('../config/mongoCollections');
 const comments = mongoCollections.comments;
-const users = require("./users")
+const usersData = require("./users")
 
 const ObjectId = require('mongodb').ObjectID;
 
@@ -37,7 +37,7 @@ module.exports = {
     // get user first then insert it into the user's comment field
     let user
     try {
-      user = await users.getUserById(ObjectId(userID))
+      user = await usersData.getUserById(ObjectId(userID))
     } catch{
       throw `Unable to fetch user ${userID}`
     }
@@ -56,7 +56,7 @@ module.exports = {
     let userReviews = user.reviews
     userReviews.push(newId)
     try {
-      await users.patchUser(userID, { "reviews": userReviews })
+      await usersData.patchUser(userID, { "reviews": userReviews })
     } catch{
       throw `unable to add comment.`
     }

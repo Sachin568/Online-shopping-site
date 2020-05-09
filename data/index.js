@@ -44,5 +44,5 @@ module.exports = {
     products: productsData,
     comments: commentsData,
     category: categoryData,
-    order: ordersData
+    orders: ordersData
 };

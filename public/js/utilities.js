@@ -76,7 +76,7 @@ $("#check-out").submit(function (event) {
         return
     }
     $.ajax({
-        url: "/users/checkout",
+        url: "",///users/checkout
         type: "get",
         data: {
         },
@@ -89,7 +89,7 @@ $("#check-out").submit(function (event) {
         },
     });
 })
-$("#place-order").click(function (event) {
+$("#place-order").submit(function (event) {
     console.log(address)
     for (let attr in address){
         if (address[attr]==""){
@@ -98,9 +98,8 @@ $("#place-order").click(function (event) {
             return
         }
     }
-    return
     $.ajax({
-        url: "/users/checkout",
+        url: "",///users/orderplaced
         type: "get",
         data: {
         },
@@ -147,6 +146,7 @@ function checkStatus(userInfo) {
         $("#log-out").hide()
         $("#log-in").show()
         $("#sign-up").show()
+        $("#order-history").hide()
         $("#greeting-message").append(`guest`)
     } else {
         $("#account").show()
@@ -154,6 +154,7 @@ function checkStatus(userInfo) {
         $("#log-out").show()
         $("#log-in").hide()
         $("#sign-up").hide()
+        $("#order-history").show()
         $("#greeting-message").append(`${userInfo}`)
     }
 }
