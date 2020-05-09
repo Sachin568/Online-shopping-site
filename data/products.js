@@ -10,33 +10,47 @@ function checkStringInput(value, inputName, functionName) {
     throw `Warning[${functionName}]: '${inputName}' is missing.`
   }
   else if (typeof value != 'string') {
-    throw `Warning[${functionName}]: String is expected for '${inputName}'. Get ${typeof value} instead.`
+    throw `Warning[${functionName}]: String is expected for '${inputName}'. Got ${typeof value} instead.`
   }
-
   return value
 }
+
 function checkNumberInput(value, inputName, functionName) {
   if (typeof value == 'undefined') {
     throw `Warning[${functionName}]: '${inputName}' is missing.`
   }
   else if (typeof value != 'number') {
-    throw `Warning[${functionName}]: Number is expected for '${inputName}'. Get ${typeof value} instead.`
+    throw `Warning[${functionName}]: Number is expected for '${inputName}'. Got ${typeof value} instead.`
   }
   else if (isNaN(value)) {
-    throw `Warning[${functionName}]: Number is expected for '${inputName}'. Get NaN instead.`
-  } else if (value <= 0) {
+    throw `Warning[${functionName}]: Number is expected for '${inputName}'. Got NaN instead.`
+  } 
+  else if (value <= 0) {
     throw `Warning[${functionName}]: '${inputName}' can not be 0 or negative number.`
   }
   return value
 }
+
+function checkObjectInput(value, inputName, functionName) {
+  if (typeof value == 'undefined') {
+    throw `Warning[${functionName}]: '${inputName}' is missing.`
+  }
+  else if (typeof value != 'object') {
+    throw `Warning[${functionName}]: Object is expected for '${inputName}'. Got ${typeof value} instead.`
+  }
+  return value
+}
+
+
 module.exports = {
   async addProduct(name, category, price, description, pic) {
-    const inputs = [name, category, description]
-    const inputsname = ["name", "category", "description"]
+    const inputs = [name, category, pic]
+    const inputsname = ["name", "category", "pic"]
     for (i = 0; i < inputs.length; i++) {
       checkStringInput(inputs[i], inputsname[i], 'addProduct')
     }
     checkNumberInput(price, "price", "addProduct")
+    checkObjectInput(description, "description", "addProduct")
     const productCollection = await products();
 
     let newProduct = {
@@ -72,6 +86,7 @@ module.exports = {
       return products
     }
   },
+
   async getProductById(id) {
     if (!id) throw 'You must provide an id to search for';
 
@@ -85,13 +100,13 @@ module.exports = {
 
   async updateProduct(id, name, category, price, description, pic) {
     if (!id) throw 'You must provide an id to update product';
-    const inputs = [name, category, description]
-    const inputsname = ["name", "category", "description"]
+    const inputs = [name, category, pic]
+    const inputsname = ["name", "category", "pic"]
     for (i = 0; i < inputs.length; i++) {
       checkStringInput(inputs[i], inputsname[i], 'addProduct')
     }
     checkNumberInput(price, "price", "addProduct")
-
+    checkObjectInput(description, "description", "addProduct")
     const productCollection = await products();
     let newProduct = {
       name: name,
