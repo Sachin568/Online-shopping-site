@@ -1,4 +1,5 @@
 <div class="shopping-cart">
+    <h2>Shopping Cart</h2>
     <ul>
         {{#each cartList}}
         <li id="{{this._id}}"><a href="/products/{{this._id}}">{{this.name}}</a> - {{this.price}}<br />
@@ -13,5 +14,10 @@
 </div>
 <div id="cart-summary">
     <p>Total price: {{cartTotalValue}}</p>
-    <button id="check-out">remove</button>
+    <form id="check-out" action="/users/checkout">
+        <button>Check out</button>
+    </form>
 </div>
+<script>
+    let cartList = "{{cartList}}"
+</script>

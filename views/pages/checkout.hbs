@@ -1,0 +1,47 @@
+<div class="check-out-review">
+    <h2>Review your order</h2>
+    <div class="address login_form container">
+        <h3>Confirm your shipping address:</h3>
+        <label for="street">Street</label>
+        <input type="text" placeholder={{#if userAddress.street}}{{userAddress.street}}{{else}}street{{/if}}
+            name="street" id="street" readonly="readonly">
+
+        <label for="city">City</label>
+        <input type="text" placeholder={{#if userAddress.city}}{{userAddress.city}}{{else}}city{{/if}}
+            name="city" id="city" readonly="readonly">
+
+        <label for="state">State</label>
+        <input type="text"
+            placeholder={{#if userAddress.state}}{{userAddress.state}}{{else}}state{{/if}} name="state"
+            id="state" readonly="readonly">
+
+        <label for="zipCode">Zipcode</label>
+        <input type="text"
+            placeholder={{#if userAddress.zipCode}}{{userAddress.zipCode}}{{else}}zipCode{{/if}}
+            name="zipCode" id="zipCode" readonly="readonly">
+    </div>
+    <div class="review-cart">
+        <h3>Review your cart:</h3>
+        <ul>
+            {{#each cartList}}
+            <li id="{{this._id}}"><a href="/products/{{this._id}}">{{this.name}}</a> - {{this.price}}<br />
+                {{this.description}}<br />
+                <img src="/{{this.pic}}" height="90" width="120">
+                <button id="remove-item-{{@index}}">remove</button>
+            </li>
+            {{else}}
+            <p>No items in your cart.</p>
+            {{/each}}
+        </ul>
+    </div>
+    <div id="cart-summary">
+        <p>Total price: {{cartTotalValue}}</p>
+        <form id="">
+        </form>
+        <button id="place-order">Place your order</button>
+
+    </div>
+</div>
+<script type="text/javascript">
+    var address = {{{json userAddress}}}
+</script>

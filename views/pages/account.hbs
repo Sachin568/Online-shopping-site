@@ -1,0 +1,60 @@
+<form action="" method="post" id="accountForm" class="login_form">
+    <div id="errormessage" hidden></div>
+    <div class="container">
+        <h2>Account Info</h2>
+        <hr>
+        <h3>This is your personal info:</h3>
+        <div class="basic-info">
+            <label for="username">User Name (you cannot change your username)</label>
+            <input type="text" placeholder={{userDetails.basicInfo.username}} name="username" readonly="readonly">
+
+            <label for="birthdate">birthdate (you cannot change your birthday)</label>
+            <input type="text" placeholder={{userDetails.basicInfo.birthdate}} name="birthdate" readonly="readonly">
+
+            <label for="email">Email</label>
+            <input type="text" placeholder={{userDetails.email}} name="email" id="email" required>
+
+        </div>
+        <hr>
+        <h3>This is your shipping address:</h3>
+        <div class="address">
+            <label for="street">Street</label>
+            <input type="text"
+                placeholder={{#if userDetails.address.street}}{{userDetails.address.street}}{{else}}street{{/if}}
+                name="street" id="street">
+
+            <label for="city">City</label>
+            <input type="text"
+                placeholder={{#if userDetails.address.city}}{{userDetails.address.city}}{{else}}city{{/if}} name="city"
+                id="city">
+
+            <label for="state">State</label>
+            <input type="text"
+                placeholder={{#if userDetails.address.state}}{{userDetails.address.state}}{{else}}state{{/if}}
+                name="state" id="state">
+
+            <label for="zipCode">Zipcode</label>
+            <input type="text"
+                placeholder={{#if userDetails.address.zipCode}}{{userDetails.address.zipCode}}{{else}}zipCode{{/if}}
+                name="zipCode" id="zipCode">
+
+        </div>
+        <hr>
+        <h3>Wanna change your password?</h3>
+        <div class="">
+            <label for="psw"><b> Old password</b></label>
+            <input type="password" placeholder="Enter your old Password" name="psw" id="psw" required>
+
+            <label for="psw"><b> New password</b></label>
+            <input type="password" placeholder="Enter new Password" name="psw" id="psw" required>
+
+            <label for="psw-repeat"><b>Repeat new Password</b></label>
+            <input type="password" placeholder="Repeat new Password" name="psw-repeat" id="psw-repeat" required>
+        </div>
+        <hr>
+        <div class="button-group">
+            <button type="submit" class="signupbtn">Update</button>
+            <button type="button" class="cancelbtn" onclick="location.href='/mainpage'">Cancel</button>
+        </div>
+    </div>
+</form>

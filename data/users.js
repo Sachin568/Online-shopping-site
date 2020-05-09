@@ -65,13 +65,7 @@ module.exports = {
                 username: basicInfo.username,
                 birthdate: basicInfo.birthdate,
             },
-            email: email,
-            // address: {
-            //     state: address.state,
-            //     city: address.city,
-            //     street: address.street,
-            //     zipCode: address.zipCode
-            // },
+            email: email, 
             address: {
                 state: "",
                 city: "",

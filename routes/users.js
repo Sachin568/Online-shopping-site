@@ -188,8 +188,8 @@ router.get("/logout", async (req, res) => {
     res.redirect("/mainpage")
 })
 
-router.get("/shoppingcart", async (req, res) => {
-    console.log("user", req.session.userInfo, "is accessing shopping cart.")
+router.get("/account", async (req, res) => {
+    console.log("user", req.session.userInfo, "is accessing account page.")
     console.log(req.session.userId)
     let userId = req.session.userId
     if (!userId | typeof (userId) === "undefined") {
@@ -197,19 +197,65 @@ router.get("/shoppingcart", async (req, res) => {
     }
     let user
     try {
+        user = await usersData.getUserById(userId)
+    } catch{
+        return
+    }
+    delete user._id;
+    res.status(200).render("pages/account", { userDetails: user})
+})
+
+router.get("/shoppingcart", async (req, res) => {
+    console.log("user", req.session.userInfo, "is accessing shopping cart.")
+    console.log(req.session.userId)
+    let userId = req.session.userId
+    if (!userId | typeof (userId) === "undefined") {
+        res.redirect("/mainpage")
+    }
+    let userShoppingCartIds
+    try {
         userShoppingCartIds = await usersData.getUserCart(userId)
     } catch{
         return
     }
     let userShoppingCart = []
     let cartTotalValue = 0
-    for(let id of userShoppingCartIds){
+    for (let id of userShoppingCartIds) {
         let item = await productsData.getProductById(id)
         userShoppingCart.push(item)
         cartTotalValue += item.price
-        console.log(cartTotalValue,item.price)
     }
     res.status(200).render("pages/shoppingCart", { cartList: userShoppingCart, cartTotalValue: cartTotalValue })
+})
+
+router.get("/checkout", async (req, res) => {
+    console.log("user", req.session.userInfo, "is checking out.")
+    let userId = req.session.userId
+    if (!userId | typeof (userId) === "undefined") {
+        res.redirect("/mainpage")
+    }
+    let user
+    try {
+        user = await usersData.getUserById(userId)
+    } catch{
+        return
+    }
+    let userShoppingCartIds = user.shoppingCart
+    // if (typeof userShoppingCartIds == 'undefined' | userShoppingCartIds.length == 0) {
+    //     console.log("error occurred when checking out.")
+    //     // res.status(400).json({ errormessage: "Your cart is empty" })
+    //     return
+    // }
+    let userShoppingCart = []
+    let cartTotalValue = 0
+    for (let id of userShoppingCartIds) {
+        let item = await productsData.getProductById(id)
+        userShoppingCart.push(item)
+        cartTotalValue += item.price
+    }
+    delete user._id
+    console.log(user)
+    res.status(200).render("pages/checkout", { userAddress: user.address,cartList: userShoppingCart, cartTotalValue: cartTotalValue })
 })
 
 module.exports = router;

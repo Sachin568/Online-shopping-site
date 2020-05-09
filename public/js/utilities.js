@@ -19,39 +19,40 @@ $("#search").click(function () {
 })
 //add item into cart
 $("button").click(function () {
-    if (this.id.match(/add-to-cart-\d/)){
+    if (this.id.match(/add-to-cart-\d/)) {
+        const productIdToAdd = $(`#${this.id}`).parent().attr("id")
+        console.log("adding", productIdToAdd, "to cart")
+        $.ajax({
+            url: "/products/addCart",
+            type: "post",
+            data: {
+                ProductToCart: productIdToAdd
+            },
+            success: function (response) {
+                console.log(response)
+                alert("product has been added to cart.")
+            },
+            error: function (xhr) {
+                alert(JSON.parse(xhr.responseText).errormessage)
+            },
+            // done: function (response,textStatus) {
+            //     console.log(response, textStatus)
+            // }
+        });
     }
-    const productIdToAdd = $(`#${this.id}`).parent().attr("id")
-    console.log("adding",productIdToAdd,"to cart")
-    $.ajax({
-        url: "/products/addCart",
-        type: "post",
-        data: {
-            ProductToCart: productIdToAdd
-        },
-        success: function (response) {
-            console.log(response)
-            alert("product has been added to cart.")
-        },
-        error: function (xhr) {
-            alert(JSON.parse(xhr.responseText).errormessage)
-        },
-        // done: function (response,textStatus) {
-        //     console.log(response, textStatus)
-        // }
-    });
+
 })
 // a stupid way to remove items in cart ahhhhhhhhhhh
 $("button").click(function () {
-    if (this.id.match(/remove-item-\d/)){
+    if (this.id.match(/remove-item-\d/)) {
         console.log(this.id)
         const itemIdToRemove = $(`#${this.id}`).parent().attr("id")
-        console.log("removing",itemIdToRemove,"from cart")
+        console.log("removing", itemIdToRemove, "from cart")
         console.log(itemIdToRemove)
         $.ajax({
             url: "/products/removeItemFromCart",
             type: "post",
-            data: {            
+            data: {
                 ProductToRemove: itemIdToRemove
             },
             success: function (response) {
@@ -68,6 +69,51 @@ $("button").click(function () {
         });
     }
 })
+$("#check-out").submit(function (event) {
+    if(cartList.length==0){
+        alert("Your cart is empty.")
+        event.preventDefault(event);
+        return
+    }
+    $.ajax({
+        url: "/users/checkout",
+        type: "get",
+        data: {
+        },
+        success: function (response) {
+            console.log(response)
+            // window.location.href = response.redirectURL
+        },
+        error: function (xhr) {
+            alert(JSON.parse(xhr.responseText).errormessage)
+        },
+    });
+})
+$("#place-order").click(function (event) {
+    console.log(address)
+    for (let attr in address){
+        if (address[attr]==""){
+            console.log(address[attr])
+            alert("please go to the account page to complete your shipping address.")
+            return
+        }
+    }
+    return
+    $.ajax({
+        url: "/users/checkout",
+        type: "get",
+        data: {
+        },
+        success: function (response) {
+            console.log(response)
+            // window.location.href = response.redirectURL
+        },
+        error: function (xhr) {
+            alert(JSON.parse(xhr.responseText).errormessage)
+        },
+    });
+})
+
 $('#signupForm').submit((event) => {
     event.preventDefault();
     $('#errormessage').hide();
