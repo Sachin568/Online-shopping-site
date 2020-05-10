@@ -1,17 +1,32 @@
 <div>
-    <h2> title here </h2>
+    <h2 class="header_text"> Happy shopping! </h2>
+    <br/>
 </div>
-<div>
-    <ul class="product_list">
+
+<div class="container-fluid">
+    <div class="row">
         {{#each products}}
-        <li id="{{this._id}}"><a href="/products/{{this._id}}">{{this.name}}</a> - {{this.price}}<br />
-            {{this.description}}<br />
-            <img src={{this.pic}} height="90" width="120">
-            <button id="add-to-cart-{{@index}}">Add to cart</button>
-        </li>
+        <div class="col-md-3" id="{{this._id}}">
+            <figure class="card card-product">
+                <div class="img-wrap"><img src={{this.pic}}></div>
+                <figcaption class="info-wrap">
+                        {{!-- <h4 class="title">{{this.name}}</h4> --}}
+                        <h4 class="title"> <a class="each_product_title" href="/products/{{this._id}}">{{this.name}}</a> </h4>
+                        <p class="desc">{{this.category}}</p>
+                        <div class="rating-wrap">
+                            <div class="label-rating"></div>
+                        </div> <!-- rating-wrap.// -->
+                </figcaption>
+                <div class="bottom-wrap">
+                    <a href="" class="btn btn-sm btn-primary float-right" id="add-to-cart-{{@index}}">Add to cart</a>	
+                    <div class="price-wrap h5">
+                        <span class="price-new">${{this.price}}.00</span>
+                    </div> <!-- price-wrap.// -->
+                </div> <!-- bottom-wrap.// -->
+            </figure>
+        </div>
         {{else}}
-        <p>No items match your criteria.</p>
+            <p>No items match your criteria.</p>
         {{/each}}
-        {{!-- <li>items here</li> --}}
-    </ul>
+    </div>
 </div>

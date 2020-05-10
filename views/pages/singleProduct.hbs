@@ -1,8 +1,71 @@
-<div class="single-product" id="{{prodDetails._id}}">
-    <h2>{{prodDetails.name}}</h2>
-    <p>{{prodDetails.description}}</p>
-    
-    <img src="/{{prodDetails.pic}}" height="600" width="800" alt="imaging there is a pic">
-    <button id="purchase">Purchase</button>
-    <button id="add-to-cart-0">Add to cart</button>
+
+<div class="container">
+	
+<div class="card">
+	<div class="row">
+		<aside class="col-sm-5 border-right">
+<article class="gallery-wrap"> 
+<div class="img-big-wrap">
+  <div> <a href="#"><img class="img-fluid w-100" src="{{prodDetails.pic}}"></a></div>
+</div> <!-- slider-product.// -->
+</article> <!-- gallery-wrap .end// -->
+		</aside>
+		<aside class="col-sm-7">
+<article class="card-body p-5">
+	<h3 class="title mb-3">{{prodDetails.name}}</h3>
+
+<p class="price-detail-wrap"> 
+	<span class="price h3 text-warning"> 
+		<span class="currency">US ${{prodDetails.price}}
+	</span> 
+</p> <!-- price-detail-wrap .// -->
+  <h4><dt>Description</dt></h4>
+<dl class="item-property card">
+  <dt>Rating</dt>
+  {{prodDetails.description.rating}}
+  <dt>Quantity</dt>
+  {{prodDetails.description.quantity}}
+  <dt>Energy-kcal_100g</dt>
+  {{prodDetails.description.energy-kcal_100g}}
+  <dt>Energy_100g</dt>
+  {{prodDetails.description.energy_100g}}
+  <dt>Fat_100g</dt>
+  {{prodDetails.description.fat_100g}}
+  <dt>Saturated-fat_100g</dt>
+  {{prodDetails.description.saturated-fat_100g}}
+</dl>
+
+<dl class="param param-feature">
+  <dt>Delivery</dt>
+  <dd>Russia, USA, and Europe</dd>
+</dl>  <!-- item-property-hor .// -->
+
+<hr>
+	<div class="row">
+		<div class="col-sm-5">
+			<dl class="param param-inline">
+			  <dt>Quantity: </dt>
+			  <dd>
+			  	<select class="form-control form-control-sm" style="width:70px;">
+			  		<option> 1 </option>
+			  		<option> 2 </option>
+			  		<option> 3 </option>
+			  	</select>
+			  </dd>
+			</dl>  <!-- item-property .// -->
+		</div> <!-- col.// -->
+	</div> <!-- row.// -->
+	<hr>
+	<a href="#" class="btn btn-lg btn-primary text-uppercase"> Buy now </a>
+	<a href="#" class="btn btn-lg btn-outline-primary text-uppercase"> <i class="fas fa-shopping-cart"></i> Add to cart </a>
+</article> <!-- card-body.// -->
+		</aside> <!-- col.// -->
+	</div> <!-- row.// -->
+</div> <!-- card.// -->
+
+
 </div>
+<!--container.//-->
+
+
+<br><br><br>
