@@ -89,7 +89,7 @@ router.post("/login", async (req, res) => {
         console.log(`user ${username} logged in`)
         req.session.userInfo = username
         // req.session.isAuthenticated = true
-        req.session.userId = user._id
+        req.session.userId = String(user._id)
         res.status(200).send({ redirectURL: "/mainpage" })
         // res.redirect("/mainpage")
         // res.redirect(url.format({
@@ -193,20 +193,46 @@ router.get("/logout", async (req, res) => {
 //view user info and making changes here
 router.get("/account", async (req, res) => {
     console.log("user", req.session.userInfo, "is accessing account page.")
-    console.log(req.session.userId)
     let userId = req.session.userId
-    if (!userId | typeof (userId) === "undefined") {
-        res.redirect("/mainpage")
-    }
     let user
     try {
         user = await usersData.getUserById(userId)
     } catch{
-        return
+        throw "wtf is happening"
     }
     delete user._id;
     res.status(200).render("pages/account", { userDetails: user })
 })
+//update user info here
+router.post("/account", async (req, res) => {
+    console.log("user", req.session.userInfo, "is making changes to the info.")
+    console.log(req.body)
+    const userId = req.session.userId
+    const newEmail = req.body['email']
+    const newStreet = req.body['street']
+    const newCity = req.body['city']
+    const newState = req.body['state']
+    const newZipCode = req.body['zipCode']
+    let newAddress = {
+        state: newState,
+        city: newCity,
+        street: newStreet,
+        zipCode: newZipCode
+    }
+
+    let updatedUser
+    try {
+        updatedUser = await usersData.updateUser(userId, newEmail, newAddress)
+    } catch (e) {
+        res.status(400).send({ errormessage: e })
+        return
+    }
+    console.log(updatedUser)
+
+    delete updatedUser._id;
+    res.status(200).send({redirectURL:"/users/account",message:"Your info have been updated." })
+})
+
 //change psw here
 router.get("/pswchange", async (req, res) => {
     console.log("user", req.session.userInfo, "is accessing psw changing page.")
@@ -218,7 +244,7 @@ router.post("/pswchange", async (req, res) => {
     const newPsw = req.body['new-psw']
     // if (!req.session.userId) res.redirect("/mainpage")
     console.log("user", req.session.userInfo, "is trying to change psw.")
-    console.log(oldPsw,newPsw)
+    console.log(oldPsw, newPsw)
     let user
     try {
         user = await usersData.getUserById(req.session.userId)
@@ -226,7 +252,7 @@ router.post("/pswchange", async (req, res) => {
         throw "no user found"
     }
     try {
-        const mtp = await usersData.updateUserPsw(req.session.userId,oldPsw,newPsw)
+        const mtp = await usersData.updateUserPsw(req.session.userId, oldPsw, newPsw)
     } catch (e) {
         res.status(400).send({ errormessage: e })
         return

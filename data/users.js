@@ -60,8 +60,6 @@ module.exports = {
         let hashedPassword = await bcrypt.hash(password, saltRounds);
         let newUser = {
             basicInfo: {
-                lastName: "",
-                firstName: "",
                 username: basicInfo.username,
                 birthdate: basicInfo.birthdate,
             },
@@ -86,6 +84,7 @@ module.exports = {
         console.log("User has been added:", user)
         return user;
     },
+    // not used
     async removeUser(id) {
         if (!id) throw 'You must provide an id to delete user';
 
@@ -99,41 +98,38 @@ module.exports = {
         return removedUser
     },
     //TODO: need polish
-    async updateUser(id, basicInfo, email, address) {
-        // won't affect shopping carts and stuff like that
+    async updateUser(id, newEmail, newAddress) {
         if (!id) throw 'You must provide an id to update user';
-        checkObjectAtrributes(basicInfo, ["lastName", "firstName", "username", "birthdate"])
-        if (!basicInfo) throw "Basic info is missing."
-        checkObjectAtrributes(address, ["state", "city", "street", "zipCode"])
-        if (!address) throw "Address is missing."
-        const inputs = [email]
-        const inputsname = ["email"]
-        for (i = 0; i < inputs.length; i++) {
-            checkStringInput(inputs[i], inputsname[i], 'addUser')
-        }
+        // checkObjectAtrributes(newAddress, ["state", "city", "street", "zipCode"])
+        if (!newAddress) throw "Address is missing."
+        // const inputs = [newEmail]
+        // const inputsname = ["newEmail"]
+        // for (i = 0; i < inputs.length; i++) {
+        //     checkStringInput(inputs[i], inputsname[i], 'updateUser')
+        // }
+        //check if there is already user with that email
         const usersCollection = await users();
-
-        let newUser = {
-            basicInfo: {
-                lastName: basicInfo.lastName,
-                firstName: basicInfo.firstName,
-                birthdate: basicInfo.birthdate,
-                username: basicInfo.username
-            },
-            email: email,
-            address: {
-                state: address.state,
-                city: address.city,
-                street: address.street,
-                zipCode: address.zipCode
+        const checkEmailExist = await usersCollection.findOne({ "email": newEmail })
+        if (checkEmailExist) {
+            if (String(checkEmailExist._id) != id) {
+                throw `User already exists with that email ${newEmail}`
             }
         }
-
-        const updatedInfo = await usersCollection.updateOne({ _id: id }, { $set: newUser });
-        if (updatedInfo.modifiedCount === 0) {
-            throw 'Could not update user successfully.';
+        //username and birthday are not supposed to be modified
+        let updatedUser = {
+            "email": newEmail,
+            "address": {
+                state: newAddress.state,
+                city: newAddress.city,
+                street: newAddress.street,
+                zipCode: newAddress.zipCode
+            }
         }
-
+        console.log("updating", updatedUser)
+        const updatedInfo = await usersCollection.updateOne({ _id: ObjectId(id) }, { $set: updatedUser });
+        if (updatedInfo.modifiedCount === 0) {
+            throw 'Could not update user successfully.(nothing changed?)';
+        }
         return await this.getUserById(id);
     },
     async patchUser(id, patchObject) {

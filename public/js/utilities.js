@@ -176,6 +176,24 @@ $("#psw-change").submit((event) => {
         });
     }
 })
+
+$("#account-update-form").submit((event) => {
+    event.preventDefault();
+    console.log($('#account-update-form').serialize())
+    $.ajax({
+        url: $('#account-update-form').attr('action'),
+        type: 'POST',
+        data: $('#account-update-form').serialize(),
+        success: function (response) {
+            // console.log(response.redirectURL)
+            alert(response.message)
+            window.location.href = response.redirectURL;
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            alert(JSON.parse(jqXHR.responseText).errormessage)
+        }
+    });
+})
 function checkStatus(userInfo) {
     console.log(userInfo)
     if (!userInfo) {
