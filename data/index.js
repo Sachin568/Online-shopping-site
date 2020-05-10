@@ -15,7 +15,7 @@ const dbConnection = require('../config/mongoConnection');
 //test cases
 const main = async () => {
     const db = await dbConnection();
-    await db.dropDatabase();
+    // await db.dropDatabase();
 
     let basicInfo = {
         username: "DIO",
@@ -24,13 +24,13 @@ const main = async () => {
     let email = "123@123.com"
 
     let u1 = await usersData.addUser(basicInfo, email, "wry")
-    let p1 = await productsData.addProduct("tea", "tea", 29.99, "make your friend fall asleep", "static/imgs/green-tea-pouring-cup.jpg")
-    let p2 = await productsData.addProduct("lethargic tea", "tea", 49.99, "make your friend fall asleep in 3 seconds", "static/imgs/green-tea-pouring-cup.jpg")
-    let p3 = await productsData.addProduct("lethargic tea 野獣先輩 limited edition", "tea", 114.514, "イキスギイクゥ！イクイクゥ！ンアッー！", "static/imgs/野兽先辈.jpg")
-    let c1 = await commentsData.addComment("wtf is this",u1._id,1)
-    let c2 = await commentsData.addComment("wtf is this???",u1._id,0.1)
-    await productsData.addProductToCart(u1._id,p1._id)
-    await productsData.addProductToCart(u1._id,p2._id)
+    // let p1 = await productsData.addProduct("tea", "tea", 29.99, "make your friend fall asleep", "static/imgs/green-tea-pouring-cup.jpg")
+    // let p2 = await productsData.addProduct("lethargic tea", "tea", 49.99, "make your friend fall asleep in 3 seconds", "static/imgs/green-tea-pouring-cup.jpg")
+    // let p3 = await productsData.addProduct("lethargic tea 野獣先輩 limited edition", "tea", 114.514, "イキスギイクゥ！イクイクゥ！ンアッー！", "static/imgs/野兽先辈.jpg")
+    // let c1 = await commentsData.addComment("wtf is this",u1._id,1)
+    // let c2 = await commentsData.addComment("wtf is this???",u1._id,0.1)
+    // await productsData.addProductToCart(u1._id,p1._id)
+    // await productsData.addProductToCart(u1._id,p2._id)
     let u11 = await usersData.getUserById(u1._id)
     console.log(u11)
 
