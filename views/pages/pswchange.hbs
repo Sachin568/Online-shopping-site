@@ -1,0 +1,16 @@
+<form action="/users/pswchange" id="psw-change" class="login_form">
+    <div class="container">
+        <label for="old-psw"><b> Old password</b></label>
+        <input type="password" placeholder="Enter your old Password" name="old-psw" id="old-psw" required>
+
+        <label for="new-psw"><b> New password</b></label>
+        <input type="password" placeholder="Enter new Password" name="new-psw" id="new-psw" required>
+
+        <label for="new-psw-repeat"><b>Repeat new Password</b></label>
+        <input type="password" placeholder="Repeat new Password" name="new-psw-repeat" id="new-psw-repeat" required>
+    </div>
+    <div class="button-group container">
+        <button type="submit" class="signupbtn">Update</button>
+        <button type="button" class="cancelbtn" onclick="location.href='/mainpage'">Cancel</button>
+    </div>
+</form>

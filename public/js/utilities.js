@@ -70,7 +70,7 @@ $("button").click(function () {
     }
 })
 $("#check-out").submit(function (event) {
-    if(cartList.length==0){
+    if (cartList.length == 0) {
         alert("Your cart is empty.")
         event.preventDefault(event);
         return
@@ -91,8 +91,8 @@ $("#check-out").submit(function (event) {
 })
 $("#place-order").submit(function (event) {
     console.log(address)
-    for (let attr in address){
-        if (address[attr]==""){
+    for (let attr in address) {
+        if (address[attr] == "") {
             console.log(address[attr])
             alert("please go to the account page to complete your shipping address.")
             return
@@ -113,6 +113,23 @@ $("#place-order").submit(function (event) {
     });
 })
 
+$('#login-form').submit((event) => {
+    event.preventDefault();
+    console.log($('#psw').val())
+    // console.log($('#signupForm').serialize())
+    $.ajax({
+        url: $('#login-form').attr('action'),
+        type: 'POST',
+        data: $('#login-form').serialize(),
+        success: function (response) {
+            console.log(response.redirectURL)
+            window.location.href = response.redirectURL;
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            alert(JSON.parse(jqXHR.responseText).errormessage)
+        }
+    });
+})
 $('#signupForm').submit((event) => {
     event.preventDefault();
     $('#errormessage').hide();
@@ -127,17 +144,38 @@ $('#signupForm').submit((event) => {
             type: 'POST',
             data: $('#signupForm').serialize(),
             success: function (response) {
-                // console.log(response.redirectURL)
                 window.location.href = response.redirectURL;
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                $('#errormessage').text(JSON.parse(jqXHR.responseText).errormessage);
-                // alert(jqXHR.responseText)
-                $('#errormessage').show();
+                alert(JSON.parse(jqXHR.responseText).errormessage)
             }
         });
     }
 });
+
+$("#psw-change").submit((event) => {
+    event.preventDefault();
+    console.log($('#psw-change').attr('action'))
+    console.log($('#new-psw-repeat').val(), $('#new-psw').val())
+    // console.log($('#signupForm').serialize())
+    if ($('#new-psw-repeat').val() != $('#new-psw').val()) {
+        alert("repeat paasword doesn't match");
+    } else {
+        $.ajax({
+            url: $('#psw-change').attr('action'),
+            type: 'POST',
+            data: $('#psw-change').serialize(),
+            success: function (response) {
+                console.log(response.redirectURL)
+                alert(response.message)
+                window.location.href = response.redirectURL;
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert(JSON.parse(jqXHR.responseText).errormessage)
+            }
+        });
+    }
+})
 function checkStatus(userInfo) {
     console.log(userInfo)
     if (!userInfo) {

@@ -47,12 +47,12 @@ module.exports = {
         }
         const usersCollection = await users();
         email = email.toLowerCase()
-        const checkEmailExist = await usersCollection.findOne({ email: email })
+        const checkEmailExist = await usersCollection.findOne({ "email": email })
         if (checkEmailExist) {
             throw `User already exists with that email ${email}`
         }
         basicInfo.username = basicInfo.username.toLowerCase()
-        const checkUsernameExist = await usersCollection.findOne({ username: basicInfo.username })
+        const checkUsernameExist = await usersCollection.findOne({ "basicInfo.username": basicInfo.username })
         if (checkUsernameExist) {
             throw `User already exists with that username ${basicInfo.username}`
         }
@@ -65,7 +65,7 @@ module.exports = {
                 username: basicInfo.username,
                 birthdate: basicInfo.birthdate,
             },
-            email: email, 
+            email: email,
             address: {
                 state: "1",
                 city: "2",
@@ -143,14 +143,15 @@ module.exports = {
         const updatedInfo = await usersCollection.updateOne({ _id: ObjectId(id) }, { $set: patchObject });
         if (updatedInfo.modifiedCount === 0) {
             // nothing changed would cause failure
-            throw 'could not update band successfully. Nothing changed?';
+            // throw 'could not update band successfully. Nothing changed?';
+            return null
         }
 
         return await this.getUserById(id);
     },
 
     async getUserById(id) {
-        if (!id|typeof(id)==='undefined') throw 'You must provide an id to search for';
+        if (!id | typeof (id) === 'undefined') throw 'You must provide an id to search for';
         const usersCollection = await users();
         const user = await usersCollection.findOne({ _id: ObjectId(id) });
         if (user === null) throw 'No user with that id';
@@ -164,15 +165,29 @@ module.exports = {
         return user;
     },
     async getUserCart(id) {
-        if (!id|typeof(id)==='undefined') throw 'You must provide an id to search for';
+        if (!id | typeof (id) === 'undefined') throw 'You must provide an id to search for';
         const usersCollection = await users();
         const user = await usersCollection.findOne({ _id: ObjectId(id) });
-        if (user === null) throw 'No user with that id';        
+        if (user === null) throw 'No user with that id';
         return user.shoppingCart;
     },
 
-    async updateUserPsw() {
-
+    async updateUserPsw(userId, oldPsw, newPsw) {
+        if (!userId | !newPsw) throw "no psw or id provided."
+        const user = await this.getUserById(userId)
+        const hashedPassword = user.password
+        const pswmatch = await bcrypt.compare(oldPsw, hashedPassword)
+        if (!pswmatch) {//user.password != oldPsw
+            console.log("pdw change failed.")
+            throw "old password doesn't match"
+        }
+        let newHashedPassword = await bcrypt.hash(newPsw, saltRounds);
+        if (await this.patchUser(userId, { "password": newHashedPassword })) {
+            console.log(`user ${user.name} changed psw`)
+            return true
+        } else {
+            return false
+        }
     },
 
     async getAllUsers() {

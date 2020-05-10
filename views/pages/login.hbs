@@ -1,14 +1,14 @@
 <h2>log in page</h2>
 
-<div id="errormessage">
+{{!-- <div id="errormessage">
     {{#if errormessage}}
     <p>
         {{errormessage}}
     </p>
     {{/if}}
-</div>
+</div> --}}
 <div class="login_form">
-    <form action="/users/login" method="post">
+    <form id="login-form" action="/users/login" method="post">
         <div class="container">
             <label for="username"><b>Username</b></label>
             <input type="text" placeholder="Enter Username" name="username" id="username" required>
@@ -19,8 +19,6 @@
                 <button type="submit">Login</button>
                 <button type="button" class="cancelbtn" onclick="location.href='/mainpage'">Cancel</button>
             </div>
-
-
             <label>
                 <input type="checkbox" checked="checked" name="remember"> Remember me
             </label>

@@ -29,15 +29,15 @@ const main = async () => {
 //     console.log(error);
 // });
 
-router.get("/", async (req, res) => {
-    try {
-        console.log("Getting all users")
-        const allUsers = await usersData.getAllUsers()
-        res.status(200).json(allUsers);
-    } catch (e) {
-        res.status(404).json({ message: "Users not found" });
-    }
-});
+// router.get("/", async (req, res) => {
+// try {
+//     console.log("Getting all users")
+//     const allUsers = await usersData.getAllUsers()
+//     res.status(200).json(allUsers);
+// } catch (e) {
+//     res.status(404).json({ message: "Users not found" });
+// }
+// });
 
 // router.get("/:id", async (req, res) => {
 //     let user
@@ -80,7 +80,7 @@ router.post("/login", async (req, res) => {
         user = await usersData.getUserByName(username)
     } catch (e) {
         console.log(e)
-        res.status(400).render("pages/login", { errormessage: "User name and password doesn't match" })
+        res.status(400).send({ errormessage: "User not exist." })
         return
     }
     const hashedPassword = user.password
@@ -90,14 +90,15 @@ router.post("/login", async (req, res) => {
         req.session.userInfo = username
         // req.session.isAuthenticated = true
         req.session.userId = user._id
-        res.redirect("/mainpage")
+        res.status(200).send({ redirectURL: "/mainpage" })
+        // res.redirect("/mainpage")
         // res.redirect(url.format({
         //     pathname: "/mainpage",
         //     userInfo: username,
         // }))
         // res.status(200).render("pages/mainpage", { userInfo: username, isAuthenticated :true })
     } else {
-        res.status(400).render("pages/login", { errormessage: "Wrong password" })
+        res.status(400).send({ errormessage: "Wrong password" })
     }
 
 });
@@ -123,12 +124,12 @@ router.post("/signup", async (req, res) => {
     } catch (e) {
         console.log(e)
         // res.status(400).render("pages/signup", { errormessage: e })
-        res.status(400).send({ errormessage: e })//"pages/signup", 
+        res.send(400, { errormessage: e })//"pages/signup", 
         return
     }
     console.log(`Registration successed.`)
     req.session.userInfo = username
-    req.session.userId = user._id
+    req.session.userId = new_user._id
     // res.status(200).render("pages/mainpage")
     res.send({ redirectURL: "/users/login" })
 });
@@ -189,7 +190,7 @@ router.get("/logout", async (req, res) => {
     res.clearCookie("userInfo")
     res.redirect("/mainpage")
 })
-
+//view user info and making changes here
 router.get("/account", async (req, res) => {
     console.log("user", req.session.userInfo, "is accessing account page.")
     console.log(req.session.userId)
@@ -205,6 +206,35 @@ router.get("/account", async (req, res) => {
     }
     delete user._id;
     res.status(200).render("pages/account", { userDetails: user })
+})
+//change psw here
+router.get("/pswchange", async (req, res) => {
+    console.log("user", req.session.userInfo, "is accessing psw changing page.")
+    res.status(200).render("pages/pswchange")
+})
+//TODO: clear cookie and session
+router.post("/pswchange", async (req, res) => {
+    const oldPsw = req.body['old-psw']
+    const newPsw = req.body['new-psw']
+    // if (!req.session.userId) res.redirect("/mainpage")
+    console.log("user", req.session.userInfo, "is trying to change psw.")
+    console.log(oldPsw,newPsw)
+    let user
+    try {
+        user = await usersData.getUserById(req.session.userId)
+    } catch{
+        throw "no user found"
+    }
+    try {
+        const mtp = await usersData.updateUserPsw(req.session.userId,oldPsw,newPsw)
+    } catch (e) {
+        res.status(400).send({ errormessage: e })
+        return
+    }
+    //let user to login again
+    req.session.destroy()
+    res.clearCookie("userInfo")
+    res.status(200).send({ redirectURL: "/users/login", message: "Your password has been changed" })
 })
 
 router.get("/shoppingcart", async (req, res) => {
@@ -279,7 +309,7 @@ router.get("/orderplaced", async (req, res) => {
         orderTotalValue += item.price
     }
     try {
-        newOrder = await ordersData.addOrder(userId, userShoppingCartIds,orderTotalValue)
+        newOrder = await ordersData.addOrder(userId, userShoppingCartIds, orderTotalValue)
     } catch (e) {
         console.log(e)
         throw `error occured when placing order.`
@@ -306,14 +336,14 @@ router.get("/orderhistory", async (req, res) => {
     for (let id of userOrderHistory) {
         let order = await ordersData.getOrdertById(id)
         let ordreDetailedProducts = []
-        for (let productId of order.products){
+        for (let productId of order.products) {
             let deteiledProduct = await productsData.getProductById(productId)
             ordreDetailedProducts.push(deteiledProduct)
         }
         order.products = ordreDetailedProducts
         userDetailedOrderHistory.push(order)
     }
-    res.status(200).render("pages/orderhistory",{orderHistory:userDetailedOrderHistory})
+    res.status(200).render("pages/orderhistory", { orderHistory: userDetailedOrderHistory })
 
 })
 
