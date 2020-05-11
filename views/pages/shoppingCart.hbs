@@ -1,23 +1,52 @@
-<div class="shopping-cart">
-    <h2>Shopping Cart</h2>
-    <ul>
+<div class="shopping-cart container-fluid">
+    <h2 class="header_text"> Shopping cart </h2>
+    <br/>
+    <br/>
+</div>
+<div class="container-fluid">
+    <div class="row">
         {{#each cartList}}
-        <li id="{{this._id}}"><a href="/products/{{this._id}}">{{this.name}}</a> - {{this.price}}<br />
-            {{this.description}}<br />
-            <img src="/{{this.pic}}" height="90" width="120">
-            <button id="remove-item-{{@index}}">remove</button>
-        </li>
+        <div class="col-md-3" id="{{this._id}}">
+            <figure class="card card-product">
+                <div class="img-wrap"><img src={{this.pic}} alt="No image"></div>
+            
+            
+                <figcaption class="info-wrap">
+                    <h4 class="title"> <a class="each_product_title" href="/products/{{this._id}}">{{this.name}}</a> - <span class="price-new">${{this.price}}.00</span>
+                    </h4>
+                </figcaption>
+                {{!-- <div class="price-wrap h5"> --}}
+                        {{!-- <span class="price-new">${{this.price}}.00</span> --}}
+                {{!-- </div>  --}}
+            </figure>
+                {{!-- <div class="bottom-wrap"> --}}
+                    	<button class="btn btn-sm btn-outline-primary" id="remove-item-{{@index}}">remove</button>
+                        <br/>
+                        <br/>
+                        <br/>
+                {{!-- </div>  --}}
+            {{!-- </figure> --}}
+        </div>
+        
         {{else}}
         <p>No items in your cart.</p>
         {{/each}}
-    </ul>
-</div>
+	</div>
+
+<br/>
+<br/>
 <div id="cart-summary">
-    <p>Total price: {{cartTotalValue}}</p>
+    {{!-- <p>Total price: {{cartTotalValue}}</p> --}}
+    <div class="price-wrap h3">
+            <span class="price-new">Total price: ${{cartTotalValue}}.00</span>
+    </div> 
     <form id="check-out" action="/users/checkout">
-        <button>Check out</button>
+        <button class="btn btn-lg btn-primary text-uppercase" >Check out</button>
     </form>
+    </div>
+    <br/>
 </div>
 <script>
     let cartList = "{{cartList}}"
 </script>
+</div>
