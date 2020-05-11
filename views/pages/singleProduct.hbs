@@ -1,74 +1,90 @@
-
-
 <div class="container">
-<div class="card">
-	<div class="row">
-		<aside class="col-sm-5 border-right">
-<article class="gallery-wrap"> 
-<div class="img-big-wrap">
-  <div> <a href="#"><img class="img-fluid w-100" src="{{prodDetails.pic}}"></a></div>
-</div> <!-- slider-product.// -->
-</article> <!-- gallery-wrap .end// -->
-		</aside>
-		<aside class="col-sm-7">
-<article class="card-body p-5">
-	<h3 class="title mb-3">{{prodDetails.name}}</h3>
+	<div class="card">
+		<div class="row">
+			<aside class="col-sm-5 border-right">
+				<article class="gallery-wrap">
+					<div class="img-big-wrap">
+						<div> <a href="#"><img class="img-fluid w-100" src="{{prodDetails.pic}}"></a></div>
+					</div> <!-- slider-product.// -->
+				</article> <!-- gallery-wrap .end// -->
+			</aside>
+			<aside class="col-sm-7">
+				<article class="card-body p-5">
+					<h3 class="title mb-3">{{prodDetails.name}}</h3>
 
-<p class="price-detail-wrap"> 
-	<span class="price h3 text-warning"> 
-		<span class="currency">US ${{prodDetails.price}}
-	</span> 
-</p> <!-- price-detail-wrap .// -->
-  <h4><dt>Description</dt></h4>
-<dl class="item-property card">
-  <dt>Rating</dt>
-  {{prodDetails.description.rating}}
-  <dt>Quantity</dt>
-  {{prodDetails.description.quantity}}
-  <dt>Energy-kcal_100g</dt>
-  {{prodDetails.description.energy-kcal_100g}}
-  <dt>Energy_100g</dt>
-  {{prodDetails.description.energy_100g}}
-  <dt>Fat_100g</dt>
-  {{prodDetails.description.fat_100g}}
-  <dt>Saturated-fat_100g</dt>
-  {{prodDetails.description.saturated-fat_100g}}
-</dl>
+					<p class="price-detail-wrap">
+						<span class="price h3 text-warning">
+							<span class="currency">US ${{prodDetails.price}}
+							</span>
+					</p> <!-- price-detail-wrap .// -->
+					<h4>
+						<dt>Description</dt>
+					</h4>
+					<dl class="item-property card">
+						<dt>Rating</dt>
+						{{prodDetails.description.rating}}
+						<dt>Quantity</dt>
+						{{prodDetails.description.quantity}}
+						<dt>Energy-kcal_100g</dt>
+						{{prodDetails.description.energy-kcal_100g}}
+						<dt>Energy_100g</dt>
+						{{prodDetails.description.energy_100g}}
+						<dt>Fat_100g</dt>
+						{{prodDetails.description.fat_100g}}
+						<dt>Saturated-fat_100g</dt>
+						{{prodDetails.description.saturated-fat_100g}}
+					</dl>
 
-<dl class="param param-feature">
-  <dt>Delivery</dt>
-  <dd>Russia, USA, and Europe</dd>
-</dl>  <!-- item-property-hor .// -->
+					<dl class="param param-feature">
+						<dt>Delivery</dt>
+						<dd>Russia, USA, and Europe</dd>
+					</dl> <!-- item-property-hor .// -->
 
-<hr>
-	<div class="row">
-		<div class="col-sm-5">
-			<dl class="param param-inline">
-			  <dt>Quantity: </dt>
-			  <dd>
-			  	<select class="form-control form-control-sm" style="width:70px;">
-			  		<option> 1 </option>
-			  		<option> 2 </option>
-			  		<option> 3 </option>
-			  	</select>
-			  </dd>
-			</dl>  <!-- item-property .// -->
-		</div> <!-- col.// -->
-	</div> <!-- row.// -->
-	<hr>
-	<div class="single-product" id="{{prodDetails._id}}">
-		<button class="btn btn-lg btn-primary text-uppercase" id="purchase"> Buy now </button>
-		<button class="btn btn-lg btn-outline-primary text-uppercase" id="add-to-cart-0"> Add to cart </button>
-	</div>
-	
-</article> <!-- card-body.// -->
-		</aside> <!-- col.// -->
-	</div> <!-- row.// -->
-</div> <!-- card.// -->
+					<hr>
+					<div class="row">
+						<div class="col-sm-5">
+							<dl class="param param-inline">
+								<dt>Quantity: </dt>
+								<dd>
+									<select class="form-control form-control-sm" style="width:70px;">
+										<option> 1 </option>
+										<option> 2 </option>
+										<option> 3 </option>
+									</select>
+								</dd>
+							</dl> <!-- item-property .// -->
+						</div> <!-- col.// -->
+					</div> <!-- row.// -->
+					<hr>
+					<div class="single-product" id="{{prodDetails._id}}">
+						<button class="btn btn-lg btn-primary text-uppercase" id="purchase"> Buy now </button>
+						<button class="btn btn-lg btn-outline-primary text-uppercase" id="add-to-cart-0"> Add to cart
+						</button>
+					</div>
+				</article> <!-- card-body.// -->
+			</aside> <!-- col.// -->
+		</div> <!-- row.// -->
+	</div> <!-- card.// -->
 
 </div>
 </div>
 <!--container.//-->
+<div class="" id="{{prodDetails._id}}">
+	<form id="comment" action="">
+		<input type="text" placeholder="Comment.." name="commentContent" id="commentContent">
+		<input type="number" placeholder="Rating.." name="commentRating" id="commentRating">
+		<button type="submit" id="commentSubmit"><i>Comment</i></button>
+	</form>
+</div>
 
+<div id="comment" class="comment">
+	{{#each prodDetails.reviews}}
+	<li>Posted by: {{this.commenter}} - {{this.rating}}<br />
+		{{this.content}}<br />
+	</li>
+	{{else}}
+	<p>No comments for this product.</p>
+	{{/each}}
+</div>
 
 <br><br><br>

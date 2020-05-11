@@ -3,22 +3,22 @@ $(document).ready(function (response) {
     checkStatus($.cookie("userInfo"))
 })
 // $("#search").submit(function (event) {
-    // event.preventDefault()
-    // console.log($("#searchbar").val())
-    // return
-    // $.ajax({
-    //     url: "/mainpage",
-    //     type: "get",
-    //     data: {
-    //         searchOn: $("#searchbar").val()
-    //     },
-    //     success: function (response) {
-    //         //Do Something
-    //     },
-    //     error: function (xhr) {
-    //         //Do Something to handle error
-    //     }
-    // });
+// event.preventDefault()
+// console.log($("#searchbar").val())
+// return
+// $.ajax({
+//     url: "/mainpage",
+//     type: "get",
+//     data: {
+//         searchOn: $("#searchbar").val()
+//     },
+//     success: function (response) {
+//         //Do Something
+//     },
+//     error: function (xhr) {
+//         //Do Something to handle error
+//     }
+// });
 // })
 //add item into cart
 $("button").click(function () {
@@ -71,6 +71,42 @@ $("button").click(function () {
             // }
         });
     }
+})
+
+$("#comment").on("submit", function (event) {
+    // event.preventDefault();
+    if (typeof($.cookie("userInfo")) == "undefined") {
+        alert("You must login before adding comments")
+        return
+    }
+    if($("#commentRating").val()<0 | $("#commentRating").val()>5){
+        alert("rating must be within 0 to 5.")
+    }
+    const productIdToAdd = $(`#${this.id}`).parent().attr("id")
+    console.log($.cookie("userInfo"), productIdToAdd, $("#commentContent").val(), $("#commentRating").val())
+    // return false
+    $.ajax({
+        url: "/comments",
+        type: "post",
+        data: {
+            username: "",
+            commentProduct: productIdToAdd,
+            content: $("#commentContent").val(),
+            rating: $("#commentRating").val()
+        },
+        success: function (response) {
+            console.log(response)
+            alert("your comment has been added.")
+            location.reload(true)
+        },
+        error: function (xhr) {
+            alert(JSON.parse(xhr.responseText).errormessage)
+        },
+        // done: function (response,textStatus) {
+        //     console.log(response, textStatus)
+        // }
+    });
+
 })
 $("#check-out").submit(function (event) {
     if (cartList.length == 0) {

@@ -148,6 +148,20 @@ module.exports = {
     return removedProduct
   },
 
+    async patchProduct(id, patchObject) {
+    if (!patchObject) throw 'You must provide an object to patch band';
+    const productCollection = await products();
+
+    const updatedInfo = await productCollection.updateOne({ _id: ObjectId(id) }, { $set: patchObject });
+    if (updatedInfo.modifiedCount === 0) {
+        // nothing changed would cause failure
+        // throw 'could not update band successfully. Nothing changed?';
+        return null
+    }
+
+    return await this.getProductById(id);
+},
+
   // TODO:check authentication
   async addProductToCart(userId, productId) {
     let user, product
@@ -167,3 +181,19 @@ module.exports = {
     console.log(`Product ${product.name} has been added to user ${user.basicInfo.username}'s cart.`)
   }
 }
+// just to insert a new field
+// const main = async () => {
+//   const productCollection = await products();
+//   let allp = await productCollection.updateMany({},
+//     { $set: { "reviews": [] } },
+//     {
+//       upsert: false,
+//       multi: true
+//     }
+//   )
+//   allp =  await productCollection.find({}).toArray()
+//   console.log(allp)
+// }
+// main().catch((error) => {
+//   console.log(error);
+// });

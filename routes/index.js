@@ -2,6 +2,7 @@ const mainpageRoutes = require("./mainpage")
 const usersRoutes = require("./users");
 const testRoutes = require("./test");
 const productsRoutes = require("./products");
+const commentsRoutes = require("./comments")
 
 
 const constructorMethod = app => {
@@ -9,6 +10,7 @@ const constructorMethod = app => {
   app.use("/users", usersRoutes);
   app.use("/test",testRoutes);
   app.use("/products", productsRoutes);
+  app.use("/comments",commentsRoutes)
 
 
   app.use("*", (req, res) => {

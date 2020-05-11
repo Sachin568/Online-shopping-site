@@ -3,6 +3,7 @@ const router = express.Router();
 const data = require("../data");
 const prodData = data.products;
 const usersData = data.users
+const commentsData = data.comments
 
 
 router.get("/:id", async (req, res) => {
@@ -13,6 +14,7 @@ router.get("/:id", async (req, res) => {
     res.redirect("/mainpage");
     return
   }
+  prodDetails.reviews = await commentsData.substantiate(prodDetails.reviews)
   res.status(200).render("pages/singleProduct", { prodDetails: prodDetails });
 
 });
