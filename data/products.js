@@ -24,7 +24,7 @@ function checkNumberInput(value, inputName, functionName) {
   }
   else if (isNaN(value)) {
     throw `Warning[${functionName}]: Number is expected for '${inputName}'. Got NaN instead.`
-  } 
+  }
   else if (value <= 0) {
     throw `Warning[${functionName}]: '${inputName}' can not be 0 or negative number.`
   }
@@ -69,21 +69,31 @@ module.exports = {
     return prod;
   },
 
-  async getAllProducts() {
+  async getAllProducts(limit, skip) {
     const productCollection = await products();
-    const productList = await productCollection.find({}).toArray();
-    return productList;
+    // discarded fancy pipeline, using two queries instead
+    // const productList = await productCollection.aggregate([
+    // ])
+    let listSize = await productCollection.find({}).toArray();
+    listSize = listSize.length
+    const productList = await productCollection.find({}).skip(skip).limit(limit).toArray();
+    const itemCount = productList.length
+    return { productList: productList, listSize: listSize, itemCount: itemCount };
   },
 
-  async searchProductByName(name) {
+  async searchProductByName(name, limit, skip) {
     const productCollection = await products();
 
+    let listSize = await productCollection.find({ "name": { $regex: `.*${name}.*` } }).toArray();
+    listSize = listSize.length
+
     if (!name) {
-      return await this.getAllProducts()
+      throw "must provide a name for searching"
     } else {
-      const products = await productCollection.find({ "name": { $regex: `.*${name}.*` } }).toArray();
-      if (products === null) throw 'No products with that name';
-      return products
+      const productList = await productCollection.find({ "name": { $regex: `.*${name}.*` } }).skip(skip).limit(limit).toArray();
+      const itemCount = productList.length
+      if (productList === null) throw 'No products with that name';
+      return { productList: productList, listSize: listSize, itemCount: itemCount }
     }
   },
 
@@ -141,10 +151,10 @@ module.exports = {
   // TODO:check authentication
   async addProductToCart(userId, productId) {
     let user, product
-    try{
+    try {
       user = await users.getUserById(userId)
       product = await this.getProductById(productId)
-    }catch{
+    } catch{
       throw `Ids not valid`
     }
     let updatedShoppingCart = user.shoppingCart

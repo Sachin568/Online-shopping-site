@@ -3,6 +3,7 @@ const path = require("path")
 const exphbs = require("express-handlebars")
 const session = require('express-session')
 const cookieParser = require('cookie-parser')
+const paginate = require('express-paginate');
 const configRoutes = require("./routes");
 
 
@@ -36,13 +37,15 @@ app.use(
     resave: false
   })
 );
+app.use(paginate.middleware(50, 100));
+
 //TODO: implement "remember me" check box logic here
 app.use(async (req, res, next) => {
   // console.log("cookie",res.cookie('userInfo',))
   // res.cookie('userInfo',"test")
   if (req.session.userInfo) {
-    res.cookie('userInfo',req.session.userInfo)
-  }else{
+    res.cookie('userInfo', req.session.userInfo)
+  } else {
     res.clearCookie("userInfo")
   }
   next()

@@ -1,27 +1,38 @@
 const express = require("express");
+const paginate = require('express-paginate');
 const router = express.Router();
 const data = require("../data");
 
 const productsData = data.products;
 
-router.get("/", async (req, res) => {
+router.get("/:page*?", async (req, res) => {
     res.locals.metaTags = {
         title: "Mainpage"
     }
-    console.log(req.query)
-    let offeredProducts, status, searchOn
-    if (Object.keys(req.query).length === 0) {
-        offeredProducts = await productsData.getAllProducts()
+    const page = req.query.page || 1
+    // console.log(page, req.query.limit, req.skip)
+    console.log("searchon",req.query.searhOn)
+    let offeredProducts, status, searchOn, totalPagesCount
+    if (typeof (req.query.searchOn) == "undefined") {
+        offeredProducts = await productsData.getAllProducts(req.query.limit, req.skip)
         status = "offer all"
+        console.log(`Returning all products`)
     } else {
-        searchOn = req.query.search
-        offeredProducts = await productsData.searchProductByName(searchOn)
+        searchOn = req.query.searchOn
+        offeredProducts = await productsData.searchProductByName(searchOn,req.query.limit, req.skip)
         status = `offer ${searchOn}`
+        console.log(`Returning products with name ${searchOn}`)
     }
-    console.log(`Returning products with name ${searchOn}`)
-    // console.log(req.session)
+    totalPagesCount = Math.ceil(offeredProducts.listSize / req.query.limit)
+
+    // console.log(paginate.getArrayPages(req)(3, totalPagesCount, req.query.page))
     res.status(200).render("pages/mainpage", {
-        products: offeredProducts,
+        pagination: {
+            page: page,
+            pageCount: totalPagesCount
+        },
+        products: offeredProducts.productList,
+        // pages: paginate.getArrayPages(req)(3, totalPagesCount, req.query.page),
         status: status
     })//userInfo: req.session.userInfo,
 
