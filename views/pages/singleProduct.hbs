@@ -1,14 +1,22 @@
 <div class="single-product">
     <h2>{{prodDetails.name}}</h2>
     <p>{{prodDetails.description}}</p>
-    
+
     <img src="/{{prodDetails.pic}}" height="600" width="800" alt="imaging there is a pic">
 
     <div>Comments : </div>
     {{#each prodDetails.comments}}
-        <div>comment by : {{username}}</div>
-        <div>comment : {{comment}}</div>
+    <div class="comment-box">
+        <div>Comment by: {{username}}</div>
+        {{!-- <div>Comment by : {{username}}</div> --}}
+        <textarea class="comment-area" id="users-comment" name="commet-users">comment : {{comment}}</textarea>
+        <div>
+            <button class="add-comment" name="add-comment">Add Comment</button>
+        </div>
+    </div>
     {{/each}}
-    <button id="purchase">Purchase</button>
-    <button id="add-to-cart">Add to cart</button>
+    <div>
+        <button id="purchase">Purchase</button>
+        <button id="add-to-cart">Add to cart</button>
+    </div>
 </div>
