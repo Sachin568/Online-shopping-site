@@ -20,7 +20,7 @@
                 </figcaption>
                 <div class="bottom-wrap">
 
-                    <button class="btn btn-sm btn-primary float-right" id="add-to-cart-{{@index}}">Add to cart</button>	
+                    <button class="btn btn-sm btn-primary float-right" id="add-to-cart-{{@index}}">Add to cart</button>
                     <div class="price-wrap h5">
                         <span class="price-new">${{this.price}}.00</span>
                     </div> <!-- price-wrap.// -->
@@ -31,6 +31,26 @@
         {{else}}
         <p>No items match your criteria.</p>
         {{/each}}
+
+    </div>
+    <div class="pagination pagination-centered">
+        <ul>
+            {{#paginate pagination type="first"}}
+            <li {{#if disabled}}class="disabled" {{/if}}><a href="?page={{n}}">First</a></li>
+            {{/paginate}}
+            {{#paginate pagination type="previous"}}
+            <li {{#if disabled}}class="disabled" {{/if}}><a href="?page={{n}}">Prev</a></li>
+            {{/paginate}}
+            {{#paginate pagination type="middle" limit="7"}}
+            <li {{#if active}}class="active" {{/if}}><a href="?page={{n}}">{{n}}</a></li>
+            {{/paginate}}
+            {{#paginate pagination type="next"}}
+            <li {{#if disabled}}class="disabled" {{/if}}><a href="?page={{n}}">Next</a></li>
+            {{/paginate}}
+            {{#paginate pagination type="last"}}
+            <li {{#if disabled}}class="disabled" {{/if}}><a href="?page={{n}}">Last</a></li>
+            {{/paginate}}
+        </ul>
     </div>
     {{!-- <div id="page-selection">Pagination goes here</div> --}}
 
@@ -51,5 +71,6 @@
 
 </div>
 <script>
-    console.log({{{ json pagination }}})
+    //console.log('{{pagination}}')
+    //console.log({{{ json pagination }}})
 </script>

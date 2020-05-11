@@ -46,8 +46,8 @@ const main = async () => {
   // await productsData.addProductToCart(u1._id,p1._id)
 
   // let u11 = await usersData.getUserById(u1._id)
-  let allp = await productsData.getAllProducts(50,0)
-  console.log("result:",allp.itemCount,allp.productList)
+  let allp = await productsData.searchProductByName("tea",50,0)
+  console.log("result:",allp.listSize,allp.productList)
 };
 main().catch((error) => {
   console.log(error);

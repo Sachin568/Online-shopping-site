@@ -2,21 +2,24 @@ $(document).ready(function (response) {
     // console.log(document.cookie.split(';'))
     checkStatus($.cookie("userInfo"))
 })
-$("#search").click(function () {
-    $.ajax({
-        url: "/mainpage",
-        type: "get",
-        data: {
-            searchOn: $("#searchbar").val()
-        },
-        success: function (response) {
-            //Do Something
-        },
-        error: function (xhr) {
-            //Do Something to handle error
-        }
-    });
-})
+// $("#search").submit(function (event) {
+    // event.preventDefault()
+    // console.log($("#searchbar").val())
+    // return
+    // $.ajax({
+    //     url: "/mainpage",
+    //     type: "get",
+    //     data: {
+    //         searchOn: $("#searchbar").val()
+    //     },
+    //     success: function (response) {
+    //         //Do Something
+    //     },
+    //     error: function (xhr) {
+    //         //Do Something to handle error
+    //     }
+    // });
+// })
 //add item into cart
 $("button").click(function () {
     if (this.id.match(/add-to-cart-\d/)) {

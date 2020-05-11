@@ -2,21 +2,14 @@ module.exports = {
   json: function (obj) {
     return JSON.stringify(obj);
   },
-  paginate: function (attr) {
-    //pagination,options
-    console.log(attr.hash,typeof(attr.hash))
-    let pagination = attr.hash.pagination
-    let options = attr.hash.options
-    // console.log(JSON.parse(attr.hash))
-    // attrs = JSON.parse(attrs)
-    // let pagination = attrs
-    var type = options || 'middle';
+  paginate: function(pagination, options) {
+    var type = options.hash.type || 'middle';
     var ret = '';
     var pageCount = Number(pagination.pageCount);
     var page = Number(pagination.page);
     var limit;
-    if (options) limit = +options;
-
+    if (options.hash.limit) limit = +options.hash.limit;
+  
     //page pageCount
     var newContext = {};
     switch (type) {
@@ -30,7 +23,7 @@ module.exports = {
           if (page - leftCount < 1)
             leftCount = page - 1;
           var start = page - leftCount;
-
+  
           while (i < limit && i < pageCount) {
             newContext = { n: start };
             if (start === page) newContext.active = true;
@@ -85,7 +78,7 @@ module.exports = {
         ret = ret + options.fn(newContext);
         break;
     }
-    console.log(String(ret))
+  
     return ret;
   }
 }
