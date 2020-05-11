@@ -16,7 +16,7 @@ const dbConnection = require('../config/mongoConnection');
 //test cases
 const main = async () => {
   const db = await dbConnection();
-  await db.dropDatabase();
+  // await db.dropDatabase();
   let basicInfo = {
     username: "DIO",
     birthdate: "101010101"
