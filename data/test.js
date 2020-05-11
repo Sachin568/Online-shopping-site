@@ -17,16 +17,17 @@ const dbConnection = require('../config/mongoConnection');
 const main = async () => {
   const db = await dbConnection();
   // await db.dropDatabase();
-  // let basicInfo = {
-  //   username: "DIO",
-  //   birthdate: "101010101"
-  // }
-  // let address1 = {
-  //   state: "gwg",
-  //   city: "wgw",
-  //   street: "wgw",
-  //   zipCode: "ww"
-  // }
+
+  let basicInfo = {
+    username: "DIO",
+    birthdate: "101010101"
+  }
+  let address1 = {
+    state: "gwg",
+    city: "wgw",
+    street: "wgw",
+    zipCode: "ww"
+  }
 
   // let email = "123@123.com"
 
