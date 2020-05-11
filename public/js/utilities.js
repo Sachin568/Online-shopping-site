@@ -194,6 +194,8 @@ $("#account-update-form").submit((event) => {
         }
     });
 })
+
+
 function checkStatus(userInfo) {
     console.log(userInfo)
     if (!userInfo) {

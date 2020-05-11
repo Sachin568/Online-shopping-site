@@ -16,22 +16,22 @@ const dbConnection = require('../config/mongoConnection');
 //test cases
 const main = async () => {
   const db = await dbConnection();
-  await db.dropDatabase();
-  let basicInfo = {
-    username: "DIO",
-    birthdate: "101010101"
-  }
-  let address1 = {
-    state: "gwg",
-    city: "wgw",
-    street: "wgw",
-    zipCode: "ww"
-  }
+  // await db.dropDatabase();
+  // let basicInfo = {
+  //   username: "DIO",
+  //   birthdate: "101010101"
+  // }
+  // let address1 = {
+  //   state: "gwg",
+  //   city: "wgw",
+  //   street: "wgw",
+  //   zipCode: "ww"
+  // }
 
-  let email = "123@123.com"
+  // let email = "123@123.com"
 
-  let u1 = await usersData.addUser(basicInfo, email, "wry")
-  let u11 = await usersData.updateUser(String(u1._id),"shffhh",u1.address)
+  // let u1 = await usersData.addUser(basicInfo, email, "wry")
+  // let u11 = await usersData.updateUser(String(u1._id),"shffhh",u1.address)
   // address1.state = "awikjghui"
   // let u12 = await usersData.updateUser(u11._id,email,address1)
   // let u2 = await usersData.addUser(basicInfo, "asjfabf", "wry")
@@ -45,7 +45,8 @@ const main = async () => {
   // await productsData.addProductToCart(u1._id,p1._id)
 
   // let u11 = await usersData.getUserById(u1._id)
-  console.log("result:",u11)
+  let allp = await productsData.getAllProducts(50,0)
+  console.log("result:",allp.itemCount,allp.productList)
 };
 main().catch((error) => {
   console.log(error);
