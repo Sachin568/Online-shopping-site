@@ -356,7 +356,13 @@ $("#account-update-form").submit((event) => {
         }
     });
 })
+$("#forget-psw").click(function (event) {
+    event.preventDefault()
+    alert("We cannot help you. Good luck then.")
+    return
+}
 
+)
 
 function checkStatus(userInfo) {
     console.log(userInfo)

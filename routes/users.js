@@ -6,55 +6,8 @@ const url = require('url');
 const ordersData = data.orders
 const usersData = data.users;
 const productsData = data.products
-// const ordersData = require("../data/orders")
 
 ObjectId = require('mongodb').ObjectID;
-
-
-const main = async () => {
-    let allUsers = await usersData.getAllUsers()
-    for (let j = 0; j < allUsers.length; j++) {
-        let albums = allUsers[j].albums
-        let detailedAlbums = Array()
-        for (let i = 0; i < albums.length; i++) {
-            let detailedAlbum = await albumsData.getAlbumById(ObjectId(albums[i]))
-            detailedAlbums.push(detailedAlbum)
-            // console.log(detailedAlbums)
-        }
-        allUsers[j].albums = detailedAlbums
-    }
-    console.log(JSON.stringify(allUsers, null, 1))
-}
-// main().catch(async (error) => {
-//     console.log(error);
-// });
-
-// router.get("/", async (req, res) => {
-// try {
-//     console.log("Getting all users")
-//     const allUsers = await usersData.getAllUsers()
-//     res.status(200).json(allUsers);
-// } catch (e) {
-//     res.status(404).json({ message: "Users not found" });
-// }
-// });
-
-// router.get("/:id", async (req, res) => {
-//     let user
-//     try {
-//         console.log('Getting user with ID:', req.params.id)
-//         user = await usersData.getUserById(ObjectId(req.params.id))
-//     } catch (e) {
-//         console.log("Failed finding user with Id:", req.params.id)
-//         res.status(404).json({ message: "User not found" })
-//         return
-//     }
-//     try {
-//         res.status(200).json(user)
-//     } catch (e) {
-//         res.status(400).json({ error: "Failed getting info." });
-//     }
-// });
 
 router.get("/login", async (req, res) => {
     res.locals.metaTags = {
@@ -74,6 +27,7 @@ router.get("/signup", async (req, res) => {
 router.post("/login", async (req, res) => {
     let username = req.body['username']
     let psw = req.body['psw']
+    let rememberMe = req.body['rememberme']// string "on" / undefined
     console.log(`user "${username}" is trying to log in with psw: ${psw}`)
     let user
     try {
@@ -88,8 +42,14 @@ router.post("/login", async (req, res) => {
     if (pswmatch) {
         console.log(`user ${username} logged in`)
         req.session.userInfo = username
-        // req.session.isAuthenticated = true
         req.session.userId = String(user._id)
+        //remember me logic here
+        if (typeof (rememberMe) != "undefined") {
+            req.session.cookie.expires = false
+        } else {
+            req.session.cookie.maxAge = 2 * 24 * 3600000; // expire after 2 days
+        }
+
         res.status(200).send({ redirectURL: "/mainpage" })
         // res.redirect("/mainpage")
         // res.redirect(url.format({
@@ -230,7 +190,7 @@ router.post("/account", async (req, res) => {
     console.log(updatedUser)
 
     delete updatedUser._id;
-    res.status(200).send({redirectURL:"/users/account",message:"Your info have been updated." })
+    res.status(200).send({ redirectURL: "/users/account", message: "Your info have been updated." })
 })
 
 //change psw here
