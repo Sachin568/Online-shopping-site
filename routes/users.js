@@ -286,6 +286,59 @@ router.get("/shoppingcart", async (req, res) => {
     res.status(200).render("pages/shoppingCart", { cartList: userShoppingCart, cartTotalValue: cartTotalValue })
 })
 
+router.get("/wishlist", async (req, res) => {
+    console.log("user", req.session.userInfo, "is accessing wish list.")
+    console.log(req.session.userId)
+    let userId = req.session.userId
+    if (!userId | typeof (userId) === "undefined") {
+        res.redirect("/mainpage")
+    }
+    let userWishlistIds
+    try {
+        userWishlistIds = await usersData.getUserWishlist(userId)
+    } catch{
+        return
+    }
+    let userWishlist = []
+    let cartTotalValue = 0
+    for (let id of userWishlistIds) {
+        let item = await productsData.getProductById(id)
+        userWishlist.push(item)
+        cartTotalValue += item.price
+    }
+    res.status(200).render("pages/wishlist", { wishList: userWishlist, cartTotalValue: cartTotalValue })
+})
+
+router.get("/clearcart", async (req, res) => {
+    console.log("user", req.session.userInfo, "is clearing cart.")
+    console.log(req.session.userId)
+    let userId = req.session.userId
+    if (!userId | typeof (userId) === "undefined") {
+        res.redirect("/mainpage")
+    }
+    try {
+        await usersData.clearUserCart(userId)
+    } catch{
+        return
+    }
+    res.sendStatus(200)
+})
+
+router.get("/clearwishlist", async (req, res) => {
+    console.log("user", req.session.userInfo, "is clearing cart.")
+    console.log(req.session.userId)
+    let userId = req.session.userId
+    if (!userId | typeof (userId) === "undefined") {
+        res.redirect("/mainpage")
+    }
+    try {
+        await usersData.clearUserWishList(userId)
+    } catch{
+        return
+    }
+    res.sendStatus(200)
+})
+
 router.get("/checkout", async (req, res) => {
     console.log("user", req.session.userInfo, "is checking out.")
     let userId = req.session.userId

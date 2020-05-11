@@ -1,15 +1,14 @@
 <div class="shopping-cart container-fluid">
-    <h2 class="header_text"> Shopping cart </h2>
+    <h2 class="header_text"> Wish list </h2>
     <br />
     <br />
 </div>
 <div class="container-fluid">
     <div class="row">
-        {{#each cartList}}
+        {{#each wishList}}
         <div class="col-md-3" id="{{this._id}}">
             <figure class="card card-product">
                 <div class="img-wrap"><img src={{this.pic}} alt="No image"></div>
-
 
                 <figcaption class="info-wrap">
                     <h4 class="title"> <a class="each_product_title" href="/products/{{this._id}}">{{this.name}}</a> -
@@ -21,7 +20,9 @@
                 {{!-- </div>  --}}
             </figure>
             {{!-- <div class="bottom-wrap"> --}}
-            <button class="btn btn-sm btn-outline-primary" id="remove-item-cart-{{@index}}">remove</button>
+            <button class="btn btn-lg btn-outline-primary" id="move-to-cart-0"> Move to cart</button>
+
+            <button class="btn btn-sm btn-outline-primary" id="remove-item-wishlist-{{@index}}">remove</button>
             <br />
             <br />
             <br />
@@ -30,7 +31,7 @@
         </div>
 
         {{else}}
-        <p>No items in your cart.</p>
+        <p>No items in your wish list.</p>
         {{/each}}
     </div>
 
@@ -41,15 +42,15 @@
         <div class="price-wrap h3">
             <span class="price-new">Total price: ${{cartTotalValue}}.00</span>
         </div>
-        <form id="check-out" action="/users/checkout">
-            <button class="btn btn-lg btn-primary text-uppercase">Check out</button>
+        <form id="go-to-wishlist" action="/users/shoppingcart">
+            <button class="btn btn-lg btn-primary text-uppercase">Go to shopping cart</button>
         </form>
-        <button class="btn btn-lg btn-primary text-uppercase" id="clear-cart">Clear cart</button>
+        <button class="btn btn-lg btn-primary text-uppercase" id="clear-wishlist">Clear wishlist</button>
 
     </div>
     <br />
 </div>
 <script>
-    let cartList = "{{cartList}}"
+    let wishList = "{{wishList}}"
 </script>
 </div>

@@ -168,9 +168,23 @@ module.exports = {
         return user.shoppingCart;
     },
 
-    async clearUserCart(id){
+    async getUserWishlist(id) {
         if (!id | typeof (id) == 'undefined') throw 'You must provide an id to search for';
-        const user = await this.patchUser(id,{ "shoppingCart": [] });
+        const usersCollection = await users();
+        const user = await usersCollection.findOne({ _id: ObjectId(id) });
+        if (user === null) throw 'No user with that id';
+        return user.wishList;
+    },
+
+    async clearUserCart(id) {
+        if (!id | typeof (id) == 'undefined') throw 'You must provide an id to search for';
+        const user = await this.patchUser(id, { "shoppingCart": [] });
+        if (user === null) throw 'No user with that id';
+        return true;
+    },
+    async clearUserWishList(id) {
+        if (!id | typeof (id) == 'undefined') throw 'You must provide an id to search for';
+        const user = await this.patchUser(id, { "wishList": [] });
         if (user === null) throw 'No user with that id';
         return true;
     },
