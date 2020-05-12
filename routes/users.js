@@ -8,6 +8,24 @@ const usersData = data.users;
 const productsData = data.products
 
 ObjectId = require('mongodb').ObjectID;
+//helper functions
+async function countAndCalculate(arr) {
+    let hashtable = {}
+    let value = 0
+    //convert to hashtable first
+    for (let id of arr) {
+      hashtable[id] = hashtable[id] ? hashtable[id] + 1 : 1
+    }
+    //then add count property into each of the item returned
+    detailedItems = []
+    for (id in hashtable) {
+      let item = await productsData.getProductById(id)
+      item.count = hashtable[id]
+      detailedItems.push(item)
+      value+=item.count*item.price
+    }
+    return {detailedItems:detailedItems,value:value}
+  }
 
 router.get("/login", async (req, res) => {
     res.locals.metaTags = {
@@ -236,14 +254,9 @@ router.get("/shoppingcart", async (req, res) => {
     } catch{
         return
     }
-    let userShoppingCart = []
-    let cartTotalValue = 0
-    for (let id of userShoppingCartIds) {
-        let item = await productsData.getProductById(id)
-        userShoppingCart.push(item)
-        cartTotalValue += item.price
-    }
-    res.status(200).render("pages/shoppingCart", { cartList: userShoppingCart, cartTotalValue: cartTotalValue })
+    let returned = await countAndCalculate(userShoppingCartIds)
+
+    res.status(200).render("pages/shoppingCart", { cartList: returned.detailedItems, cartTotalValue: returned.value })
 })
 
 router.get("/wishlist", async (req, res) => {
@@ -259,14 +272,9 @@ router.get("/wishlist", async (req, res) => {
     } catch{
         return
     }
-    let userWishlist = []
-    let cartTotalValue = 0
-    for (let id of userWishlistIds) {
-        let item = await productsData.getProductById(id)
-        userWishlist.push(item)
-        cartTotalValue += item.price
-    }
-    res.status(200).render("pages/wishlist", { wishList: userWishlist, cartTotalValue: cartTotalValue })
+    let returned = await countAndCalculate(userWishlistIds)
+
+    res.status(200).render("pages/wishlist", { wishList: returned.detailedItems, cartTotalValue: returned.value })
 })
 
 router.get("/clearcart", async (req, res) => {

@@ -10,7 +10,7 @@
             <figure class="card card-product">
                 <div class="img-wrap"><img src={{this.pic}} alt="No image"></div>
                 <figcaption class="info-wrap">
-                    <h4 class="title"> <a class="each_product_title" href="/products/{{this._id}}">{{this.name}}</a> - <span class="price-new">${{this.price}}.00</span></h4>
+                    <h4 class="title"> <a class="each_product_title" href="/products/{{this._id}}">{{this.name}}</a> - <span class="price-new">${{this.price}}.00 | {{this.count}}</span></h4>
                 </figcaption>
             </figure>
             <button class="btn btn-sm btn-outline-primary" id="remove-item-cart-{{@index}}">remove</button>
