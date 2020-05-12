@@ -10,7 +10,7 @@ header {
 }
 .topnav {
   overflow: hidden;
-  background-color: #e9e9e9;
+  /* background-color: #343A40; */
 }
 
 .topnav a {
@@ -24,7 +24,7 @@ header {
 }
 
 .topnav a:hover {
-  background-color: #ddd;
+  /* background-color: #ddd; */
   color: black;
 }
 
@@ -43,7 +43,7 @@ header {
   border: none;
 }
 
-.topnav .search-container button {
+/* .topnav .search-container button {
   float: right;
   padding: 6px 10px;
   margin-top: 8px;
@@ -52,7 +52,7 @@ header {
   font-size: 17px;
   border: none;
   cursor: pointer;
-}
+} */
 
 .topnav .search-container button:hover {
   background: #ccc;

@@ -1,4 +1,4 @@
-<header class="topnav">
+{{!-- <header class="topnav">
     <h1><a class="logo" href="/mainpage">Grocery Store</a></h1>
     <a href="#menu">Menu</a>
     <a href="/users/login" id="log-in">Log in</a>
@@ -15,4 +15,78 @@
             <button type="submit" id="searchOn"><i>search</i></button>
         </form>
     </div>
-</header>
+</header> --}}
+
+{{!-- fixed-top --}}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <h1><a class="navbar-brand" href="/mainpage"><h1>Grocery Store</h1></a></h1>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="/mainpage"> Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/users/account" id="account">Account</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/users/shoppingCart" id="shopping-cart">Shopping Cart</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/users/wishlist" id="wish-list">Wish list</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/users/orderhistory" id="order-history">Order history</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Categories
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">Beans</a>
+          <a class="dropdown-item" href="#">Beverages</a>
+          <a class="dropdown-item" href="#">Breads</a>
+          <a class="dropdown-item" href="#">Canned food</a>
+          <a class="dropdown-item" href="#">Cereals</a>
+          <a class="dropdown-item" href="#">Corn</a>
+          <a class="dropdown-item" href="#">Crackers</a>
+          <a class="dropdown-item" href="#">Lentils</a>
+          <a class="dropdown-item" href="#">Millet</a>
+          <a class="dropdown-item" href="#">Munchies</a>
+          <a class="dropdown-item" href="#">Nuts</a>
+          <a class="dropdown-item" href="#">Oats</a>
+          <a class="dropdown-item" href="#">Oil</a>
+          <a class="dropdown-item" href="#">Peas</a>
+          <a class="dropdown-item" href="#">Quinoa</a>
+          <a class="dropdown-item" href="#">Random</a>
+          <a class="dropdown-item" href="#">Rice</a>
+          <a class="dropdown-item" href="#">Risottos</a>
+          <a class="dropdown-item" href="#">Seeds</a>
+          <a class="dropdown-item" href="#">Sesame</a>
+
+          {{!-- <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Something else here</a> --}}
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/users/login" id="log-in">Log in</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/users/signup" id="sign-up">Sign Up</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/users/logout" id="log-out">Log out (<span id="greeting-message"></span>)</a>
+      </li>
+    </ul>
+    <div class="search-container">
+      <form class="form-inline my-2 my-lg-0" id="search" action="/mainpage">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="searchbar" name="searchOn">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="searchOn">Search</button>
+      </form>
+    </div>
+  </div>
+</nav>
+<br/>
