@@ -13,33 +13,30 @@
                     <h4 class="title"> <a class="each_product_title" href="/products/{{this._id}}">{{this.name}}</a> - <span class="price-new">${{this.price}}.00</span></h4>
                 </figcaption>
             </figure>
-                <button class="btn btn-sm btn-outline-primary" id="remove-item-{{@index}}">remove</button>
-                <br/>
-                <br/>
-                <br/>
+            <button class="btn btn-sm btn-outline-primary" id="remove-item-cart-{{@index}}">remove</button>
+            <br/>
+            <br/>
+            <br/>
         </div>
 
         {{else}}
-        <p>No items in your cart.</p>
+        <p class="container-fluid">No items in your cart.</p>
         {{/each}}
     </div>
 
     <br />
     <br />
     <div id="cart-summary">
-        {{!-- <p>Total price: {{cartTotalValue}}</p> --}}
         <div class="price-wrap h3">
             <span class="price-new">Total price: ${{cartTotalValue}}.00</span>
         </div>
         <form id="check-out" action="/users/checkout">
-            <button class="btn btn-lg btn-primary text-uppercase">Check out</button>
+            <button class="btn btn-lg btn-primary">Check out</button>
+            <button class="btn btn-lg btn-primary" id="clear-cart">Clear cart</button>
         </form>
-        <button class="btn btn-lg btn-primary text-uppercase" id="clear-cart">Clear cart</button>
-
     </div>
     <br />
 </div>
 <script>
     let cartList = "{{cartList}}"
 </script>
-</div>

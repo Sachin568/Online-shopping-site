@@ -20,9 +20,8 @@
                 {{!-- </div>  --}}
             </figure>
             {{!-- <div class="bottom-wrap"> --}}
-            <button class="btn btn-lg btn-outline-primary" id="move-to-cart-0"> Move to cart</button>
-
-            <button class="btn btn-sm btn-outline-primary" id="remove-item-wishlist-{{@index}}">remove</button>
+            <button class="btn btn-sm btn-primary" id="move-to-cart-0"> Move to cart</button>
+            <button class="btn btn-sm btn-outline-primary" id="remove-item-wishlist-{{@index}}">Remove</button>
             <br />
             <br />
             <br />
@@ -31,23 +30,23 @@
         </div>
 
         {{else}}
-        <p>No items in your wish list.</p>
+        <p class="container-fluid">No items in your wish list.</p>
         {{/each}}
     </div>
 
     <br />
     <br />
     <div id="cart-summary">
-        {{!-- <p>Total price: {{cartTotalValue}}</p> --}}
         <div class="price-wrap h3">
             <span class="price-new">Total price: ${{cartTotalValue}}.00</span>
         </div>
         <form id="go-to-wishlist" action="/users/shoppingcart">
-            <button class="btn btn-lg btn-primary text-uppercase">Go to shopping cart</button>
+            <button class="btn btn-lg btn-primary">Go to shopping cart</button>
+            <button class="btn btn-lg btn-primary" id="clear-wishlist">Clear wishlist</button>
         </form>
-        <button class="btn btn-lg btn-primary text-uppercase" id="clear-wishlist">Clear wishlist</button>
 
     </div>
+    <br />
     <br />
 </div>
 <script>

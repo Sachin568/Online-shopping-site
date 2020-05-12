@@ -68,24 +68,6 @@
 
 </div>
 </div>
-<!--container.//-->
-{{!-- <div class="" id="{{prodDetails._id}}">
-	<form id="comment" action="">
-		<input type="text" placeholder="Comment.." name="commentContent" id="commentContent">
-		<input type="number" placeholder="Rating.." name="commentRating" id="commentRating">
-		<button type="submit" id="commentSubmit"><i>Comment</i></button>
-	</form>
-</div>
-
-<div id="comment" class="comment">
-	{{#each prodDetails.reviews}}
-	<li>Posted by: {{this.commenter}} - {{this.rating}}<br />
-		{{this.content}}<br />
-	</li>
-	{{else}}
-	<p>No comments for this product.</p>
-	{{/each}}
-</div> --}}
 
 <br/><br/><br/>
 
@@ -124,7 +106,7 @@
 							<p>{{this.content}}</p>
 						</div>
 						{{else}}
-							<p>No comments for this product.</p>
+							<p class="container-fluid">No comments for this product.</p>
 						{{/each}}
 					</div>
                 </div>
