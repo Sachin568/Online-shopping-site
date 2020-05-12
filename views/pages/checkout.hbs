@@ -1,6 +1,5 @@
 <div class="check-out-review container-fluid">
     <h2>Review your order</h2>
-
     <br/>
     <br/>
 
@@ -27,7 +26,6 @@
     <div class="review-cart container-fluid">
         <h3>Review your cart:</h3>
         
-
         <div class="container-fluid">
             <div class="row">
                 {{#each cartList}}
@@ -45,7 +43,7 @@
                 </div>
                 
                 {{else}}
-                <p>No items in your cart.</p>
+                    <p>No items in your cart.</p>
                 {{/each}}
             </div>
 
@@ -54,34 +52,13 @@
                     <span class="price-new">Total price: ${{cartTotalValue}}.00</span>
                 </div> 
                 <form id="place-order" action="/users/orderplaced">
-                    <button class="btn btn-lg btn-primary text-uppercase" >Place your order</button>
+                    <button class="btn btn-lg btn-primary" >Place your order</button>
                 </form>
             </div>
             <br/>
             <br/>
         </div>
-
-
-        {{!-- <ul>
-            {{#each cartList}}
-            <li id="{{this._id}}"><a href="/products/{{this._id}}">{{this.name}}</a> - {{this.price}}<br />
-                {{this.description}}<br />
-                <img src="/{{this.pic}}" height="90" width="120">
-                <button id="remove-item-{{@index}}">remove</button>
-            </li>
-            {{else}}
-            <p>No items in your cart.</p>
-            {{/each}}
-        </ul>
     </div>
-    <div id="cart-summary">
-        <p>Total price: {{cartTotalValue}}</p>
-        <form id="place-order" action="/users/orderplaced">
-            <button>Place your order</button>
-        </form>
-
-    </div> --}}
-</div>
 <script type="text/javascript">
     var address = {{{ json userAddress }}}
 </script>

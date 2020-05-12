@@ -10,13 +10,12 @@
             <figure class="card card-product">
                 <div class="img-wrap"><img src={{this.pic}} alt="No image"></div>
                 <figcaption class="info-wrap">
-                    {{!-- <h4 class="title">{{this.name}}</h4> --}}
                     <h4 class="title"> <a class="each_product_title" href="/products/{{this._id}}">{{this.name}}</a>
                     </h4>
                     <p class="desc">{{this.category}}</p>
                     <div class="rating-wrap">
                         <div class="label-rating"></div>
-                    </div> <!-- rating-wrap.// -->
+                    </div>
                 </figcaption>
                 <div class="bottom-wrap">
                     	<div class="single-product" id="{{this._id}}">
@@ -24,8 +23,8 @@
                         </div>
                     <div class="price-wrap h5">
                         <span class="price-new">${{this.price}}.00</span>
-                    </div> <!-- price-wrap.// -->
-                </div> <!-- bottom-wrap.// -->
+                    </div>
+                </div>
             </figure>
         </div>
 
@@ -33,35 +32,33 @@
         <p>No items match your criteria.</p>
         {{/each}}
     </div>
-    
-        <div class="col-12">
-            <nav aria-label="...">
-                <div>
-                    <ul class="pagination pagination-centered">
-                        {{#paginate pagination type="first"}}
-                            <li {{#if disabled}}class="page-item disabled" {{/if}}><a class="page-link" href="?page={{n}}">First</a></li>
-                        {{/paginate}}
-                        
-                        {{#paginate pagination type="previous"}}
-                            <li {{#if disabled}}class="page-item disabled" {{/if}}><a class="page-link" href="?page={{n}}" tabindex="-1">Previous</a></li>
-                        {{/paginate}}
+    <div class="col-12">
+        <nav aria-label="...">
+            <div>
+                <ul class="pagination pagination-centered">
+                    {{#paginate pagination type="first"}}
+                        <li {{#if disabled}}class="page-item disabled" {{/if}}><a class="page-link" href="?page={{n}}">First</a></li>
+                    {{/paginate}}
+                    
+                    {{#paginate pagination type="previous"}}
+                        <li {{#if disabled}}class="page-item disabled" {{/if}}><a class="page-link" href="?page={{n}}" tabindex="-1">Previous</a></li>
+                    {{/paginate}}
 
-                        {{#paginate pagination type="middle" limit="7"}}
-                            <li {{#if active}}class="page-item active" {{/if}}><a class="page-link" href="?page={{n}}">{{n}}</a></li><span class="sr-only">(current)</span></a>
-                        {{/paginate}}
+                    {{#paginate pagination type="middle" limit="7"}}
+                        <li {{#if active}}class="page-item active" {{/if}}><a class="page-link" href="?page={{n}}">{{n}}</a></li><span class="sr-only">(current)</span></a>
+                    {{/paginate}}
 
-                        {{#paginate pagination type="next"}}
-                            <li {{#if disabled}}class="disabled page-item" {{/if}}><a class="page-link" href="?page={{n}}">Next</a></li>
-                        {{/paginate}}
-                        
-                        {{#paginate pagination type="last"}}
-                            <li {{#if disabled}}class="page-item disabled" {{/if}}><a class="page-link" href="?page={{n}}">Last</a></li>
-                        {{/paginate}}
-                    </ul>
-                </div>
-            </nav>
-        </div>
-    
+                    {{#paginate pagination type="next"}}
+                        <li {{#if disabled}}class="disabled page-item" {{/if}}><a class="page-link" href="?page={{n}}">Next</a></li>
+                    {{/paginate}}
+                    
+                    {{#paginate pagination type="last"}}
+                        <li {{#if disabled}}class="page-item disabled" {{/if}}><a class="page-link" href="?page={{n}}">Last</a></li>
+                    {{/paginate}}
+                </ul>
+            </div>
+        </nav>
+    </div>
 </div>
 <script>
 </script>
