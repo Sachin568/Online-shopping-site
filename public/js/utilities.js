@@ -43,11 +43,58 @@ $("button").click(function () {
             // }
         });
     }
-
 })
+//add item to wishlist
+$("button").click(function () {
+    if (this.id.match(/add-to-wish-list-\d/)) {
+        const productIdToAdd = $(`#${this.id}`).parent().attr("id")
+        console.log("adding", productIdToAdd, "to wishlist")
+        $.ajax({
+            url: "/products/addwishlist",
+            type: "post",
+            data: {
+                ProductTowishList: productIdToAdd
+            },
+            success: function (response) {
+                console.log(response)
+                alert("product has been added to wishlist.")
+                // alert("product has been removed.")
+            },
+            error: function (xhr) {
+                alert(JSON.parse(xhr.responseText).errormessage)
+            }
+        });
+    }
+})
+// move item from wishlist to cart * add and remove
+$("button").click(function () {
+    if (this.id.match(/move-to-cart-\d/)) {
+        const productIdToAdd = $(`#${this.id}`).parent().attr("id")
+        console.log("adding", productIdToAdd, "to wishlist")
+        $.ajax({
+            url: "/products/movetowishlist",
+            type: "post",
+            data: {
+                ProductMoveToCart: productIdToAdd
+            },
+            success: function (response) {
+                console.log(response)
+                alert("product has been added to wishlist.")
+                location.reload(true);
+                // alert("product has been removed.")
+            },
+            error: function (xhr) {
+                alert(JSON.parse(xhr.responseText).errormessage)
+            }
+        });
+    }
+}
+
+)
+
 // a stupid way to remove items in cart ahhhhhhhhhhh
 $("button").click(function () {
-    if (this.id.match(/remove-item-\d/)) {
+    if (this.id.match(/remove-item-cart-\d/)) {
         console.log(this.id)
         const itemIdToRemove = $(`#${this.id}`).parent().attr("id")
         console.log("removing", itemIdToRemove, "from cart")
@@ -72,14 +119,90 @@ $("button").click(function () {
         });
     }
 })
+//remove item from wishlist
+$("button").click(function () {
+    if (this.id.match(/remove-item-wishlist-\d/)) {
+        console.log(this.id)
+        const itemIdToRemove = $(`#${this.id}`).parent().attr("id")
+        console.log("removing", itemIdToRemove, "from wishlist")
+        console.log(itemIdToRemove)
+        $.ajax({
+            url: "/products/removeItemFromWishlist",
+            type: "post",
+            data: {
+                ProductToRemove: itemIdToRemove
+            },
+            success: function (response) {
+                console.log(response)
+                location.reload(true);
+                // alert("product has been removed.")
+            },
+            error: function (xhr) {
+                alert(JSON.parse(xhr.responseText).errormessage)
+            },
+            // done: function (response,textStatus) {
+            //     console.log(response, textStatus)
+            // }
+        });
+    }
+})
+
+$("#clear-cart").click(function () {
+    if (cartList.length != 0) {
+        $.ajax({
+            url: "/users/clearcart",
+            type: "get",
+            data: {
+            },
+            success: function (response) {
+                console.log(response)
+                location.reload(true);
+                // alert("product has been removed.")
+            },
+            error: function (xhr) {
+                alert(JSON.parse(xhr.responseText).errormessage)
+            },
+            // done: function (response,textStatus) {
+            //     console.log(response, textStatus)
+            // }
+        });
+    } else {
+        alert("your cart is empty already.")
+    }
+
+})
+$("#clear-wishlist").click(function () {
+    if (wishList.length != 0) {
+        $.ajax({
+            url: "/users/clearwishlist",
+            type: "get",
+            data: {
+            },
+            success: function (response) {
+                console.log(response)
+                location.reload(true);
+                // alert("product has been removed.")
+            },
+            error: function (xhr) {
+                alert(JSON.parse(xhr.responseText).errormessage)
+            },
+            // done: function (response,textStatus) {
+            //     console.log(response, textStatus)
+            // }
+        });
+    } else {
+        alert("your wishlist is empty already.")
+    }
+
+})
 
 $("#comment").on("submit", function (event) {
     // event.preventDefault();
-    if (typeof($.cookie("userInfo")) == "undefined") {
+    if (typeof ($.cookie("userInfo")) == "undefined") {
         alert("You must login before adding comments")
         return
     }
-    if($("#commentRating").val()<0 | $("#commentRating").val()>5){
+    if ($("#commentRating").val() < 0 | $("#commentRating").val() > 5) {
         alert("rating must be within 0 to 5.")
     }
     const productIdToAdd = $(`#${this.id}`).parent().attr("id")
@@ -233,13 +356,20 @@ $("#account-update-form").submit((event) => {
         }
     });
 })
+$("#forget-psw").click(function (event) {
+    event.preventDefault()
+    alert("We cannot help you. Good luck then.")
+    return
+}
 
+)
 
 function checkStatus(userInfo) {
     console.log(userInfo)
     if (!userInfo) {
         $("#account").hide()
         $("#shopping-cart").hide()
+        $("#wish-list").hide()
         $("#log-out").hide()
         $("#log-in").show()
         $("#sign-up").show()
@@ -248,6 +378,7 @@ function checkStatus(userInfo) {
     } else {
         $("#account").show()
         $("#shopping-cart").show()
+        $("#wish-list").show()
         $("#log-out").show()
         $("#log-in").hide()
         $("#sign-up").hide()

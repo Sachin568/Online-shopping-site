@@ -1,7 +1,7 @@
 <div class="shopping-cart container-fluid">
     <h2 class="header_text"> Shopping cart </h2>
-    <br/>
-    <br/>
+    <br />
+    <br />
 </div>
 <div class="container-fluid">
     <div class="row">
@@ -18,22 +18,26 @@
                 <br/>
                 <br/>
         </div>
-        
+
         {{else}}
         <p>No items in your cart.</p>
         {{/each}}
-	</div>
-    <br/>
-    <br/>
-<div id="cart-summary">
-    <div class="price-wrap h3">
-        <span class="price-new">Total price: ${{cartTotalValue}}.00</span>
-    </div> 
-    <form id="check-out" action="/users/checkout">
-        <button class="btn btn-lg btn-primary text-uppercase" >Check out</button>
-    </form>
     </div>
-    <br/>
+
+    <br />
+    <br />
+    <div id="cart-summary">
+        {{!-- <p>Total price: {{cartTotalValue}}</p> --}}
+        <div class="price-wrap h3">
+            <span class="price-new">Total price: ${{cartTotalValue}}.00</span>
+        </div>
+        <form id="check-out" action="/users/checkout">
+            <button class="btn btn-lg btn-primary text-uppercase">Check out</button>
+        </form>
+        <button class="btn btn-lg btn-primary text-uppercase" id="clear-cart">Clear cart</button>
+
+    </div>
+    <br />
 </div>
 <script>
     let cartList = "{{cartList}}"

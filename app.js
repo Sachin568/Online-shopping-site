@@ -34,19 +34,18 @@ app.use(
     name: 'AuthCookie',
     secret: "Operation Aegis",
     saveUninitialized: true,
-    resave: false
+    resave: false,
+    expires: new Date(Date.now() + (86400 * 1000))//one day of expiration period
   })
 );
 app.use(paginate.middleware(50, 100));
 
-//TODO: implement "remember me" check box logic here
+//clear cookie after reboot
 app.use(async (req, res, next) => {
-  // console.log("cookie",res.cookie('userInfo',))
-  // res.cookie('userInfo',"test")
   if (req.session.userInfo) {
     res.cookie('userInfo', req.session.userInfo)
   } else {
-    res.clearCookie("userInfo")
+      res.clearCookie("userInfo")
   }
   next()
 })
