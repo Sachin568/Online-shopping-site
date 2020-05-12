@@ -9,36 +9,25 @@
         <div class="col-md-3" id="{{this._id}}">
             <figure class="card card-product">
                 <div class="img-wrap"><img src={{this.pic}} alt="No image"></div>
-            
-            
                 <figcaption class="info-wrap">
-                    <h4 class="title"> <a class="each_product_title" href="/products/{{this._id}}">{{this.name}}</a> - <span class="price-new">${{this.price}}.00</span>
-                    </h4>
+                    <h4 class="title"> <a class="each_product_title" href="/products/{{this._id}}">{{this.name}}</a> - <span class="price-new">${{this.price}}.00</span></h4>
                 </figcaption>
-                {{!-- <div class="price-wrap h5"> --}}
-                        {{!-- <span class="price-new">${{this.price}}.00</span> --}}
-                {{!-- </div>  --}}
             </figure>
-                {{!-- <div class="bottom-wrap"> --}}
-                    	<button class="btn btn-sm btn-outline-primary" id="remove-item-{{@index}}">remove</button>
-                        <br/>
-                        <br/>
-                        <br/>
-                {{!-- </div>  --}}
-            {{!-- </figure> --}}
+                <button class="btn btn-sm btn-outline-primary" id="remove-item-{{@index}}">remove</button>
+                <br/>
+                <br/>
+                <br/>
         </div>
         
         {{else}}
         <p>No items in your cart.</p>
         {{/each}}
 	</div>
-
-<br/>
-<br/>
+    <br/>
+    <br/>
 <div id="cart-summary">
-    {{!-- <p>Total price: {{cartTotalValue}}</p> --}}
     <div class="price-wrap h3">
-            <span class="price-new">Total price: ${{cartTotalValue}}.00</span>
+        <span class="price-new">Total price: ${{cartTotalValue}}.00</span>
     </div> 
     <form id="check-out" action="/users/checkout">
         <button class="btn btn-lg btn-primary text-uppercase" >Check out</button>

@@ -20,7 +20,7 @@
 					<h4>
 						<dt>Description</dt>
 					</h4>
-					<dl class="item-property card">
+					<dl class="item-property card container-fluid">
 						<dt>Rating</dt>
 						{{prodDetails.description.rating}}
 						<dt>Quantity</dt>
@@ -69,7 +69,7 @@
 </div>
 </div>
 <!--container.//-->
-<div class="" id="{{prodDetails._id}}">
+{{!-- <div class="" id="{{prodDetails._id}}">
 	<form id="comment" action="">
 		<input type="text" placeholder="Comment.." name="commentContent" id="commentContent">
 		<input type="number" placeholder="Rating.." name="commentRating" id="commentRating">
@@ -85,6 +85,50 @@
 	{{else}}
 	<p>No comments for this product.</p>
 	{{/each}}
-</div>
+</div> --}}
 
-<br><br><br>
+<br/><br/><br/>
+
+<section class="content-item" id="comments">
+    <div class="container">         
+    	<div class="row">
+            <div class="col-sm-8" id="{{prodDetails._id}}">   
+                <form id="comment" action="">
+                	<h3 class="pull-left">New Comment</h3>
+                    <fieldset>
+                        <div class="row">
+                            <div class="form-group col-xs-12 col-sm-9 col-lg-10">
+                                <textarea class="form-control" id="commentContent" name="commentContent" placeholder="Your message" required=""></textarea>
+								<h3 class="pull-left"> Rating </h3>
+								<input type="number" name="commentRating" id="commentRating" min="0" max="5">
+								{{!-- <div class="rating" name="commentRating" id="commentRating">
+									<input type="radio" id="star5" name="star5" value="5" /><label for="star5" title="Rocks!">5</label>
+									<input type="radio" id="star4" name="star4" value="4" /><label for="star4" title="Pretty good">4</label>
+									<input type="radio" id="star3" name="star3" value="3" /><label for="star3" title="Kinda bad">3</label>
+									<input type="radio" id="star2" name="star2" value="2" /><label for="star2" title="Meh">2</label>
+									<input type="radio" id="star1" name="star1" value="1" /><label for="star1" title="Sucks big time">1</label>
+								</div> --}}
+                            </div>
+                        </div>  	
+                    </fieldset>
+					<button type="submit" class="btn btn-normal pull-right" id="commentSubmit">Submit</button>
+                </form>
+                
+                <h3>Comments</h3>
+                
+                <div class="media">
+					<div id="comment" class="comment">
+						{{#each prodDetails.reviews}}
+						<div class="media-body">
+							<h4 class="media-heading">{{this.commenter}} - {{this.rating}}</h4>
+							<p>{{this.content}}</p>
+						</div>
+						{{else}}
+							<p>No comments for this product.</p>
+						{{/each}}
+					</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
