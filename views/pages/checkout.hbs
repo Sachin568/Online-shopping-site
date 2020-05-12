@@ -1,26 +1,68 @@
-<div class="check-out-review">
+<div class="check-out-review container-fluid">
     <h2>Review your order</h2>
+
+    <br/>
+    <br/>
+
     <div class="address login_form container">
         <h3>Confirm your shipping address:</h3>
-        <label for="street">Street</label>
-        <input type="text" placeholder={{#if userAddress.street}}{{userAddress.street}}{{else}}street{{/if}}
-            name="street" id="street" readonly="readonly">
+        <div class="container-fluid">
+            <label for="street">Street</label>
+            <input type="text" placeholder={{#if userAddress.street}}{{userAddress.street}}{{else}}street{{/if}}
+                name="street" id="street" readonly="readonly">
 
-        <label for="city">City</label>
-        <input type="text" placeholder={{#if userAddress.city}}{{userAddress.city}}{{else}}city{{/if}} name="city"
-            id="city" readonly="readonly">
+            <label for="city">City</label>
+            <input type="text" placeholder={{#if userAddress.city}}{{userAddress.city}}{{else}}city{{/if}} name="city"
+                id="city" readonly="readonly">
 
-        <label for="state">State</label>
-        <input type="text" placeholder={{#if userAddress.state}}{{userAddress.state}}{{else}}state{{/if}} name="state"
-            id="state" readonly="readonly">
+            <label for="state">State</label>
+            <input type="text" placeholder={{#if userAddress.state}}{{userAddress.state}}{{else}}state{{/if}} name="state"
+                id="state" readonly="readonly">
 
-        <label for="zipCode">Zipcode</label>
-        <input type="text" placeholder={{#if userAddress.zipCode}}{{userAddress.zipCode}}{{else}}zipCode{{/if}}
-            name="zipCode" id="zipCode" readonly="readonly">
+            <label for="zipCode">Zipcode</label>
+            <input type="text" placeholder={{#if userAddress.zipCode}}{{userAddress.zipCode}}{{else}}zipCode{{/if}}
+                name="zipCode" id="zipCode" readonly="readonly">
+        </div>
     </div>
-    <div class="review-cart">
+    <div class="review-cart container-fluid">
         <h3>Review your cart:</h3>
-        <ul>
+        
+
+        <div class="container-fluid">
+            <div class="row">
+                {{#each cartList}}
+                <div class="col-md-3" id="{{this._id}}">
+                    <figure class="card card-product">
+                        <div class="img-wrap"><img src={{this.pic}} alt="No image"></div>
+                        <figcaption class="info-wrap">
+                            <h4 class="title"> <a class="each_product_title" href="/products/{{this._id}}">{{this.name}}</a> - <span class="price-new">${{this.price}}.00</span></h4>
+                        </figcaption>
+                    </figure>
+                        <button class="btn btn-sm btn-outline-primary" id="remove-item-{{@index}}">remove</button>
+                        <br/>
+                        <br/>
+                        <br/>
+                </div>
+                
+                {{else}}
+                <p>No items in your cart.</p>
+                {{/each}}
+            </div>
+
+            <div id="cart-summary">
+                <div class="price-wrap h3">
+                    <span class="price-new">Total price: ${{cartTotalValue}}.00</span>
+                </div> 
+                <form id="place-order" action="/users/orderplaced">
+                    <button class="btn btn-lg btn-primary text-uppercase" >Place your order</button>
+                </form>
+            </div>
+            <br/>
+            <br/>
+        </div>
+
+
+        {{!-- <ul>
             {{#each cartList}}
             <li id="{{this._id}}"><a href="/products/{{this._id}}">{{this.name}}</a> - {{this.price}}<br />
                 {{this.description}}<br />
@@ -38,7 +80,7 @@
             <button>Place your order</button>
         </form>
 
-    </div>
+    </div> --}}
 </div>
 <script type="text/javascript">
     var address = {{{ json userAddress }}}
