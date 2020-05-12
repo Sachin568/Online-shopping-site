@@ -32,10 +32,10 @@ const main = async () => {
   let email = "123@123.com"
 
   // let u1 = await usersData.addUser(basicInfo, email, "wry")
-  const comments = db.collection('comments').drop()
+  // const comments = db.collection('comments').drop()
   let u1 = await usersData.getUserByName('dio')
-  let p1 = await productsData.getProductById("5eb4a52b8c261c69a007d649")
-  await productsData.patchProduct(p1._id,{"reviews":[]})
+  // let p1 = await productsData.getProductById("5eb4a52b8c261c69a007d649")
+  // await productsData.patchProduct(p1._id,{"reviews":[]})
   // let u11 = await usersData.updateUser(String(u1._id),"shffhh",u1.address)
   // address1.state = "awikjghui"
   // let u12 = await usersData.updateUser(u11._id,email,address1)
@@ -52,13 +52,35 @@ const main = async () => {
   // let c1 = await usersData.getUserCart(u1._id)
 
 
-  let co1 = await commentsData.addComment("gud", u1._id, "5eb4a52b8c261c69a007d649", 5)
-  let co2 = await commentsData.addComment("whoaaaaa", u1._id, "5eb4a52b8c261c69a007d649", 5)
-  p1 = await productsData.getProductById("5eb4a52b8c261c69a007d649")
+  // let co1 = await commentsData.addComment("gud", u1._id, "5eb4a52b8c261c69a007d649", 5)
+  // let co2 = await commentsData.addComment("whoaaaaa", u1._id, "5eb4a52b8c261c69a007d649", 5)
+  // p1 = await productsData.getProductById("5eb4a52b8c261c69a007d649")
 
 
   // let u11 = await usersData.getUserById(u1._id)
-  console.log("result:", p1)
+  // console.log("result:", p1)
+  
+  // let cart = await usersData.getUserCart(u1._id)
+  // async function countAndCalculate(arr) {
+  //   let hashtable = {}
+  //   let value = 0
+  //   //convert to hashtable first
+  //   for (let id of arr) {
+  //     hashtable[id] = hashtable[id] ? hashtable[id] + 1 : 1
+  //   }
+  //   //then add count property into each of the item returned
+  //   detailedItems = []
+  //   for (id in hashtable) {
+  //     let item = await productsData.getProductById(id)
+  //     item.count = hashtable[id]
+  //     detailedItems.push(item)
+  //     value+=item.count*item.price
+  //   }
+  //   return {detailedItems:detailedItems,value:value}
+  // }
+  // let res = await convert(cart)
+  // console.log(res.value)
+
 };
 main().catch((error) => {
   console.log(error);
