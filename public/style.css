@@ -43,6 +43,17 @@ header {
   border: none;
 }
 
+.category-fill {
+  background-color: #299C45;
+  color: #E9F6EC;
+  border-radius: 4px;
+  height: 38px;
+}
+
+.category-fill a:hover {
+  color: #E9F6EC;
+}
+
 /* .topnav .search-container button {
   float: right;
   padding: 6px 10px;
