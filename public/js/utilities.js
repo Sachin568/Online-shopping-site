@@ -1,25 +1,8 @@
 $(document).ready(function (response) {
-    // console.log(document.cookie.split(';'))
+    console.log(document.cookie.split(';'))
     checkStatus($.cookie("userInfo"))
 })
-// $("#search").submit(function (event) {
-// event.preventDefault()
-// console.log($("#searchbar").val())
-// return
-// $.ajax({
-//     url: "/mainpage",
-//     type: "get",
-//     data: {
-//         searchOn: $("#searchbar").val()
-//     },
-//     success: function (response) {
-//         //Do Something
-//     },
-//     error: function (xhr) {
-//         //Do Something to handle error
-//     }
-// });
-// })
+//search function is with the plain form, not ajax for it
 //add item into cart
 $("button").click(function () {
     if (this.id.match(/add-to-cart-\d/)) {
@@ -30,7 +13,7 @@ $("button").click(function () {
             type: "post",
             data: {
                 ProductToCart: productIdToAdd,
-                quantity:$("#quantity").val()
+                quantity: $("#quantity").val()
             },
             success: function (response) {
                 console.log(response)

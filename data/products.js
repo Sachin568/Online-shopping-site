@@ -96,6 +96,38 @@ module.exports = {
       return { productList: productList, listSize: listSize, itemCount: itemCount }
     }
   },
+  //temporary added
+  async searchProductByCategory(category, limit, skip) {
+    const productCollection = await products();
+
+    let listSize = await productCollection.find({ "description.category": category }).toArray();
+    listSize = listSize.length
+
+    if (!category) {
+      throw "must provide a category for searching"
+    } else {
+      const productList = await productCollection.find({ "category": category }).skip(skip).limit(limit).toArray();
+      const itemCount = productList.length
+      if (productList === null) throw 'No products with that name';
+      return { productList: productList, listSize: listSize, itemCount: itemCount }
+    }
+  },
+  //temporary added
+  async searchProductByNameAndCategory(name, category, limit, skip) {
+    const productCollection = await products();
+
+    let listSize = await productCollection.find({ "name": { $regex: `.*${name}.*` }, "description.category": category }).toArray();
+    listSize = listSize.length
+
+    if (!name) {
+      throw "must provide a name for searching"
+    } else {
+      const productList = await productCollection.find({ "name": { $regex: `.*${name}.*` }, "category": category }).skip(skip).limit(limit).toArray();
+      const itemCount = productList.length
+      if (productList === null) throw 'No products with that name';
+      return { productList: productList, listSize: listSize, itemCount: itemCount }
+    }
+  },
 
   async getProductById(id) {
     if (!id) throw 'You must provide an id to search for';
