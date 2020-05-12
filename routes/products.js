@@ -30,14 +30,16 @@ router.post("/addCart", async (req, res) => {
     return
   }
   let userCart = user.shoppingCart
-  userCart.push(req.body.ProductToCart)
+  //stupid way to add multiple items into cart
+  for (i = 0; i < req.body.quantity; i++) {
+    userCart.push(req.body.ProductToCart)
+  }
   try {
     usersData.patchUser(user._id, { "shoppingCart": userCart })
   } catch{
     throw `unable to add item.`
   }
   console.log("Item has been added into user", user.basicInfo.username, "'s cart")
-  console.log(await usersData.getUserById(userId))
   res.sendStatus(200);
 })
 router.post("/addwishlist", async (req, res) => {
@@ -58,7 +60,6 @@ router.post("/addwishlist", async (req, res) => {
     throw `unable to add item.`
   }
   console.log("Item has been added into user", user.basicInfo.username, "'s wishList")
-  console.log(await usersData.getUserById(userId))
   res.sendStatus(200);
 })
 // move to cart and delete from wishlist
@@ -77,7 +78,7 @@ router.post("/movetowishlist", async (req, res) => {
   userShoppingCart.push(req.body.ProductMoveToCart)
 
   try {
-    usersData.patchUser(user._id, { "wishList": userWishList,"shoppingCart":userShoppingCart })
+    usersData.patchUser(user._id, { "wishList": userWishList, "shoppingCart": userShoppingCart })
   } catch{
     throw `unable to add item.`
   }

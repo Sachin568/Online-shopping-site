@@ -29,11 +29,12 @@ $("button").click(function () {
             url: "/products/addCart",
             type: "post",
             data: {
-                ProductToCart: productIdToAdd
+                ProductToCart: productIdToAdd,
+                quantity:$("#quantity").val()
             },
             success: function (response) {
                 console.log(response)
-                alert("product has been added to cart.")
+                alert(`product of ${$("#quantity").val()} has been added to cart.`)
             },
             error: function (xhr) {
                 alert(JSON.parse(xhr.responseText).errormessage)
