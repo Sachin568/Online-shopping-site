@@ -16,6 +16,16 @@ const dbConnection = require('../config/mongoConnection');
 const main = async () => {
     const db = await dbConnection();
     // await db.dropDatabase();
+    // fs.readFile('products_data.json', 'utf8', function (err, data) {
+    //     if (err) throw err;
+    //     console.log(data);
+    //     var json = JSON.parse(data);
+    
+    //     db.configurations.insert(json, function(err, doc) {
+    //         console.log(data);
+    //         if(err) throw err;
+    //     });
+    // });
     // TODO:seed scripts here:
     let basicInfo = {
         username: "DIO",
