@@ -1,58 +1,32 @@
-const usersData = require("./users");
-const productsData = require("./products");
-const commentsData = require("./comments");
-const categoryData = require("./category");
-const ordersData = require("./orders");
-// test
-const mongoCollections = require('../config/mongoCollections');
-const users = mongoCollections.users;
-
-// test
 const dbConnection = require('../config/mongoConnection');
-// const data = require('./data/');
-// const bandsData = data.bands;
-// const albumsData = data.albums
-//test cases
+const mongoCollections = require('../config/mongoCollections');
+
+const data = require('./seed_data/');
+// const usersData = require("../data/users");
+const productsData = require("../data/products");
+// const commentsData = require("../data/comments");
+// const categoryData = require("../data/category");
+// const ordersData = require("../data/orders");
+// const users = mongoCollections.users;
+
+
 const main = async () => {
     const db = await dbConnection();
-    // await db.dropDatabase();
-    // fs.readFile('products_data.json', 'utf8', function (err, data) {
-    //     if (err) throw err;
-    //     console.log(data);
-    //     var json = JSON.parse(data);
-    
-    //     db.configurations.insert(json, function(err, doc) {
-    //         console.log(data);
-    //         if(err) throw err;
-    //     });
-    // });
-    // TODO:seed scripts here:
-    let basicInfo = {
-        username: "DIO",
-        birthdate: "101010101"
-    }
-    let email = "123@123.com"
-
-    // let u1 = await usersData.addUser(basicInfo, email, "wry")
-    // let p1 = await productsData.addProduct("tea", "tea", 29.99, {description:"make your friend fall asleep"}, "static/imgs/green-tea-pouring-cup.jpg")
-    // let p2 = await productsData.addProduct("lethargic tea", "tea", 49.99, "make your friend fall asleep in 3 seconds", "static/imgs/green-tea-pouring-cup.jpg")
-    // let p3 = await productsData.addProduct("lethargic tea 野獣先輩 limited edition", "tea", 114.514, "イキスギイクゥ！イクイクゥ！ンアッー！", "static/imgs/野兽先辈.jpg")
-    // let c1 = await commentsData.addComment("wtf is this",u1._id,1)
-    // let c2 = await commentsData.addComment("wtf is this???",u1._id,0.1)
-    // await productsData.addProductToCart(u1._id,p1._id)
-    // await productsData.addProductToCart(u1._id,p2._id)
-    // let u11 = await usersData.getUserById(u1._id)
-    // console.log(u11)
-
+    const fs = require('fs');
+    let groceryData = fs.readFileSync('products_data.json');  
+    let grocery = JSON.parse(groceryData);  
+    db.Final_Project.insertMany(grocery);
+    // console.log(cities);
+    await db.serverConfig.close();
 };
 main().catch((error) => {
     console.log(error);
 });
 
 module.exports = {
-    users: usersData,
-    products: productsData,
-    comments: commentsData,
-    category: categoryData,
-    orders: ordersData
+    // users: usersData,
+    products: productsData//,
+    // comments: commentsData,
+    // category: categoryData,
+    // orders: ordersData
 };
