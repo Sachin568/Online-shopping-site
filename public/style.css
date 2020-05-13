@@ -8,6 +8,22 @@ header {
   color: red;
   text-align: center;
 }
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  padding-top: 80px;
+  margin-bottom: 60px;
+}
+@media (max-width: 979px) {
+  body {
+    padding-top: 0px;
+  }
+}
+
 .topnav {
   overflow: hidden;
   /* background-color: #343A40; */
@@ -46,8 +62,18 @@ header {
 .category-fill {
   background-color: #299C45;
   color: #E9F6EC;
-  border-radius: 4px;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
   height: 38px;
+}
+
+.search-round-corners {
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  height: 38px;
+  width: 350px;
+  outline: none;
+  border: 0px solid;
 }
 
 .category-fill a:hover {
@@ -77,9 +103,9 @@ header {
   align-items: center;
 }
 
-.login_form form {
+/* .login_form form {
   border: 3px solid #f1f1f1;
-}
+} */
 
 /* Full-width inputs */
 
@@ -235,13 +261,28 @@ body {
 .pagination {
   margin-top: 20px;
 }
-footer {
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  line-height: 60px; /* Vertically center the text there */
+  background-color: #f5f5f5;
+}
+
+/* footer {
   background: #343a40;
   padding: 40px;
 }
 footer a {
   color: #f8f9fa!important
 }
+
+.stky-footer {
+  background: blue;
+} */
 
 /* Nav bar end*/
 
@@ -435,3 +476,7 @@ body{margin-top:20px;}
 }
 
 /* star rating end */
+
+.footer-git {
+  text-align: center;
+}
