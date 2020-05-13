@@ -37,7 +37,7 @@
                             <h4 class="title"> <a class="each_product_title" href="/products/{{this._id}}">{{this.name}}</a> - <span class="price-new">${{this.price}}.00</span></h4>
                         </figcaption>
                     </figure>
-                        <button class="btn btn-sm btn-outline-primary" id="remove-item-{{@index}}">remove</button>
+                        <button class="btn btn-sm button-primary" id="remove-item-{{@index}}">remove</button>
                         <br/>
                         <br/>
                         <br/>
@@ -53,7 +53,7 @@
                     <span class="price-new">Total price: ${{cartTotalValue}}.00</span>
                 </div> 
                 <form id="place-order" action="/users/orderplaced">
-                    <button class="btn btn-lg btn-primary" >Place your order</button>
+                    <button class="btn btn-lg button-primary" >Place your order</button>
                 </form>
             </div>
             <br/>

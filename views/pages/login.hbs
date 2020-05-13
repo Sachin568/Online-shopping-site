@@ -4,11 +4,14 @@
 <div class="login_form">
     <form id="login-form" action="/users/login" method="post">
         <div class="container">
-            <label for="username"><b>Username</b></label>
-            <input type="text" placeholder="Enter Username" name="username" id="username" required>
-
-            <label for="psw"><b>Password</b></label>
-            <input type="password" placeholder="Enter Password" name="psw" id="psw" required>
+            <label for="username">
+                <b>Username</b>
+                <input type="text" placeholder="Enter Username" name="username" id="username" required>
+            </label>
+            <label for="psw">
+                <b>Password</b>
+                <input type="password" placeholder="Enter Password" name="psw" id="psw" required>
+            </label>
             <div class="button-group">
                 <button type="submit">Login</button>
                 <button type="button" class="cancelbtn" onclick="location.href='/mainpage'">Cancel</button>
