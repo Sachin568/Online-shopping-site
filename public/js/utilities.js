@@ -281,6 +281,11 @@ $('#signupForm').submit((event) => {
     $('#errormessage').hide();
     console.log($('#psw-repeat').val(), $('#psw').val())
     // console.log($('#signupForm').serialize())
+    if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test($("#email").val())) {
+        alert("please input a valid email address.")
+        return
+     }
+
     if ($('#psw-repeat').val() != $('#psw').val()) {
         $('#errormessage').text("Password doesn't match!")
         $('#errormessage').show();
@@ -290,6 +295,7 @@ $('#signupForm').submit((event) => {
             type: 'POST',
             data: $('#signupForm').serialize(),
             success: function (response) {
+                alert("welcome, please sign in.")
                 window.location.href = response.redirectURL;
             },
             error: function (jqXHR, textStatus, errorThrown) {

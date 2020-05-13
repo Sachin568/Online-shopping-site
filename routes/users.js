@@ -14,18 +14,18 @@ async function countAndCalculate(arr) {
     let value = 0
     //convert to hashtable first
     for (let id of arr) {
-      hashtable[id] = hashtable[id] ? hashtable[id] + 1 : 1
+        hashtable[id] = hashtable[id] ? hashtable[id] + 1 : 1
     }
     //then add count property into each of the item returned
     detailedItems = []
     for (id in hashtable) {
-      let item = await productsData.getProductById(id)
-      item.count = hashtable[id]
-      detailedItems.push(item)
-      value+=item.count*item.price
+        let item = await productsData.getProductById(id)
+        item.count = hashtable[id]
+        detailedItems.push(item)
+        value += item.count * item.price
     }
-    return {detailedItems:detailedItems,value:value}
-  }
+    return { detailedItems: detailedItems, value: value }
+}
 
 router.get("/login", async (req, res) => {
     res.locals.metaTags = {
@@ -214,13 +214,17 @@ router.post("/account", async (req, res) => {
 //change psw here
 router.get("/pswchange", async (req, res) => {
     console.log("user", req.session.userInfo, "is accessing psw changing page.")
+    if (!req.session.userId || typeof (req.session.userId) == "undefined") {
+        res.redirect("/mainpage")
+        return
+    }
     res.status(200).render("pages/pswchange")
 })
 //TODO: clear cookie and session
 router.post("/pswchange", async (req, res) => {
     const oldPsw = req.body['old-psw']
     const newPsw = req.body['new-psw']
-    // if (!req.session.userId) res.redirect("/mainpage")
+    const birthdate = req.body['birthdate']
     console.log("user", req.session.userInfo, "is trying to change psw.")
     console.log(oldPsw, newPsw)
     let user
@@ -228,6 +232,10 @@ router.post("/pswchange", async (req, res) => {
         user = await usersData.getUserById(req.session.userId)
     } catch{
         throw "no user found"
+    }
+    if (birthdate != user.basicInfo.birthdate) {
+        res.status(400).send({ errormessage: "Your birthdate is not match." })
+        return
     }
     try {
         const mtp = await usersData.updateUserPsw(req.session.userId, oldPsw, newPsw)
