@@ -26,13 +26,14 @@ const main = async () => {
     //     });
     // });
     // TODO:seed scripts here:
+    //keep Mr. Dio for historical reason
     let basicInfo = {
         username: "DIO",
         birthdate: "101010101"
     }
     let email = "123@123.com"
 
-    // let u1 = await usersData.addUser(basicInfo, email, "wry")
+    let u1 = await usersData.addUser(basicInfo, email, "wry")
     await productsData.addProduct("Pinto Beans","Beans",28,{quantity:"1 pound","energy-kcal_100g":167,"energy_100g":699,"fat_100g":0,"saturated-fat_100g":0,"rating":2.94},"https://static.openfoodfacts.org/images/products/008/523/934/6518/front_en.5.400.jpg")
     await productsData.addProduct("Alubia pinta","Beans",17,{quantity:"1 Kg","energy-kcal_100g":0,"energy_100g":0,"fat_100g":0,"saturated-fat_100g":0,"rating":3.35},"https://static.openfoodfacts.org/images/products/843/187/605/5641/front_es.5.400.jpg")
     await productsData.addProduct("Pinto Beans Seasoned With Pork","Beans",21,{quantity:"15 oz","energy-kcal_100g":85,"energy_100g":356,"fat_100g":0.77,"saturated-fat_100g":0,"rating":0.55},"https://static.openfoodfacts.org/images/products/088/439/506/1019/front_en.4.400.jpg")

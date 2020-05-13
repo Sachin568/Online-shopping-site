@@ -1,11 +1,11 @@
 $(document).ready(function (response) {
     console.log(document.cookie.split(';'))
     checkStatus($.cookie("userInfo"))
-    if(selectedCategory){
+    if (selectedCategory) {
         console.log(selectedCategory)
         $("#category").val(selectedCategory)
     }
-    if(selectedSearchOn){
+    if (selectedSearchOn) {
         console.log(selectedSearchOn)
         $("#searchbar").val(selectedSearchOn)
     }
@@ -366,9 +366,22 @@ $("#forget-psw").click(function (event) {
     event.preventDefault()
     alert("We cannot help you. Good luck then.")
     return
-}
+})
+$("#navigation li").click(function (event) {
+    // event.preventDefault();
+    const pageParam = $(this).find("a").attr("href")
+    console.log(pageParam)
+    const newAction = $("#search").attr("action") + pageParam + "&searchOn=" + $("#searchbar").val() + "&category=" + $("#category").val()
+    console.log(newAction)
+    $(this).find("a").attr("href", newAction)
+    console.log($(this).find("a").attr("href"))
+    // return
+    // $("#search").attr('action', newAction)
+    // console.log($("#search").attr("action"))
+    // return
+    // $("#search").attr('action', newAction).submit()
+})
 
-)
 
 function checkStatus(userInfo) {
     console.log(userInfo)

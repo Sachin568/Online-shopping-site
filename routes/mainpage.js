@@ -9,9 +9,9 @@ router.get("/:page*?", async (req, res) => {
     res.locals.metaTags = {
         title: "Mainpage"
     }
+    console.log(req.query,req.query.page)
     const page = req.query.page || 1
     // console.log(page, req.query.limit, req.skip)
-    console.log(req.query, "|", req.body)
     let offeredProducts, status, searchOn, totalPagesCount, searchCategory
     searchOn = req.query.searchOn
     searchCategory = req.query.category ? req.query.category : "All"

@@ -39,7 +39,7 @@
                 <br/>
                 <label for "pagination">
                     Page navigation
-                <ul class="pagination pagination-centered">
+                <ul class="pagination pagination-centered" id="navigation">
                     {{#paginate pagination type="first"}}
                         <li {{#if disabled}}class="page-item disabled" {{/if}}><a class="page-link-black" href="?page={{n}}">First</a></li>
                     {{/paginate}}

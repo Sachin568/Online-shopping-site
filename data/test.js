@@ -15,14 +15,14 @@ const dbConnection = require('../config/mongoConnection');
 // const albumsData = data.albums
 //test cases
 const main = async () => {
-  const db = await dbConnection();
+  // const db = await dbConnection();
   // await db.dropDatabase();
 
-  // fs.readFile('./products_data.json', (err, data) => {
-  //   if (err) throw err;
+  fs.readFile('./test.json', (err, data) => {
+    if (err) throw err;
 
-  //   console.log(JSON.parse(data));
-  // })
+    console.log(JSON.parse(data));
+  })
   // insert json in collection
   // const productCollection = await products();
   // let allp = await productCollection.updateMany({},
@@ -74,9 +74,7 @@ const main = async () => {
   // p1 = await productsData.getProductById("5eb4a52b8c261c69a007d649")
 
 
-  if (!/\S/.test("    ")) {
-    console.log("Comment cannot be empty.")
-}
+
 
 };
 main().catch((error) => {
