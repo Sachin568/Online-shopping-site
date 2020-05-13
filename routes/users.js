@@ -46,7 +46,6 @@ router.post("/login", async (req, res) => {
     let username = req.body['username']
     let psw = req.body['psw']
     let rememberMe = req.body['rememberme']// string "on" / undefined
-    console.log(`user "${username}" is trying to log in with psw: ${psw}`)
     let user
     try {
         user = await usersData.getUserByName(username)

@@ -1,6 +1,7 @@
-header {
-  border-bottom: 10px solid black;
-}
+/* header { */
+  /* border-bottom: 10px solid black; */
+/* } */
+
 * {box-sizing: border-box;}
 
 #errormessage{
@@ -32,17 +33,17 @@ body {
 .topnav a {
   float: left;
   display: block;
-  color: black;
+  /* color: black; */
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
   font-size: 17px;
 }
 
-.topnav a:hover {
+/* .topnav a:hover { */
   /* background-color: #ddd; */
-  color: black;
-}
+  /* color: black; */
+/* } */
 
 .topnav a.logo {
   font-size: 120%;
@@ -59,9 +60,18 @@ body {
   border: none;
 }
 
+.navbar-nav.mr-auto li a {
+  color: #ddd;  
+}
+
 .category-fill {
-  background-color: #299C45;
-  color: #E9F6EC;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  height: 38px;
+  /* width: 200px; */
+}
+
+.category-round-corners {
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
   height: 38px;
@@ -134,7 +144,7 @@ hr {
 /* Set a style for all buttons */
 
 .login_form button {
-  background-color: rgb(162, 189, 120);
+  background-color:#343A40;
   color: white;
   padding: 14px 20px;
   margin: 8px 8px;
@@ -157,7 +167,7 @@ hr {
 /* Extra style for the cancel button (red) */
 
 .login_form .cancelbtn {
-  background-color: rgb(224, 79, 79);
+  background-color: #343A40;
 }
 
 /* Add padding to containers */
@@ -212,6 +222,16 @@ body {
 
 /* Nav bar start*/
 
+.button-outline-success {
+  color: rgb(30, 114, 51);
+}
+
+.navigation-link {
+  display: block;
+  padding: .5rem 1rem;
+  color: #fff;
+}
+
 .bloc_left_price {
   color: #c01508;
   text-align: center;
@@ -219,7 +239,7 @@ body {
   font-size: 150%;
 }
 .category_block li:hover {
-  background-color: #007bff;
+  background-color: #343A40;
 }
 .category_block li:hover a {
   color: #ffffff;
@@ -285,6 +305,51 @@ footer a {
 } */
 
 /* Nav bar end*/
+
+.button-primary {
+  color: #fff;
+  background-color: #343a40;
+  border-color: #343a40;
+}
+
+.button-outline-primary {
+  color: #343a40;
+  background-color: transparent;
+  background-image: none;
+  border-color: #343a40;
+}
+
+.price-color {
+  color: #343A40;
+}
+
+.page-link-black {
+  z-index: 1;
+  color: #343a40;
+  background-color: #343a40;
+  background: #fff;
+  border-color: #343a40;
+  position: relative;
+  display: block;
+  padding: .5rem .75rem;
+  margin-left: -1px;
+  line-height: 1.25;
+  border: 1px solid #dee2e6;
+}
+
+.page-link-black-active {
+  z-index: 1;
+  color: #fff;
+  background-color: #343a40;
+  background: #343a40;
+  border-color: #343a40;
+  position: relative;
+  display: block;
+  padding: .5rem .75rem;
+  margin-left: -1px;
+  line-height: 1.25;
+  border: 1px solid #dee2e6;
+}
 
 /* comments start */
 

@@ -5,16 +5,17 @@
 			<aside class="col-sm-5 border-right">
 				<article class="gallery-wrap">
 					<div class="img-big-wrap">
-						<div> <a href="#"><img class="img-fluid w-100" src="{{prodDetails.pic}}"></a></div>
+						<div> <a href="#"><img class="img-fluid w-100" src="{{prodDetails.pic}}" alt="No image"></a></div>
 					</div> <!-- slider-product.// -->
 				</article> <!-- gallery-wrap .end// -->
 			</aside>
+			<h2></h2>
 			<aside class="col-sm-7">
 				<article class="card-body p-5">
 					<h3 class="title mb-3">{{prodDetails.name}}</h3>
 
 					<p class="price-detail-wrap">
-						<span class="price h3 text-warning">
+						<span class="price h3 price-color">
 							<span class="currency">US ${{prodDetails.price}}
 							</span>
 					</p> <!-- price-detail-wrap .// -->
@@ -58,8 +59,8 @@
 					</div> <!-- row.// -->
 					<hr>
 					<div class="single-product" id="{{prodDetails._id}}">
-						<button class="btn btn-lg btn-primary text-uppercase" id="add-to-wish-list-0"> Add to wishlist </button>
-						<button class="btn btn-lg btn-outline-primary text-uppercase" id="add-to-cart-0"> Add to cart
+						<button class="btn btn-lg button-primary text-uppercase" id="add-to-wish-list-0"> Add to wishlist </button>
+						<button class="btn btn-lg button-primary text-uppercase" id="add-to-cart-0"> Add to cart
 						</button>
 					</div>
 				</article> <!-- card-body.// -->
@@ -81,8 +82,14 @@
                     <fieldset>
                         <div class="row">
                             <div class="form-group col-xs-12 col-sm-9 col-lg-10">
-                                <textarea class="form-control" id="commentContent" name="commentContent" placeholder="Your message" required=""></textarea>
+								<label for="commentContent">
+										Enter comment here...
+									<textarea class="form-control" id="commentContent" name="commentContent" placeholder="Your message" required="" style=" min-width:500px; max-width:100%;min-height:50px;height:100%;width:100%;">
+									</textarea>
+								</label>
 								<h3 class="pull-left"> Rating </h3>
+								<label for="commentRating">
+									Enter your rating
 								<input type="number" name="commentRating" id="commentRating" min="0" max="5">
 								{{!-- <div class="rating" name="commentRating" id="commentRating">
 									<input type="radio" id="star5" name="star5" value="5" /><label for="star5" title="Rocks!">5</label>
@@ -91,6 +98,7 @@
 									<input type="radio" id="star2" name="star2" value="2" /><label for="star2" title="Meh">2</label>
 									<input type="radio" id="star1" name="star1" value="1" /><label for="star1" title="Sucks big time">1</label>
 								</div> --}}
+								</label>
                             </div>
                         </div>  	
                     </fieldset>
