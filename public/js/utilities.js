@@ -223,19 +223,19 @@ $("#check-out").submit(function (event) {
         event.preventDefault(event);
         return
     }
-    $.ajax({
-        url: "",///users/checkout
-        type: "get",
-        data: {
-        },
-        success: function (response) {
-            console.log(response)
-            // window.location.href = response.redirectURL
-        },
-        error: function (xhr) {
-            alert(JSON.parse(xhr.responseText).errormessage)
-        },
-    });
+    // $.ajax({
+    //     url: "",///users/checkout
+    //     type: "get",
+    //     data: {
+    //     },
+    //     success: function (response) {
+    //         console.log(response)
+    //         // window.location.href = response.redirectURL
+    //     },
+    //     error: function (xhr) {
+    //         alert(JSON.parse(xhr.responseText).errormessage)
+    //     },
+    // });
 })
 $("#place-order").submit(function (event) {
     console.log(address)

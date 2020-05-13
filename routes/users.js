@@ -16,6 +16,7 @@ async function countAndCalculate(arr) {
     for (let id of arr) {
         hashtable[id] = hashtable[id] ? hashtable[id] + 1 : 1
     }
+    console.log("hashtable:",hashtable)
     //then add count property into each of the item returned
     detailedItems = []
     for (id in hashtable) {
@@ -24,6 +25,8 @@ async function countAndCalculate(arr) {
         detailedItems.push(item)
         value += item.count * item.price
     }
+    console.log("detailedItems",detailedItems)
+    console.log("------------------------")
     return { detailedItems: detailedItems, value: value }
 }
 
@@ -320,27 +323,35 @@ router.get("/checkout", async (req, res) => {
     if (!userId | typeof (userId) === "undefined") {
         res.redirect("/mainpage")
     }
-    let user
+    let userShoppingCartIds, user
     try {
+        // userShoppingCartIds = await usersData.getUserCart(userId)
         user = await usersData.getUserById(userId)
+        userShoppingCartIds = user.shoppingCart
+
     } catch{
         return
     }
-    let userShoppingCartIds = user.shoppingCart
+    // let userShoppingCartIds = user.shoppingCart
     // if (typeof userShoppingCartIds == 'undefined' | userShoppingCartIds.length == 0) {
     //     console.log("error occurred when checking out.")
     //     // res.status(400).json({ errormessage: "Your cart is empty" })
     //     return
     // }
-    let userShoppingCart = []
-    let cartTotalValue = 0
-    for (let id of userShoppingCartIds) {
-        let item = await productsData.getProductById(id)
-        userShoppingCart.push(item)
-        cartTotalValue += item.price
-    }
+    console.log(userShoppingCartIds)
+    let returned = await countAndCalculate(userShoppingCartIds)
+    // console.log(returned)
+
+    // let userShoppingCart = []
+    // let cartTotalValue = 0
+    // for (let id of userShoppingCartIds) {
+    //     let item = await productsData.getProductById(id)
+    //     userShoppingCart.push(item)
+    //     cartTotalValue += item.price
+    // }
     delete user._id
-    res.status(200).render("pages/checkout", { userAddress: user.address, cartList: userShoppingCart, cartTotalValue: cartTotalValue })
+    // res.status(200).render("pages/checkout", { userAddress: user.address, cartList: userShoppingCart, cartTotalValue: cartTotalValue })
+    res.status(200).render("pages/checkout", { userAddress: user.address, cartList: returned.detailedItems, cartTotalValue: returned.value })
 })
 
 router.get("/orderplaced", async (req, res) => {
@@ -389,12 +400,13 @@ router.get("/orderhistory", async (req, res) => {
     let userDetailedOrderHistory = []
     for (let id of userOrderHistory) {
         let order = await ordersData.getOrdertById(id)
-        let ordreDetailedProducts = []
-        for (let productId of order.products) {
-            let deteiledProduct = await productsData.getProductById(productId)
-            ordreDetailedProducts.push(deteiledProduct)
-        }
-        order.products = ordreDetailedProducts
+        returned = await countAndCalculate(order.products)
+        // let ordreDetailedProducts = []
+        // for (let productId of order.products) {            
+        //     let deteiledProduct = await productsData.getProductById(productId)
+        //     ordreDetailedProducts.push(deteiledProduct)
+        // }
+        order.products = returned.detailedItems
         userDetailedOrderHistory.push(order)
     }
     res.status(200).render("pages/orderhistory", { orderHistory: userDetailedOrderHistory })
