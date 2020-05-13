@@ -22,22 +22,22 @@
         <div class="address">
             <label for="street">Street</label>
             <input type="text"
-                value={{#if userDetails.address.street}}{{userDetails.address.street}}{{else}}{{/if}}
+                value={{#if userDetails.address.street}}{{userDetails.address.street}}{{else}}empty{{/if}}
                 name="street" id="street" required>
 
             <label for="city">City</label>
             <input type="text"
-                value={{#if userDetails.address.city}}{{userDetails.address.city}}{{else}}{{/if}} name="city"
+                value={{#if userDetails.address.city}}{{userDetails.address.city}}{{else}}empty{{/if}} name="city"
                 id="city" required>
 
             <label for="state">State</label>
             <input type="text"
-                value={{#if userDetails.address.state}}{{userDetails.address.state}}{{else}}{{/if}}
+                value={{#if userDetails.address.state}}{{userDetails.address.state}}{{else}}empty{{/if}}
                 name="state" id="state" required>
 
             <label for="zipCode">Zipcode</label>
             <input type="text"
-                value={{#if userDetails.address.zipCode}}{{userDetails.address.zipCode}}{{else}}{{/if}}
+                value={{#if userDetails.address.zipCode}}{{userDetails.address.zipCode}}{{else}}empty{{/if}}
                 name="zipCode" id="zipCode" required>
 
         </div>

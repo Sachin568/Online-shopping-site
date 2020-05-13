@@ -1,6 +1,14 @@
 $(document).ready(function (response) {
     console.log(document.cookie.split(';'))
     checkStatus($.cookie("userInfo"))
+    if(selectedCategory){
+        console.log(selectedCategory)
+        $("#category").val(selectedCategory)
+    }
+    if(selectedSearchOn){
+        console.log(selectedSearchOn)
+        $("#searchbar").val(selectedSearchOn)
+    }
 })
 //search function is with the plain form, not ajax for it
 //add item into cart
@@ -190,6 +198,11 @@ $("#comment").on("submit", function (event) {
     }
     if ($("#commentRating").val() < 0 | $("#commentRating").val() > 5) {
         alert("rating must be within 0 to 5.")
+        return
+    }
+    if (!/\S/.test($("#commentContent").val())) {
+        alert("Comment cannot be empty.")
+        return
     }
     const productIdToAdd = $(`#${this.id}`).parent().attr("id")
     console.log($.cookie("userInfo"), productIdToAdd, $("#commentContent").val(), $("#commentRating").val())
@@ -206,7 +219,7 @@ $("#comment").on("submit", function (event) {
         success: function (response) {
             console.log(response)
             alert("your comment has been added.")
-            location.reload(true)
+            location.reload()
         },
         error: function (xhr) {
             alert(JSON.parse(xhr.responseText).errormessage)
@@ -243,22 +256,23 @@ $("#place-order").submit(function (event) {
         if (address[attr] == "") {
             console.log(address[attr])
             alert("please go to the account page to complete your shipping address.")
+            event.preventDefault()
             return
         }
     }
-    $.ajax({
-        url: "",///users/orderplaced
-        type: "get",
-        data: {
-        },
-        success: function (response) {
-            console.log(response)
-            // window.location.href = response.redirectURL
-        },
-        error: function (xhr) {
-            alert(JSON.parse(xhr.responseText).errormessage)
-        },
-    });
+    // $.ajax({
+    //     url: "",///users/orderplaced
+    //     type: "get",
+    //     data: {
+    //     },
+    //     success: function (response) {
+    //         console.log(response)
+    //         // window.location.href = response.redirectURL
+    //     },
+    //     error: function (xhr) {
+    //         alert(JSON.parse(xhr.responseText).errormessage)
+    //     },
+    // });
 })
 
 $('#login-form').submit((event) => {
@@ -289,8 +303,8 @@ $('#signupForm').submit((event) => {
     }
 
     if ($('#psw-repeat').val() != $('#psw').val()) {
-        $('#errormessage').text("Password doesn't match!")
-        $('#errormessage').show();
+        alert("Password doesn't match!")
+        return
     } else {
         $.ajax({
             url: $('#signupForm').attr('action'),

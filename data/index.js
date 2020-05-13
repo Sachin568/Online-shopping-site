@@ -1,7 +1,6 @@
 const usersData = require("./users");
 const productsData = require("./products");
 const commentsData = require("./comments");
-const categoryData = require("./category");
 const ordersData = require("./orders");
 // test
 const mongoCollections = require('../config/mongoCollections');
@@ -53,6 +52,5 @@ module.exports = {
     users: usersData,
     products: productsData,
     comments: commentsData,
-    category: categoryData,
     orders: ordersData
 };

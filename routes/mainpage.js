@@ -41,7 +41,8 @@ router.get("/:page*?", async (req, res) => {
         },
         products: offeredProducts.productList,
         status: status,
-        category: searchCategory
+        category: searchCategory,
+        searchOn: searchOn
     })
 });
 

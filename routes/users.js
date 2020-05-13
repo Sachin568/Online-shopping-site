@@ -111,7 +111,7 @@ router.post("/signup", async (req, res) => {
     req.session.userInfo = username
     req.session.userId = new_user._id
     // res.status(200).render("pages/mainpage")
-    res.send({ redirectURL: "/users/login" })
+    res.status(200).send({ redirectURL: "/users/login" })
 });
 //TODO:update user info
 router.put("/:id", async (req, res) => {

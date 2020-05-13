@@ -43,8 +43,8 @@
           <select id="category" class="dropdown-menu" aria-labelledby="navbarDropdown" multiple> --}}
 
           
-          <select id="category" class="category-round-corners" name="category" form="search" require>
-            <option class="dropdown-item">All Categories</option>
+          <select id="category" class="category-round-corners" name="category" form="search" selected="selected" require>
+            <option class="dropdown-item">All</option>
             <option class="dropdown-item">Beans</option>
             <option class="dropdown-item">Beverages</option>
             <option class="dropdown-item">Breads</option>
@@ -77,3 +77,7 @@
     </div>
 </nav>
 <br />
+<script>
+  let selectedCategory = "{{category}}"
+  let selectedSearchOn = "{{searchOn}}"
+</script>

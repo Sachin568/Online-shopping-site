@@ -35,7 +35,7 @@ app.use(
     secret: "Operation Aegis",
     saveUninitialized: true,
     resave: false,
-    expires: new Date(Date.now() + (86400 * 1000))//one day of expiration period
+    expires: new Date(Date.now() + 7*(86400 * 1000))//one day of expiration period
   })
 );
 app.use(paginate.middleware(48, 100));
