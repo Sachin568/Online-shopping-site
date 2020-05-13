@@ -19,7 +19,7 @@ $("button").click(function () {
             },
             success: function (response) {
                 console.log(response)
-                alert(`product of ${quantity} has been added to cart.`)
+                alert(`product of quantity ${quantity} has been added to cart.`)
             },
             error: function (xhr) {
                 alert(JSON.parse(xhr.responseText).errormessage)
