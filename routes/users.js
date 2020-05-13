@@ -52,7 +52,7 @@ router.post("/login", async (req, res) => {
         user = await usersData.getUserByName(username)
     } catch (e) {
         console.log(e)
-        res.status(400).send({ errormessage: "User not exist." })
+        res.status(400).send({ errormessage: "Username or password is incorrect" })
         return
     }
     const hashedPassword = user.password
@@ -76,7 +76,7 @@ router.post("/login", async (req, res) => {
         // }))
         // res.status(200).render("pages/mainpage", { userInfo: username, isAuthenticated :true })
     } else {
-        res.status(400).send({ errormessage: "Wrong password" })
+        res.status(400).send({ errormessage: "Username or password is incorrect" })
     }
 
 });
