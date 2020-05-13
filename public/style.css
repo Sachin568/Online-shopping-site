@@ -1,6 +1,7 @@
-header {
+/* header { */
   /* border-bottom: 10px solid black; */
-}
+/* } */
+
 * {box-sizing: border-box;}
 
 #errormessage{
