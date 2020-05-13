@@ -38,7 +38,7 @@ app.use(
     expires: new Date(Date.now() + (86400 * 1000))//one day of expiration period
   })
 );
-app.use(paginate.middleware(50, 100));
+app.use(paginate.middleware(48, 100));
 
 //clear cookie after reboot
 app.use(async (req, res, next) => {

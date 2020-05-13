@@ -11,20 +11,28 @@ router.get("/:page*?", async (req, res) => {
     }
     const page = req.query.page || 1
     // console.log(page, req.query.limit, req.skip)
-    console.log("searchon",req.query.searhOn)
-    let offeredProducts, status, searchOn, totalPagesCount
-    if (typeof (req.query.searchOn) == "undefined") {
+    console.log(req.query, "|", req.body)
+    let offeredProducts, status, searchOn, totalPagesCount, searchCategory
+    searchOn = req.query.searchOn
+    searchCategory = req.query.category ? req.query.category : "All"
+    if (!searchOn && searchCategory == "All") {
         offeredProducts = await productsData.getAllProducts(req.query.limit, req.skip)
         status = "offer all"
         console.log(`Returning all products`)
-    } else {
-        searchOn = req.query.searchOn
-        offeredProducts = await productsData.searchProductByName(searchOn,req.query.limit, req.skip)
+    } else if (searchOn && searchCategory == "All") {
+        offeredProducts = await productsData.searchProductByName(searchOn, req.query.limit, req.skip)
         status = `offer ${searchOn}`
         console.log(`Returning products with name ${searchOn}`)
+    } else if (!searchOn && searchCategory != "All") {
+        offeredProducts = await productsData.searchProductByCategory(searchCategory, req.query.limit, req.skip)
+        console.log(`Returning products with category ${searchCategory}`)
+    } else {
+        offeredProducts = await productsData.searchProductByNameAndCategory(searchOn, searchCategory, req.query.limit, req.skip)
+        console.log(`Returning products with name ${searchOn} and category ${searchCategory}`)
     }
-    totalPagesCount = Math.ceil(offeredProducts.listSize / req.query.limit)
 
+    totalPagesCount = Math.ceil(offeredProducts.listSize / req.query.limit)
+    // console.log("------------------")
     // console.log(paginate.getArrayPages(req)(3, totalPagesCount, req.query.page))
     res.status(200).render("pages/mainpage", {
         pagination: {
@@ -32,12 +40,9 @@ router.get("/:page*?", async (req, res) => {
             pageCount: totalPagesCount
         },
         products: offeredProducts.productList,
-        // pages: paginate.getArrayPages(req)(3, totalPagesCount, req.query.page),
-        status: status
-    })//userInfo: req.session.userInfo,
-
-
+        status: status,
+        category: searchCategory
+    })
 });
-
 
 module.exports = router;
