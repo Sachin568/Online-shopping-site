@@ -59,7 +59,7 @@ module.exports = {
       price: price,
       description: description,
       pic: pic,
-      reviews:[]
+      reviews: []
     };
 
     const insertInfo = await productCollection.insertOne(newProduct);
@@ -156,7 +156,8 @@ module.exports = {
       category: category,
       price: price,
       description: description,
-      pic: pic
+      pic: pic,
+      reviews: []
     };
     const updatedInfo = await productCollection.updateOne({ _id: id }, { $set: newProduct });
     if (updatedInfo.modifiedCount === 0) {
