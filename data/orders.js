@@ -56,7 +56,7 @@ module.exports = {
     const ordersCollection = await orders();
     let newOrder = {
       userId: userId,
-      products: productList,
+      products: hashtable,
       placedDate: getCurrentTime(),
       value:value
 
