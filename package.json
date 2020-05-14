@@ -28,6 +28,7 @@
     "express-paginate": "^1.0.0",
     "express-session": "^1.17.1",
     "handlebars-helpers": "^0.10.0",
+    "helmet": "^3.22.0",
     "mongodb": "^3.5.5",
     "xss": "^1.0.6"
   }

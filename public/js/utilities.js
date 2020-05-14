@@ -236,19 +236,6 @@ $("#check-out").submit(function (event) {
         event.preventDefault(event);
         return
     }
-    // $.ajax({
-    //     url: "",///users/checkout
-    //     type: "get",
-    //     data: {
-    //     },
-    //     success: function (response) {
-    //         console.log(response)
-    //         // window.location.href = response.redirectURL
-    //     },
-    //     error: function (xhr) {
-    //         alert(JSON.parse(xhr.responseText).errormessage)
-    //     },
-    // });
 })
 $("#place-order").submit(function (event) {
     console.log(address)
@@ -260,19 +247,6 @@ $("#place-order").submit(function (event) {
             return
         }
     }
-    // $.ajax({
-    //     url: "",///users/orderplaced
-    //     type: "get",
-    //     data: {
-    //     },
-    //     success: function (response) {
-    //         console.log(response)
-    //         // window.location.href = response.redirectURL
-    //     },
-    //     error: function (xhr) {
-    //         alert(JSON.parse(xhr.responseText).errormessage)
-    //     },
-    // });
 })
 
 $('#login-form').submit((event) => {
@@ -375,11 +349,6 @@ $("#navigation li").click(function (event) {
     console.log(newAction)
     $(this).find("a").attr("href", newAction)
     console.log($(this).find("a").attr("href"))
-    // return
-    // $("#search").attr('action', newAction)
-    // console.log($("#search").attr("action"))
-    // return
-    // $("#search").attr('action', newAction).submit()
 })
 
 

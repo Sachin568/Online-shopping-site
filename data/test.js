@@ -18,11 +18,11 @@ const main = async () => {
   // const db = await dbConnection();
   // await db.dropDatabase();
 
-  fs.readFile('./test.json', (err, data) => {
-    if (err) throw err;
+  // fs.readFile('./test.json', (err, data) => {
+  //   if (err) throw err;
 
-    console.log(JSON.parse(data));
-  })
+  //   console.log(JSON.parse(data));
+  // })
   // insert json in collection
   // const productCollection = await products();
   // let allp = await productCollection.updateMany({},
@@ -73,7 +73,7 @@ const main = async () => {
   // let co2 = await commentsData.addComment("whoaaaaa", u1._id, "5eb4a52b8c261c69a007d649", 5)
   // p1 = await productsData.getProductById("5eb4a52b8c261c69a007d649")
 
-
+console.log(String("smt"))
 
 
 };
