@@ -1,51 +1,48 @@
 <body>
-<form action="/users/account" method="post" id="account-update-form" class="login_form">
-    <div id="errormessage" hidden></div>
-    <div class="container">
-        <h2>Account Info</h2>
-        <hr>
-        <a href="/users/pswchange" style="color: rgb(1, 115, 177);">Wanna change your password?</a>
-        <hr>
-        <h3>This is your personal info:</h3>
-        <div class="basic-info">
-            <label for="username">User Name (you cannot change your username)</label>
-            <input type="text" placeholder={{userDetails.basicInfo.username}} name="username" readonly="readonly">
+    <form action="/users/account" method="post" id="account-update-form" class="login_form">
+        <div id="errormessage" hidden></div>
+        <div class="container">
+            <h2>Account Info</h2>
+            <hr>
+            <a href="/users/pswchange" style="color: rgb(1, 115, 177);">Wanna change your password?</a>
+            <hr>
+            <h3>This is your personal info:</h3>
+            <div class="basic-info">
+                <label for="username">User Name (you cannot change your username)</label>
+                <input type="text" placeholder={{userDetails.basicInfo.username}} name="username" readonly="readonly">
 
-            <label for="birthdate">birthdate (you cannot change your birthday)</label>
-            <input type="text" placeholder={{userDetails.basicInfo.birthdate}} name="birthdate" readonly="readonly">
+                <label for="birthdate">birthdate (you cannot change your birthday)</label>
+                <input type="text" placeholder={{userDetails.basicInfo.birthdate}} name="birthdate" readonly="readonly">
 
-            <label for="email">Email</label>
-            <input type="text" value={{userDetails.email}} name="email" id="email" required>
+                <label for="email">Email</label>
+                <input type="text" value={{userDetails.email}} name="email" id="email" required>
+            </div>
+            <hr>
+            <h3>This is your shipping address:</h3>
+            <div class="address">
+                <label for="street">Street</label>
+                <input type="text" name="street" id="street" required maxlength="40"
+                    placeholder={{#if userDetails.address.street}}{{userDetails.address.street}}{{/if}}>
+
+                <label for="city">City</label>
+                <input type="text" name="city" id="city" required maxlength="40"
+                    placeholder={{#if userDetails.address.city}}{{userDetails.address.city}}{{/if}}>
+
+                <label for="state">State</label>
+                <input type="text" name="state" id="state" required maxlength="40"
+                    placeholder={{#if userDetails.address.state}}{{userDetails.address.state}}{{/if}}>
+
+                <label for="zipCode">Zipcode</label>
+                <input type="text" name="zipCode" id="zipCode" required maxlength="40"
+                    placeholder={{#if userDetails.address.zipCode}}{{userDetails.address.zipCode}}{{/if}}>
+
+            </div>
+            <hr>
+            <div class="button-group">
+                <button type="submit" class="btn btn-lg button-primary">Update</button>
+                <button type="button" class="btn btn-lg button-primary"
+                    onclick="location.href='/mainpage'">Cancel</button>
+            </div>
         </div>
-        <hr>
-        <h3>This is your shipping address:</h3>
-        <div class="address">
-            <label for="street">Street</label>
-            <input type="text"
-                value={{#if userDetails.address.street}}{{userDetails.address.street}}{{else}}empty{{/if}}
-                name="street" id="street" required>
-
-            <label for="city">City</label>
-            <input type="text"
-                value={{#if userDetails.address.city}}{{userDetails.address.city}}{{else}}empty{{/if}} name="city"
-                id="city" required>
-
-            <label for="state">State</label>
-            <input type="text"
-                value={{#if userDetails.address.state}}{{userDetails.address.state}}{{else}}empty{{/if}}
-                name="state" id="state" required>
-
-            <label for="zipCode">Zipcode</label>
-            <input type="text"
-                value={{#if userDetails.address.zipCode}}{{userDetails.address.zipCode}}{{else}}empty{{/if}}
-                name="zipCode" id="zipCode" required>
-
-        </div>
-        <hr>
-        <div class="button-group">
-            <button type="submit" class="btn btn-lg button-primary">Update</button>
-            <button type="button" class="btn btn-lg button-primary" onclick="location.href='/mainpage'">Cancel</button>
-        </div>
-    </div>
-</form>
+    </form>
 </body>

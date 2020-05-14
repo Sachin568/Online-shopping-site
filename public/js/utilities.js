@@ -10,6 +10,11 @@ $(document).ready(function (response) {
         $("#searchbar").val(selectedSearchOn)
     }
 })
+$('#address-update').keydown(function (e) {
+    if (e.keyCode == 32) {
+        return false;
+    }
+});
 //search function is with the plain form, not ajax for it
 //add item into cart
 $("button").click(function () {
@@ -321,6 +326,13 @@ $("#psw-change").submit((event) => {
 
 $("#account-update-form").submit((event) => {
     event.preventDefault();
+    if (!/\S/.test($("#street").val()) |
+        !/\S/.test($("#city").val()) |
+        !/\S/.test($("#state").val()) |
+        !/\S/.test($("#zipCode").val())) {
+        alert("Your address connot be blank")
+        return
+    }
     console.log($('#account-update-form').serialize())
     $.ajax({
         url: $('#account-update-form').attr('action'),
