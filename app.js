@@ -4,10 +4,13 @@ const exphbs = require("express-handlebars")
 const session = require('express-session')
 const cookieParser = require('cookie-parser')
 const paginate = require('express-paginate');
+const helmet = require('helmet')
 const configRoutes = require("./routes");
 
 
 const app = express();
+app.use(helmet())
+app.set('trust proxy', 1)
 app.use("/static", express.static(__dirname + "/public"))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json());
@@ -35,7 +38,7 @@ app.use(
     secret: "Operation Aegis",
     saveUninitialized: true,
     resave: false,
-    expires: new Date(Date.now() + (86400 * 1000))//one day of expiration period
+    expires: new Date(Date.now() + 7 * (86400 * 1000)),//one day of expiration period
   })
 );
 app.use(paginate.middleware(48, 100));
@@ -45,7 +48,7 @@ app.use(async (req, res, next) => {
   if (req.session.userInfo) {
     res.cookie('userInfo', req.session.userInfo)
   } else {
-      res.clearCookie("userInfo")
+    res.clearCookie("userInfo")
   }
   next()
 })

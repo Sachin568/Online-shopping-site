@@ -46,8 +46,8 @@ router.get("/signup", async (req, res) => {
 });
 //TODO:check if user already logged in: not possible
 router.post("/login", async (req, res) => {
-    let username = req.body['username']
-    let psw = req.body['psw']
+    let username = String(req.body['username'])
+    let psw = String(req.body['psw'])
     let rememberMe = req.body['rememberme']// string "on" / undefined
     let user
     try {
@@ -83,9 +83,9 @@ router.post("/login", async (req, res) => {
 
 });
 router.post("/signup", async (req, res) => {
-    let username = req.body['username']
+    let username = String(req.body['username'])
     let birthdate = req.body['birthdate']
-    let email = req.body['email']
+    let email = String(req.body['email'])
 
     let psw = req.body['psw']
     // let psw_repeat = req.body['psw-repeat']
@@ -111,7 +111,7 @@ router.post("/signup", async (req, res) => {
     req.session.userInfo = username
     req.session.userId = new_user._id
     // res.status(200).render("pages/mainpage")
-    res.send({ redirectURL: "/users/login" })
+    res.status(200).send({ redirectURL: "/users/login" })
 });
 //TODO:update user info
 router.put("/:id", async (req, res) => {
@@ -166,12 +166,18 @@ router.post("/", async (req, res) => {
     }
 });
 router.get("/logout", async (req, res) => {
+    res.locals.metaTags = {
+        title: "logout"
+    }
     req.session.destroy()
     res.clearCookie("userInfo")
     res.redirect("/mainpage")
 })
 //view user info and making changes here
 router.get("/account", async (req, res) => {
+    res.locals.metaTags = {
+        title: "Account"
+    }
     console.log("user", req.session.userInfo, "is accessing account page.")
     let userId = req.session.userId
     let user
@@ -215,6 +221,9 @@ router.post("/account", async (req, res) => {
 
 //change psw here
 router.get("/pswchange", async (req, res) => {
+    res.locals.metaTags = {
+        title: "Password Change"
+    }
     console.log("user", req.session.userInfo, "is accessing psw changing page.")
     if (!req.session.userId || typeof (req.session.userId) == "undefined") {
         res.redirect("/mainpage")
@@ -252,6 +261,9 @@ router.post("/pswchange", async (req, res) => {
 })
 
 router.get("/shoppingcart", async (req, res) => {
+    res.locals.metaTags = {
+        title: "Shopping Cart"
+    }
     console.log("user", req.session.userInfo, "is accessing shopping cart.")
     console.log(req.session.userId)
     let userId = req.session.userId
@@ -270,6 +282,9 @@ router.get("/shoppingcart", async (req, res) => {
 })
 
 router.get("/wishlist", async (req, res) => {
+    res.locals.metaTags = {
+        title: "Wish List"
+    }
     console.log("user", req.session.userInfo, "is accessing wish list.")
     console.log(req.session.userId)
     let userId = req.session.userId
@@ -318,6 +333,9 @@ router.get("/clearwishlist", async (req, res) => {
 })
 
 router.get("/checkout", async (req, res) => {
+    res.locals.metaTags = {
+        title: "Checking out"
+    }
     console.log("user", req.session.userInfo, "is checking out.")
     let userId = req.session.userId
     if (!userId | typeof (userId) === "undefined") {
@@ -355,6 +373,9 @@ router.get("/checkout", async (req, res) => {
 })
 
 router.get("/orderplaced", async (req, res) => {
+    res.locals.metaTags = {
+        title: "Order placed"
+    }
     console.log("user", req.session.userInfo, "is placing order.")
     let userId = req.session.userId
     if (!userId | typeof (userId) === "undefined") {
@@ -385,6 +406,9 @@ router.get("/orderplaced", async (req, res) => {
 })
 
 router.get("/orderhistory", async (req, res) => {
+    res.locals.metaTags = {
+        title: "Order history"
+    }
     console.log("user", req.session.userInfo, "is viewing order history.")
     let userId = req.session.userId
     if (!userId | typeof (userId) === "undefined") {

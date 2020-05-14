@@ -6,7 +6,7 @@ const usersData = data.users
 const commentsData = data.comments
 
 
-router.get("/:id", async (req, res) => {
+router.get("/:id", async (req, res) => {  
   let prodDetails
   try {
     prodDetails = await prodData.getProductById(req.params.id);
@@ -14,6 +14,9 @@ router.get("/:id", async (req, res) => {
     res.redirect("/mainpage");
     return
   }
+  res.locals.metaTags = {
+    title: prodDetails.name
+}
   prodDetails.reviews = await commentsData.substantiate(prodDetails.reviews)
   res.status(200).render("pages/singleProduct", { prodDetails: prodDetails });
 

@@ -9,12 +9,12 @@ router.get("/:page*?", async (req, res) => {
     res.locals.metaTags = {
         title: "Mainpage"
     }
+    console.log(req.query)
     const page = req.query.page || 1
     // console.log(page, req.query.limit, req.skip)
-    console.log(req.query, "|", req.body)
     let offeredProducts, status, searchOn, totalPagesCount, searchCategory
-    searchOn = req.query.searchOn
-    searchCategory = req.query.category ? req.query.category : "All"
+    searchOn = req.query.searchOn ? String(req.query.searchOn) : undefined
+    searchCategory = req.query.category ? String(req.query.category) : "All"
     if (!searchOn && searchCategory == "All") {
         offeredProducts = await productsData.getAllProducts(req.query.limit, req.skip)
         status = "offer all"
@@ -41,7 +41,8 @@ router.get("/:page*?", async (req, res) => {
         },
         products: offeredProducts.productList,
         status: status,
-        category: searchCategory
+        category: searchCategory,
+        searchOn: searchOn
     })
 });
 

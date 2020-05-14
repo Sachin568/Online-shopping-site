@@ -1,7 +1,20 @@
 $(document).ready(function (response) {
     console.log(document.cookie.split(';'))
     checkStatus($.cookie("userInfo"))
+    if (selectedCategory) {
+        console.log(selectedCategory)
+        $("#category").val(selectedCategory)
+    }
+    if (selectedSearchOn) {
+        console.log(selectedSearchOn)
+        $("#searchbar").val(selectedSearchOn)
+    }
 })
+$('#address-update').keydown(function (e) {
+    if (e.keyCode == 32) {
+        return false;
+    }
+});
 //search function is with the plain form, not ajax for it
 //add item into cart
 $("button").click(function () {
@@ -190,6 +203,11 @@ $("#comment").on("submit", function (event) {
     }
     if ($("#commentRating").val() < 0 | $("#commentRating").val() > 5) {
         alert("rating must be within 0 to 5.")
+        return
+    }
+    if (!/\S/.test($("#commentContent").val())) {
+        alert("Comment cannot be empty.")
+        return
     }
     const productIdToAdd = $(`#${this.id}`).parent().attr("id")
     console.log($.cookie("userInfo"), productIdToAdd, $("#commentContent").val(), $("#commentRating").val())
@@ -206,7 +224,7 @@ $("#comment").on("submit", function (event) {
         success: function (response) {
             console.log(response)
             alert("your comment has been added.")
-            location.reload(true)
+            location.reload()
         },
         error: function (xhr) {
             alert(JSON.parse(xhr.responseText).errormessage)
@@ -223,19 +241,6 @@ $("#check-out").submit(function (event) {
         event.preventDefault(event);
         return
     }
-    // $.ajax({
-    //     url: "",///users/checkout
-    //     type: "get",
-    //     data: {
-    //     },
-    //     success: function (response) {
-    //         console.log(response)
-    //         // window.location.href = response.redirectURL
-    //     },
-    //     error: function (xhr) {
-    //         alert(JSON.parse(xhr.responseText).errormessage)
-    //     },
-    // });
 })
 $("#place-order").submit(function (event) {
     console.log(address)
@@ -243,22 +248,10 @@ $("#place-order").submit(function (event) {
         if (address[attr] == "") {
             console.log(address[attr])
             alert("please go to the account page to complete your shipping address.")
+            event.preventDefault()
             return
         }
     }
-    $.ajax({
-        url: "",///users/orderplaced
-        type: "get",
-        data: {
-        },
-        success: function (response) {
-            console.log(response)
-            // window.location.href = response.redirectURL
-        },
-        error: function (xhr) {
-            alert(JSON.parse(xhr.responseText).errormessage)
-        },
-    });
 })
 
 $('#login-form').submit((event) => {
@@ -289,8 +282,8 @@ $('#signupForm').submit((event) => {
     }
 
     if ($('#psw-repeat').val() != $('#psw').val()) {
-        $('#errormessage').text("Password doesn't match!")
-        $('#errormessage').show();
+        alert("Password doesn't match!")
+        return
     } else {
         $.ajax({
             url: $('#signupForm').attr('action'),
@@ -333,6 +326,13 @@ $("#psw-change").submit((event) => {
 
 $("#account-update-form").submit((event) => {
     event.preventDefault();
+    if (!/\S/.test($("#street").val()) |
+        !/\S/.test($("#city").val()) |
+        !/\S/.test($("#state").val()) |
+        !/\S/.test($("#zipCode").val())) {
+        alert("Your address connot be blank")
+        return
+    }
     console.log($('#account-update-form').serialize())
     $.ajax({
         url: $('#account-update-form').attr('action'),
@@ -352,9 +352,17 @@ $("#forget-psw").click(function (event) {
     event.preventDefault()
     alert("We cannot help you. Good luck then.")
     return
-}
+})
+$("#navigation li").click(function (event) {
+    // event.preventDefault();
+    const pageParam = $(this).find("a").attr("href")
+    console.log(pageParam)
+    const newAction = $("#search").attr("action") + pageParam + "&searchOn=" + $("#searchbar").val() + "&category=" + $("#category").val()
+    console.log(newAction)
+    $(this).find("a").attr("href", newAction)
+    console.log($(this).find("a").attr("href"))
+})
 
-)
 
 function checkStatus(userInfo) {
     console.log(userInfo)
